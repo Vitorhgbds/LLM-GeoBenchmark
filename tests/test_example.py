@@ -11,3 +11,5 @@ def test_answer_relevancy():
         retrieval_context=["All customers are eligible for a 30 day full refund at no extra cost."]
     )
     assert_test(test_case, [answer_relevancy_metric])
+
+    

@@ -10,11 +10,16 @@ license = "MIT"
 python = ">=3.12, <3.13"
 deepeval = "^2.0.9"
 openai = "^1.58.1"
-torch = "^2.5.1"
 transformers = "^4.47.1"
+pytest = "^8.3.4"
+accelerate = "^1.2.1"
+bitsandbytes = "^0.45.0"
+torch = {version = "^2.6.0.dev20241226+cu126", allow-prereleases = true, source = "pytorch-gpu-src"}
 
-[tool.poetry.dev-dependencies]
-pytest = "^7.1"
+[[tool.poetry.source]]
+name = "pytorch-gpu-src"
+url = "https://download.pytorch.org/whl/nightly/cu126"
+priority = "explicit"
 
 [build-system]
 requires = ["poetry-core"]

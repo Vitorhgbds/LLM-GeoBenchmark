@@ -1,0 +1,11 @@
+models:
+  - name: llama-3.0
+    provider: huggingface
+    model_path: "path_or_model_name_in_hf_hub"
+  - name: gemma
+    provider: huggingface
+    model_path: "path_or_model_name_in_hf_hub"
+judge:
+  name: gpt-4o-mini
+  provider: openai
+  model_path: "gpt-4"

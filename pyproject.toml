@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "gas"
+version = "0.1.0"
+description = "GeoAI Showdown"
+authors = ["Garcez, Vitor Hugo <vitor_hgbds@hotmail.com>"]
+readme = "README.md"
+license = "MIT"
+
+[tool.poetry.dependencies]
+python = ">=3.12, <3.13"
+deepeval = "^2.0.9"
+openai = "^1.58.1"
+torch = "^2.5.1"
+transformers = "^4.47.1"
+
+[tool.poetry.dev-dependencies]
+pytest = "^7.1"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

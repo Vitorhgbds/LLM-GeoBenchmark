@@ -1,8 +1,32 @@
-# LLM-GeoBenchmark
+# GeoAI Showdown
 
-48h light weight download
-https://llama3-2-lightweight.llamameta.net/*?Policy=eyJTdGF0ZW1lbnQiOlt7InVuaXF1ZV9oYXNoIjoidTluZ3VmbDV6NTgxc2JiY2huZGU2OGN3IiwiUmVzb3VyY2UiOiJodHRwczpcL1wvbGxhbWEzLTItbGlnaHR3ZWlnaHQubGxhbWFtZXRhLm5ldFwvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTczMTY1MDcxMX19fV19&Signature=jvWHV%7ErwRGyzQBvczeiCeD3JGPTfq0Vf9bc-tTC3knQ91Io9TResOyQL3XU1UN5YzbTt2HARRV1I9FAhJKl3pQvIIvOCrhtmtlXi%7ECwUtuxzFm5PpGnz-XNdh5%7EIOf037YKgP7PzgQ3SMB1UBvhkB11tnzdE6LFzSgPOe5t4TNCbbQis51h1A22CJcKBat6AHwfpD69kcf7ZFKfn1eSR4QG8OMtx4ZwnUJzK24FHlMDwJ1YR9nuaRpqNzRSy0thkbDEkZWume4QYO130AU35t%7EL61aYk8Pevr-vKItfOjDhp2j09dvSv2osnQp7ZztZKErP6TMVOQt%7Eielg9IL7wtA__&Key-Pair-Id=K15QRJLYKIFSLZ&Download-Request-ID=879390074318923
+# Setup
 
-48h 
+1.  Export your OPENAI_API_KEY  
 
-https://llama3-1.llamameta.net/*?Policy=eyJTdGF0ZW1lbnQiOlt7InVuaXF1ZV9oYXNoIjoieWYyZWZiMHd3OWcxdzFkM2p3d2JiaWs4IiwiUmVzb3VyY2UiOiJodHRwczpcL1wvbGxhbWEzLTEubGxhbWFtZXRhLm5ldFwvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTczMTY1MDcxMX19fV19&Signature=jevkKFZt9IKXB5sEUkDRj9PPmOM-gJ%7EB4fYxM7uhK5k%7EiomFOxI07sEKhzBmnLU2SPNyLdGQPfL7m4dp1cC4Ii5PklC7R8mbOggVXIXSmoHGkgQIZwEWvdBZGoFsfRVr3KnAtoH27eZ4xpo6mxdpFCX9%7EhEBqLUZiyzPn6rHMo8j7YmsTkQLSEJ4F3fGdhcTlrbuLpYbwB7MG8KOvlooG3MzsS7Sm0ghvgiXoFE86sKTBur0FWDrfiZJ9idjS-r%7ErRV-tWCjwsmwlsCEx8YeK%7EFVPQvQ%7EQzxPIn%7EpPaiyC3GWN15CDUDf08lo4sVEvM3RVAsrH%7E7XMOIHZeMtX5HVg__&Key-Pair-Id=K15QRJLYKIFSLZ&Download-Request-ID=962324879055755
+Windows
+
+```bash
+setx OPENAI_API_KEY "api-key-here"
+```
+Linux
+```bash
+export OPENAI_API_KEY "api-key-here"
+```
+2. Export HuggingFace Acess token
+```bash
+setx HUGGINGFACE_API_TOKEN "access-token-here"
+```
+
+3. Poetry install  
+```bash
+pip install poetry
+```  
+
+4. install dependencies
+``` bash
+poetry install --with dev
+```
+
+
+

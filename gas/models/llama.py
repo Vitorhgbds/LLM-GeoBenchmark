@@ -33,10 +33,8 @@ class Llama3_8B(DeepEvalBaseLLM):
         return self.model
 
     def generate(self, prompt: str) -> str:
-        # Format the prompt for exam-style Q&A
-        formatted_prompt = f"Q: {prompt}\nA:"
         # Tokenize input and set attention mask
-        inputs = self.tokenizer(formatted_prompt, return_tensors="pt", padding=True)
+        inputs = self.tokenizer(prompt, return_tensors="pt", padding=True)
         input_ids = inputs.input_ids.cuda()
         attention_mask = inputs.attention_mask.cuda()
 
@@ -59,7 +57,7 @@ class Llama3_8B(DeepEvalBaseLLM):
         raw_output = self.tokenizer.decode(outputs[0], skip_special_tokens=True)
         
         # Post-process to extract only the answer after "A:"
-        answer_start = raw_output.find("A:") + 2
+        answer_start = raw_output.find(prompt) + 2
         final_output = raw_output[answer_start:].strip()
         return final_output
 

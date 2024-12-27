@@ -4,7 +4,7 @@ version = "0.1.0"
 description = "GeoAI Showdown"
 authors = ["Garcez, Vitor Hugo <vitor_hgbds@hotmail.com>"]
 readme = "README.md"
-license = "MIT"
+license = "GNU GENERAL PUBLIC LICENSE"
 
 [tool.poetry.dependencies]
 python = ">=3.12, <3.13"

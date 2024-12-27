@@ -17,21 +17,21 @@ correctness_metric = GEval(
     evaluation_params=[LLMTestCaseParams.INPUT, LLMTestCaseParams.ACTUAL_OUTPUT, LLMTestCaseParams.EXPECTED_OUTPUT],
 )
 
+llama = Llama3_8B()
+question = "The dog chased the cat up the tree, who ran up the tree?"
+actual_output = llama.generate(question)
+expected_output = "The cat."
 
-def test_llama3_8B():
-    llama = Llama3_8B()
-    question = "The dog chased the cat up the tree, who ran up the tree?"
-    actual_output = llama.generate(question)
-    expected_output = "The cat."
+test_case = LLMTestCase(
+    input=question,
+    actual_output=actual_output,
+    expected_output=expected_output
+)
 
-    test_case = LLMTestCase(
-        input=question,
-        actual_output=actual_output,
-        expected_output=expected_output
-    )
-
-    print("-------------------- Correctness Metric --------------------")
-    print(f"Question: {test_case.input}")
-    print(f"Actual Output: {test_case.actual_output}")
-    print(f"Expected Output: {test_case.expected_output}")
-    assert True == True
+print("-------------------- Correctness Metric --------------------")
+print(f"Question: {test_case.input}")
+print(f"Actual Output: {test_case.actual_output}")
+print(f"Expected Output: {test_case.expected_output}")
+#correctness_metric.measure(test_case)
+#print(correctness_metric.score)
+#print(correctness_metric.reason)

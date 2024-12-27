@@ -45,7 +45,7 @@ class Llama3_8B(DeepEvalBaseLLM):
         outputs = self.model.generate(
             input_ids=input_ids,
             attention_mask=attention_mask,
-            max_length=500,  # Limit output length
+            max_length=2500,  # Limit output length
             no_repeat_ngram_size=2,  # Prevent repetitive phrases
             repetition_penalty=1.2,  # Penalize repetition
             temperature=0.1,  # Almost Fully deterministic
@@ -57,7 +57,7 @@ class Llama3_8B(DeepEvalBaseLLM):
         raw_output = self.tokenizer.decode(outputs[0], skip_special_tokens=True)
         
         # Post-process to extract only the answer after "A:"
-        answer_start = raw_output.find(prompt) + 2
+        answer_start = raw_output.find("Answer:") + 7
         final_output = raw_output[answer_start:].strip()
         return final_output
 

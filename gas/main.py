@@ -1,37 +1,35 @@
-from deepeval.metrics import GEval
-from deepeval.test_case import LLMTestCaseParams
+from deepeval import evaluate
 from deepeval.test_case import LLMTestCase
 
+# Define your model
+from gas.metrics import metrics
 from gas.models.llama import Llama3_8B
 
-correctness_metric = GEval(
-    name="Correctness",
-    model="gpt-4o-mini",
-    criteria="Determine whether the actual output is factually correct based on the expected output.",
-    # NOTE: you can only provide either criteria or evaluation_steps, and not both
-    evaluation_steps=[
-        "Check whether the facts in 'actual output' contradicts any facts in 'expected output'",
-        "You should also heavily penalize omission of detail",
-        "Vague language, or contradicting OPINIONS, are OK"
-    ],
-    evaluation_params=[LLMTestCaseParams.INPUT, LLMTestCaseParams.ACTUAL_OUTPUT, LLMTestCaseParams.EXPECTED_OUTPUT],
-)
+# Dataset
+qa = [
+    ("How are igneous rocks formed?", "Igneous rocks form from the cooling and solidification of magma or lava."),
+    ("List three causes of metamorphism.", "Heat, pressure, fluid activity.")
+]
 
 llama = Llama3_8B()
-question = "The dog chased the cat up the tree, who ran up the tree?"
-actual_output = llama.generate(question)
-expected_output = "The cat."
 
-test_case = LLMTestCase(
-    input=question,
-    actual_output=actual_output,
-    expected_output=expected_output
-)
+# Test Cases
+test_cases = [
+    LLMTestCase(
+        input=qa[0][0],
+        expected_output=qa[0][1],
+        actual_output=llama.generate(qa[0][0]),
+        retrieval_context=[qa[0][1]]
+    ),
+    LLMTestCase(
+        input=qa[1][0],
+        expected_output=qa[1][1],
+        actual_output=llama.generate(qa[1][0]),
+        retrieval_context=[qa[1][1]]
+    )
+]
 
-print("-------------------- Correctness Metric --------------------")
-print(f"Question: {test_case.input}")
-print(f"Actual Output: {test_case.actual_output}")
-print(f"Expected Output: {test_case.expected_output}")
-#correctness_metric.measure(test_case)
-#print(correctness_metric.score)
-#print(correctness_metric.reason)
+
+# Evaluate
+print("-----------------EVALUATION------------------")
+evaluate(test_cases, metrics)

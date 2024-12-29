@@ -83,9 +83,9 @@ Ensure access to the following gated repositories:
 
 ## 🌀 Usage
 
-### Run main script
+### Run the CLI
 ```bash
-python ./gas/main.py
+gas --help
 ```
 
 ## 🧪 Features

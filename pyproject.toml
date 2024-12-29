@@ -6,20 +6,102 @@ authors = ["Garcez, Vitor Hugo <vitor_hgbds@hotmail.com>"]
 readme = "README.md"
 license = "GNU GENERAL PUBLIC LICENSE"
 
-[tool.poetry.dependencies]
-python = ">=3.12, <3.13"
-deepeval = "^2.0.9"
-openai = "^1.58.1"
-transformers = "^4.47.1"
-pytest = "^8.3.4"
-accelerate = "^1.2.1"
-bitsandbytes = "^0.45.0"
-torch = {version = "^2.6.0.dev20241226+cu126", allow-prereleases = true, source = "pytorch-gpu-src"}
 
 [[tool.poetry.source]]
 name = "pytorch-gpu-src"
 url = "https://download.pytorch.org/whl/nightly/cu126"
 priority = "explicit"
+
+
+[tool.poetry.dependencies]
+python = ">=3.12, <3.13"
+deepeval = "^2.0.9"
+openai = "^1.58.1"
+transformers = "^4.47.1"
+accelerate = "^1.2.1"
+bitsandbytes = "^0.45.0"
+torch = {version = "^2.6.0.dev20241226+cu126", allow-prereleases = true, source = "pytorch-gpu-src"}
+
+
+[tool.poetry.group.dev.dependencies]
+ruff = "^0.8.4"
+pre-commit = "^4.0.1"
+mypy = "^1.14.0"
+pytest = "^8.3.4"
+
+
+[tool.ruff]
+exclude = [".git", ".mypy_cache", ".ruff_cache", ".venv"]
+line-length = 120
+indent-width = 4
+
+[tool.ruff.lint]
+select = [
+    # pycodestyle (Error):
+    "E",
+    # Pyflakes
+    "F",
+    # pyupgrade
+    "UP",
+    # flake8-bugbear
+    "B",
+    # flake8-simplify
+    "SIM",
+    # isort
+    "I",
+    # pycodestyle (warning)
+    "W",
+    # eradicate
+    "ERA",
+    # flake8-use-pathlib
+    "PTH",
+    # tryceratops
+    "TRY",
+]
+ignore = [
+    # if-else-block-instead-of-if-exp
+    "SIM108",
+    # replace built-in open with Path.open
+    "PTH123",
+    # commented-ou-code
+    "ERA001",
+    # try-except-raise
+    "TRY003",
+    # move this to an else block
+    "TRY300",
+    # Redundant exception object included in `logging.exception` call
+    "TRY401",
+    # `os.path.exists()` should be replaced by `Path.exists()`
+    "PTH110",
+    # `os.remove()` should be replaced by `Path.unlink()`
+    "PTH107",
+]
+# Allow fix for all enabled rules (when `--fix`) is provided.
+fixable = ["ALL"]
+# Allow unused variables when underscore-prefixed.
+dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
+
+[tool.ruff.format]
+# Like Black, use double quotes for strings.
+quote-style = "double"
+# Like Black, indent with spaces, rather than tabs.
+indent-style = "space"
+# Like Black, respect magic trailing commas.
+skip-magic-trailing-comma = false
+# Like Black, automatically detect the appropriate line ending.
+line-ending = "auto"
+
+[tool.ruff.lint.isort]
+case-sensitive = true
+combine-as-imports = true
+
+[tool.mypy]
+mypy_path = "gas"
+follow_imports = "silent"
+no_implicit_optional = true
+warn_unused_ignores = true
+show_error_codes = true
+disable_error_code = "func-returns-value"
 
 [build-system]
 requires = ["poetry-core"]

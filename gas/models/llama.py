@@ -4,7 +4,6 @@ from transformers import (
     AutoModelForCausalLM,
     AutoTokenizer,
     BitsAndBytesConfig,
-    PreTrainedTokenizer,
     TextGenerationPipeline,
     pipeline,
 )
@@ -47,7 +46,7 @@ class Llama3_8B(DeepEvalBaseLLM):
         )
 
         # Load the tokenizer
-        self.tokenizer: PreTrainedTokenizer = AutoTokenizer.from_pretrained("meta-llama/Meta-Llama-3-8B-Instruct")
+        self.tokenizer = AutoTokenizer.from_pretrained("meta-llama/Meta-Llama-3-8B-Instruct")
         self.tokenizer.pad_token = self.tokenizer.eos_token  # Set pad token to eos token
 
     def load_model(self) -> AutoModelForCausalLM:

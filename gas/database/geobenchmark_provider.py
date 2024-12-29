@@ -6,23 +6,28 @@ from deepeval.dataset import EvaluationDataset
 from deepeval.models import DeepEvalBaseLLM
 from deepeval.test_case import LLMTestCase
 
+from gas.logger import Logger
+
+logger = Logger().get_logger()
+
+
+class BanchmarkType(Enum):
+    """
+    An enumeration of the different types of benchmarks in the GeoBenchmark dataset.
+    """
+
+    NOUN = "noun"
+    CHOICE = "choice"
+    COMPLETION = "completion"
+    TF = "tf"
+    QA = "qa"
+    DISCUSSION = "discussion"
+
 
 class GeobenchProvider:
     """
     A class to provide the GeoBenchmark dataset for evaluation.
     """
-
-    class BanchmarkType(Enum):
-        """
-        An enumeration of the different types of benchmarks in the GeoBenchmark dataset.
-        """
-
-        NOUN = 1
-        CHOICE = 2
-        COMPLETION = 3
-        TF = 4
-        QA = 5
-        DISCUSSION = 6
 
     def __init__(self):
         # Load the JSON content into a dictionary
@@ -75,7 +80,7 @@ class GeobenchProvider:
         for i in range(len(banchmark_dict["question"])):
             if limit is not None and i >= limit:
                 break
-            print(f"Generating test case {i+1}")
+            logger.debug(f"Generating test case {i+1}")
             question = banchmark_dict["question"][i]
             expected_output = banchmark_dict["answer"][i]
             prompt = self._fetch_prompt(banchmark_type, question)
@@ -99,17 +104,17 @@ class GeobenchProvider:
             A dictionary containing the questions and answers for the specified benchmark type.
         """
         match banchmark_type:
-            case self.BanchmarkType.NOUN:
+            case BanchmarkType.NOUN:
                 return self.noun_dict
-            case self.BanchmarkType.CHOICE:
+            case BanchmarkType.CHOICE:
                 return self.choice_dict
-            case self.BanchmarkType.COMPLETION:
+            case BanchmarkType.COMPLETION:
                 return self.completion_dict
-            case self.BanchmarkType.TF:
+            case BanchmarkType.TF:
                 return self.tf_dict
-            case self.BanchmarkType.QA:
+            case BanchmarkType.QA:
                 return self.qa_dict
-            case self.BanchmarkType.DISCUSSION:
+            case BanchmarkType.DISCUSSION:
                 return self.discussion_dict
             case _:
                 raise ValueError("Invalid benchmark type")
@@ -127,18 +132,17 @@ class GeobenchProvider:
         role = ""
         structure = ""
         match banchmark_type:
-            case self.BanchmarkType.NOUN:
+            case BanchmarkType.NOUN:
                 role = (
                     "You are a geoscience expert with a deep understanding of geological and "
                     "geographical terminology."
                 )
                 context = (
-                    "Using your expertise, explain the meaning of the following concept in clear and "
-                    "concise language. The explanation should reflect definitions commonly found in "
-                    "geoscience dictionaries and encyclopedias, such as Signal G7 and Wikipedia."
+                    "Using your expertise, provide a clear, concise, and self-contained explanation in one sentence"
+                    "cotaining key technical specifications and relevant numerical details of the following concept."
                 )
                 structure = f"Concept: {input}. Answer:"
-            case self.BanchmarkType.CHOICE:
+            case BanchmarkType.CHOICE:
                 role = (
                     "You are a geoscience expert tasked with answering multiple-choice questions based "
                     "on geological and geographical knowledge derived from dictionaries, encyclopedias, "
@@ -146,7 +150,7 @@ class GeobenchProvider:
                 )
                 context = "Below is a question with options. Select the correct answer from the given choices."
                 structure = f"Question: {input}. Answer:"
-            case self.BanchmarkType.COMPLETION:
+            case BanchmarkType.COMPLETION:
                 role = (
                     "You are a geoscience expert tasked with completing sentences based on geological and "
                     "geographical knowledge derived from dictionaries, encyclopedias, and related materials."
@@ -156,7 +160,7 @@ class GeobenchProvider:
                     "or phrases."
                 )
                 structure = f"Sentence: {input}. Answer:"
-            case self.BanchmarkType.TF:
+            case BanchmarkType.TF:
                 role = (
                     "You are a geoscience expert tasked with determining whether the following statements "
                     "are True or False based on geological and geographical knowledge derived from "
@@ -164,7 +168,7 @@ class GeobenchProvider:
                 )
                 context = "Provide a clear and concise judgment for each statement."
                 structure = f"Statement: {input}. Answer:"
-            case self.BanchmarkType.QA:
+            case BanchmarkType.QA:
                 role = (
                     "You are a geoscience expert answering detailed questions about geological and "
                     "geographical processes."
@@ -174,7 +178,7 @@ class GeobenchProvider:
                     "geoscience dictionaries, encyclopedias, and related materials."
                 )
                 structure = f"Question: {input}. Answer:"
-            case self.BanchmarkType.DISCUSSION:
+            case BanchmarkType.DISCUSSION:
                 role = (
                     "You are a geoscience expert leading a detailed discussion about geological and "
                     "geographical topics."

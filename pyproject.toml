@@ -21,6 +21,7 @@ transformers = "^4.47.1"
 accelerate = "^1.2.1"
 bitsandbytes = "^0.45.0"
 torch = {version = "^2.6.0.dev20241226+cu126", allow-prereleases = true, source = "pytorch-gpu-src"}
+rich = "^13.9.4"
 
 
 [tool.poetry.group.dev.dependencies]
@@ -106,3 +107,6 @@ disable_error_code = "func-returns-value"
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.scripts]
+gas = 'gas.cli:cli'

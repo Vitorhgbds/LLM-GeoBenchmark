@@ -1,6 +1,5 @@
 from deepeval.metrics import GEval
 from deepeval.test_case import LLMTestCaseParams
-from deepeval.test_case import LLMTestCase
 
 from gas.models.llama import Llama3_8B
 
@@ -12,9 +11,13 @@ correctness_metric = GEval(
     evaluation_steps=[
         "Check whether the facts in 'actual output' contradicts any facts in 'expected output'",
         "You should also heavily penalize omission of detail",
-        "Vague language, or contradicting OPINIONS, are OK"
+        "Vague language, or contradicting OPINIONS, are OK",
     ],
-    evaluation_params=[LLMTestCaseParams.INPUT, LLMTestCaseParams.ACTUAL_OUTPUT, LLMTestCaseParams.EXPECTED_OUTPUT],
+    evaluation_params=[
+        LLMTestCaseParams.INPUT,
+        LLMTestCaseParams.ACTUAL_OUTPUT,
+        LLMTestCaseParams.EXPECTED_OUTPUT,
+    ],
 )
 
 
@@ -22,16 +25,4 @@ def test_llama3_8B():
     llama = Llama3_8B()
     question = "The dog chased the cat up the tree, who ran up the tree?"
     actual_output = llama.generate(question)
-    expected_output = "The cat."
-
-    test_case = LLMTestCase(
-        input=question,
-        actual_output=actual_output,
-        expected_output=expected_output
-    )
-
-    print("-------------------- Correctness Metric --------------------")
-    print(f"Question: {test_case.input}")
-    print(f"Actual Output: {test_case.actual_output}")
-    print(f"Expected Output: {test_case.expected_output}")
-    assert True == True
+    assert len(actual_output) > 0

@@ -1,12 +1,33 @@
 import torch
-from transformers import BitsAndBytesConfig
-from transformers import AutoModelForCausalLM, AutoTokenizer
-
 from deepeval.models import DeepEvalBaseLLM
+from transformers import (
+    AutoModelForCausalLM,
+    AutoTokenizer,
+    BitsAndBytesConfig,
+    PreTrainedTokenizer,
+    TextGenerationPipeline,
+    pipeline,
+)
 
-from gas.commons import SEED
+from gas.commons import (
+    DO_SAMPLE,
+    MAX_LENGHT,
+    NO_REPEAT_NGRAM_SIZE,
+    REPETITION_PENALTY,
+    RETURN_FULL_TEXT,
+    SEED,
+    TEMPERATURE,
+    TOP_K,
+    TOP_P,
+    TRUNCATION,
+)
+
 
 class Llama3_8B(DeepEvalBaseLLM):
+    """
+    Llama3_8B model for evaluation.
+    """
+
     def __init__(self):
         # Configure quantization
         quantization_config = BitsAndBytesConfig(
@@ -26,44 +47,59 @@ class Llama3_8B(DeepEvalBaseLLM):
         )
 
         # Load the tokenizer
-        self.tokenizer = AutoTokenizer.from_pretrained("meta-llama/Meta-Llama-3-8B-Instruct")
+        self.tokenizer: PreTrainedTokenizer = AutoTokenizer.from_pretrained("meta-llama/Meta-Llama-3-8B-Instruct")
         self.tokenizer.pad_token = self.tokenizer.eos_token  # Set pad token to eos token
 
-    def load_model(self):
+    def load_model(self) -> AutoModelForCausalLM:
+        """
+        Load the model.
+        """
         return self.model
 
     def generate(self, prompt: str) -> str:
+        """
+        Generate text based on the prompt.
+        Args:
+            prompt: The input prompt.
+        Returns:
+            The generated text.
+        """
         # Tokenize input and set attention mask
-        inputs = self.tokenizer(prompt, return_tensors="pt", padding=True)
-        input_ids = inputs.input_ids.cuda()
-        attention_mask = inputs.attention_mask.cuda()
+        model = self.load_model()
 
-        # Set the random seed for reproducibility
         torch.manual_seed(SEED)
-
-        # Generate output with controlled parameters
-        outputs = self.model.generate(
-            input_ids=input_ids,
-            attention_mask=attention_mask,
-            max_length=2500,  # Limit output length
-            no_repeat_ngram_size=2,  # Prevent repetitive phrases
-            repetition_penalty=1.2,  # Penalize repetition
-            temperature=0.1,  # Almost Fully deterministic
-            top_p=1,  # Always select the most likely next token
-            pad_token_id=self.tokenizer.pad_token_id,
+        pipe: TextGenerationPipeline = pipeline(
+            "text-generation",
+            model=model,
+            tokenizer=self.tokenizer,
         )
-
-        # Decode and clean up the output
-        raw_output = self.tokenizer.decode(outputs[0], skip_special_tokens=True)
-        
-        # Post-process to extract only the answer after "A:"
-        answer_start = raw_output.find("Answer:") + 7
-        final_output = raw_output[answer_start:].strip()
-        return final_output
+        outputs = pipe(
+            prompt,
+            max_length=MAX_LENGHT,
+            no_repeat_ngram_size=NO_REPEAT_NGRAM_SIZE,  # Prevent repetitive phrases
+            repetition_penalty=REPETITION_PENALTY,  # Penalize repetition
+            temperature=TEMPERATURE,  # Control randomness
+            top_k=TOP_K,  # Top-k sampling
+            top_p=TOP_P,  # Nucleus sampling
+            do_sample=DO_SAMPLE,  # Enable sampling
+            truncation=TRUNCATION,  # Ensure truncation to max_length
+            return_full_text=RETURN_FULL_TEXT,  # Avoid repeating the prompt
+        )
+        generated_text = outputs[0]["generated_text"].strip()
+        return generated_text
 
     async def a_generate(self, prompt: str) -> str:
+        """
+        Asynchronously generate text based on the prompt.
+        Args:
+            prompt: The input prompt.
+        Returns:
+            The generated text.
+        """
         return self.generate(prompt)
 
     def get_model_name(self):
+        """
+        Get the model name.
+        """
         return "Llama-3.2 8B"
-    

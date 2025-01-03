@@ -84,8 +84,10 @@ class GeobenchProvider:
             question = banchmark_dict["question"][i]
             expected_output = banchmark_dict["answer"][i]
             prompt = self._fetch_prompt(banchmark_type, question)
-
             actual_output = model.generate(prompt)
+            logger.debug(f"prompt: {prompt}")
+            logger.debug(f"Expected output: {expected_output}")
+            logger.debug(f"Generated output: {actual_output}")
             test_case = LLMTestCase(
                 input=question,
                 expected_output=expected_output,
@@ -138,35 +140,38 @@ class GeobenchProvider:
                     "geographical terminology."
                 )
                 context = (
-                    "Using your expertise, provide a clear, concise, and self-contained explanation in one sentence"
-                    "cotaining key technical specifications and relevant numerical details of the following concept."
+                    "You are asked to provide a concise definition of a specific geoscience concept. "
+                    "Your answer should be short and to the point. "
+                    "Your response should have technical specifications and relevant numerical details if applicable."
                 )
                 structure = f"Concept: {input}. Answer:"
             case BanchmarkType.CHOICE:
-                role = (
-                    "You are a geoscience expert tasked with answering multiple-choice questions based "
-                    "on geological and geographical knowledge derived from dictionaries, encyclopedias, "
-                    "and related materials."
-                )
-                context = "Below is a question with options. Select the correct answer from the given choices."
-                structure = f"Question: {input}. Answer:"
-            case BanchmarkType.COMPLETION:
-                role = (
-                    "You are a geoscience expert tasked with completing sentences based on geological and "
-                    "geographical knowledge derived from dictionaries, encyclopedias, and related materials."
-                )
                 context = (
-                    "Fill in the blanks or incomplete sentences with the most accurate and relevant terms "
-                    "or phrases."
+                    "The question below is about college geoscience. "
+                    "The question below have answer options (associated with alphabet letters) "
+                    "out of which only one is correct. "
+                    "Answer the question by selecting the correct option. "
+                    'Answer should be " A", " B", " C", or " D". Without any additional information.'
                 )
-                structure = f"Sentence: {input}. Answer:"
+                structure = f"Question:{input}.\nAnswer:"
+            case BanchmarkType.COMPLETION:
+                context = (
+                    "The sentence below is about college geoscience. "
+                    "The sentence below is incomplete and has a blank spaces. "
+                    'Blank spaces are represented by "_" and "()". '
+                    "Answer the sentence by filling in the blank space. "
+                    "Answer should be just the missing words that fits in each blank. "
+                    "Without any additional information."
+                )
+                structure = f"Sentence: {input}.\nAnswer:"
             case BanchmarkType.TF:
-                role = (
-                    "You are a geoscience expert tasked with determining whether the following statements "
-                    "are True or False based on geological and geographical knowledge derived from "
-                    "dictionaries, encyclopedias, and related resources."
+                context = (
+                    "The statement below is about college geoscience. "
+                    "The statement below is either true or false. "
+                    "Answer if the statement is true or false. "
+                    'Answer should be either "True" or "False". '
+                    "Without any additional information."
                 )
-                context = "Provide a clear and concise judgment for each statement."
                 structure = f"Statement: {input}. Answer:"
             case BanchmarkType.QA:
                 role = (
@@ -174,8 +179,10 @@ class GeobenchProvider:
                     "geographical processes."
                 )
                 context = (
-                    "Provide comprehensive, accurate, and contextually relevant answers based on "
-                    "geoscience dictionaries, encyclopedias, and related materials."
+                    "You are asked to provide a detailed answer to a specific geoscience question. "
+                    "Your answer should be thorough and detailed, providing all relevant information. "
+                    "Your response should have technical specifications and relevant numerical details if applicable. "
+                    "Your answer should be short and to the point. "
                 )
                 structure = f"Question: {input}. Answer:"
             case BanchmarkType.DISCUSSION:

@@ -17,11 +17,12 @@ from gas.commons import (
     TOP_P,
     TRUNCATION,
 )
+from gas.logger import Logger
 
-
-class Ministral_8B_it(DeepEvalBaseLLM):
+logger = Logger().get_logger()
+class K2(DeepEvalBaseLLM):
     """
-    Ministral 8B Instruct model for evaluation.
+    K2 model for evaluation.
     """
 
     def __init__(self):
@@ -35,7 +36,7 @@ class Ministral_8B_it(DeepEvalBaseLLM):
 
         # Load the model with CUDA support
         self.model = AutoModelForCausalLM.from_pretrained(
-            "mistralai/Ministral-8B-Instruct-2410",
+            "daven3/k2",
             device_map="auto",
             quantization_config=quantization_config,
             torch_dtype="auto",
@@ -43,7 +44,10 @@ class Ministral_8B_it(DeepEvalBaseLLM):
         )
 
         # Load the tokenizer
-        self.tokenizer = AutoTokenizer.from_pretrained("mistralai/Ministral-8B-Instruct-2410")
+        self.tokenizer = AutoTokenizer.from_pretrained("huggyllama/llama-7b")
+        self.model.config.pad_token_id = self.tokenizer.pad_token_id = 0
+        self.model.config.bos_token_id = 1
+        self.model.config.eos_token_id = 2
         self.tokenizer.pad_token = self.tokenizer.eos_token  # Set pad token to eos token
 
     def load_model(self) -> AutoModelForCausalLM:
@@ -68,7 +72,6 @@ class Ministral_8B_it(DeepEvalBaseLLM):
             padding=True,
             truncation=TRUNCATION,
         )
-
         # Ensure input tensors are moved to the same device as the model
         device = model.device
         input_ids = inputs.input_ids.to(device)
@@ -113,4 +116,4 @@ class Ministral_8B_it(DeepEvalBaseLLM):
         """
         Get the model name.
         """
-        return "mistralai/Ministral-8B-Instruct-2410"
+        return "daven3/k2"

@@ -18,7 +18,7 @@ def print_help(parser: argparse.ArgumentParser) -> None:
     console.print(Panel(help_text, title="[bold cyan]Help[/bold cyan]", border_style="blue"))
 
 
-def run(model: str, task: str, limit: int | None = None) -> None:
+def run(model: str, task: str, limit: int | None = None, path: str | None = None) -> None:
     """
     Run the Geobenchmark evaluation suite.
     Args:
@@ -30,7 +30,10 @@ def run(model: str, task: str, limit: int | None = None) -> None:
     logger.info(f"Task: {task}")
     logger.info(f"Test Cases Limit: {limit}")
     provider: GeobenchProvider = GeobenchProvider()
-    model_instance = model_name_class_map.get(model, DeepEvalBaseLLM)()
+    if path:
+        model_instance = model_name_class_map.get(model, DeepEvalBaseLLM)(path)
+    else:
+        model_instance = model_name_class_map.get(model, DeepEvalBaseLLM)()
     list_evaluations = []
     if task == "all":
         for task_type in BanchmarkType:
@@ -83,6 +86,12 @@ def cli() -> None:
         metavar="<LEVEL>",
         help="Set the logging level. Choices: [%(choices)s] (default: %(default)s) ",
         default="INFO",
+    )
+    parser.add_argument(
+        "--path",
+        type=str,
+        dest="path",
+        help="Path to the model checkpoint.",
     )
     parser.print_help = lambda: print_help(parser)  # type: ignore[method-assign, misc, assignment]
     parser.set_defaults(func=run)

@@ -23,6 +23,7 @@ rich = "^13.9.4"
 sentencepiece = "^0.2.0"
 torch = {version = "=2.6.0.dev20241226+cu126", allow-prereleases = true, source = "pytorch-gpu-src"}
 deepeval = "=2.0.9"
+peft = ">=0.13.2"
 
 [tool.poetry.group.dev.dependencies]
 ruff = "^0.8.4"

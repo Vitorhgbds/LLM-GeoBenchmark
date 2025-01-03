@@ -169,10 +169,10 @@ class GeobenchProvider:
                     "The statement below is about college geoscience. "
                     "The statement below is either true or false. "
                     "Answer if the statement is true or false. "
-                    'Answer should be either "True" or "False". '
-                    "Without any additional information."
+                    "Answer should be either \"True\" or \"False\". " 
+                    "Without any additional information.\n"
                 )
-                structure = f"Statement: {input}. Answer:"
+                structure = f"Statement: {input}\nAnswer:"
             case BanchmarkType.QA:
                 role = (
                     "You are a geoscience expert answering detailed questions about geological and "

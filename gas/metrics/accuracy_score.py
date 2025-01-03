@@ -1,6 +1,6 @@
-from deepeval.scorer import Scorer
 from deepeval.metrics import BaseMetric
 from deepeval.test_case import LLMTestCase
+
 
 class ObjectiveAccuracyMetric(BaseMetric):
     def __init__(self):

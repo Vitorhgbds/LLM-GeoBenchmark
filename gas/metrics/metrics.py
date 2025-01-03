@@ -1,5 +1,4 @@
-from deepeval.metrics import AnswerRelevancyMetric, GEval, PromptAlignmentMetric, BaseMetric
-from deepeval.scorer import Scorer
+from deepeval.metrics import AnswerRelevancyMetric, GEval, PromptAlignmentMetric
 from deepeval.test_case import LLMTestCaseParams
 
 from gas.commons import GPT_JUDGE
@@ -15,18 +14,13 @@ from gas.commons import GPT_JUDGE
 ## Accuracy
 
 prompt_alignment = PromptAlignmentMetric(
-    prompt_instructions=["Reply in all uppercase"],
-    model=GPT_JUDGE,
-    include_reason=True
+    prompt_instructions=["Reply in all uppercase"], model=GPT_JUDGE, include_reason=True
 )
 
-answer_relevancy = AnswerRelevancyMetric(
-    threshold=0.7,
-    model=GPT_JUDGE,
-    include_reason=True
-)
+answer_relevancy = AnswerRelevancyMetric(threshold=0.7, model=GPT_JUDGE, include_reason=True)
 
-correcness = GEval(
+correcness = (
+    GEval(
         name="Correctness",
         model=GPT_JUDGE,
         evaluation_steps=[
@@ -46,5 +40,6 @@ correcness = GEval(
             LLMTestCaseParams.EXPECTED_OUTPUT,
         ],
     ),
+)
 
-metrics = []
+metrics = [correcness, prompt_alignment, answer_relevancy]

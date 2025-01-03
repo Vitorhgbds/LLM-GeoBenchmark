@@ -1,6 +1,7 @@
-from deepeval.scorer import Scorer
 from deepeval.metrics import BaseMetric
+from deepeval.scorer import Scorer
 from deepeval.test_case import LLMTestCase
+
 
 class BertSimilarityMetric(BaseMetric):
     def __init__(self, threshold: float = 0.5):

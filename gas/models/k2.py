@@ -20,6 +20,8 @@ from gas.commons import (
 from gas.logger import Logger
 
 logger = Logger().get_logger()
+
+
 class K2(DeepEvalBaseLLM):
     """
     K2 model for evaluation.

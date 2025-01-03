@@ -5,7 +5,7 @@ from deepeval.test_case import LLMTestCase
 class ObjectiveAccuracyMetric(BaseMetric):
     def __init__(self):
         pass
-    
+
     def measure(self, test_case: LLMTestCase):
         self.score = test_case.actual_output == test_case.expected_output
         self.success = self.score

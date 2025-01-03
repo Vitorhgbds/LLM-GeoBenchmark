@@ -1,6 +1,7 @@
 import logging
-from rich.logging import RichHandler
 from threading import Lock
+
+from rich.logging import RichHandler
 
 
 class Logger:
@@ -20,12 +21,7 @@ class Logger:
         self._initialized = True
 
         # Configure Rich logging
-        logging.basicConfig(
-            level=logging.INFO,
-            format="%(message)s",
-            datefmt="[%X]",
-            handlers=[RichHandler()]
-        )
+        logging.basicConfig(level=logging.INFO, format="%(message)s", datefmt="[%X]", handlers=[RichHandler()])
         self.logger = logging.getLogger("rich_logger")
         self.logger.setLevel(logging.DEBUG)  # Default log level
 
@@ -43,7 +39,9 @@ class Logger:
             self.logger.setLevel(getattr(logging, level))
             self.logger.info(f"Log level set to {level}")
         else:
-            self.logger.error(f"Invalid log level: {level}. Use one of 'DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICAL'.")
+            self.logger.error(
+                f"Invalid log level: {level}. Use one of 'DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICAL'."
+            )
 
     def get_level(self) -> None:
         """Get the current logging level."""

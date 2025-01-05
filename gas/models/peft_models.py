@@ -44,6 +44,7 @@ class PEFTModel(DeepEvalBaseLLM):
             quantization_config=quantization_config,
             torch_dtype="auto",
             low_cpu_mem_usage=True,
+            cache_dir="/mnt/D-SSD/parraga/LLMs/cache"
         )
 
         # Load the tokenizer

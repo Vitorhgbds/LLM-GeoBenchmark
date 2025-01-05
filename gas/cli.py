@@ -31,7 +31,7 @@ def run(model: str, task: str, limit: int | None = None, path: str | None = None
     logger.info(f"Test Cases Limit: {limit}")
     provider: GeobenchProvider = GeobenchProvider()
     if path:
-        model_instance = model_name_class_map.get(model, DeepEvalBaseLLM)(path)
+        model_instance = model_name_class_map.get("PEFTModel", DeepEvalBaseLLM)(path)
     else:
         model_instance = model_name_class_map.get(model, DeepEvalBaseLLM)()
     list_evaluations = []

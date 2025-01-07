@@ -3,11 +3,12 @@ from deepeval.test_case import LLMTestCase
 
 
 class ObjectiveAccuracyMetric(BaseMetric):
-    def __init__(self):
-        pass
+    def __init__(self, threshold: float = 0.5):
+        self.threshold = threshold
 
     def measure(self, test_case: LLMTestCase):
-        self.score = test_case.actual_output == test_case.expected_output
+        output = test_case.actual_output.strip().split("\n")[0].split(" ")[0].removesuffix(".")
+        self.score = output == test_case.expected_output
         self.success = self.score
         return self.score
 
@@ -21,4 +22,4 @@ class ObjectiveAccuracyMetric(BaseMetric):
 
     @property
     def __name__(self):
-        return "Objective Accuracy Metric"
+        return "Objective Task Accuracy Metric"

@@ -35,7 +35,6 @@ class Llama32_3B_it(DeepEvalBaseLLM):
             bnb_4bit_quant_type="nf4",
             bnb_4bit_use_double_quant=True,
         )
-
         # Load the model with CUDA support
         self.model = AutoModelForCausalLM.from_pretrained(
             "meta-llama/Llama-3.2-3B-Instruct",

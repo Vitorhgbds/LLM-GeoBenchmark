@@ -32,6 +32,7 @@ class GeobenchProvider:
 
         # Create separate dictionaries for each key
         self.benchmark_datasets_dict: dict[BenchmarkType, dict[str, str]] = {}
+
         for type in BenchmarkType:
             self.benchmark_datasets_dict[type] = {
                 "question": data[type.value.lower()]["question"],

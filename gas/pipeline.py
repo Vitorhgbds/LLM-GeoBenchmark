@@ -1,5 +1,6 @@
 import csv
 import json
+import os
 from pathlib import Path
 from typing import Any
 
@@ -8,22 +9,7 @@ from deepeval import evaluate
 from deepeval.dataset import EvaluationDataset
 from deepeval.metrics import AnswerRelevancyMetric, BaseMetric, GEval, PromptAlignmentMetric
 from deepeval.models import DeepEvalBaseLLM
-from deepeval.metrics import AnswerRelevancyMetric, BaseMetric, GEval, PromptAlignmentMetric
-from deepeval.models import DeepEvalBaseLLM
 from deepeval.test_case import LLMTestCase, LLMTestCaseParams
-from rich.progress import BarColumn, SpinnerColumn, TimeElapsedColumn, TimeRemainingColumn
-
-from gas.commons import (
-    DO_SAMPLE,
-    GPT_JUDGE,
-    MAX_NEW_TOKENS,
-    MIN_NEW_TOKENS,
-    PENALTY_ALPHA,
-    SEED,
-    TEMPERATURE,
-    TOP_K,
-    TOP_P,
-)
 from rich.progress import BarColumn, SpinnerColumn, TimeElapsedColumn, TimeRemainingColumn
 
 from gas.commons import (
@@ -49,7 +35,7 @@ logger = Logger().get_logger()
 
 
 def build_llm_test_cases(
-    model: DeepEvalBaseLLM, prompt_instruction: str, dataset: dict[str, str], limit: int | None, obj_task: str
+    model: DeepEvalBaseLLM, prompt_instruction: str, dataset: dict[str, str], limit: int | None, obj_task: BenchmarkType
 ) -> EvaluationDataset:
     """
     Build an evaluation dataset with LLM Test Cases.
@@ -71,7 +57,6 @@ def build_llm_test_cases(
         TimeElapsedColumn(),
         TimeRemainingColumn(),
         expand=True,
-        console=Logger().console,
         console=Logger().console,
     ) as progress:
         task = progress.add_task(f"[bold bright_green]Generating {total} Test Cases:[/bold bright_green]", total=total)
@@ -126,8 +111,6 @@ def fetch_results(model: str, task_type: str) -> list[dict[str, Any]]:
         data = json.load(json_file)
     test_cases_dict: dict[str, dict[str, list]] = data["test_cases_lookup_map"]
 
-    test_cases_dict: dict[str, dict[str, list]] = data["test_cases_lookup_map"]
-
     i = 0
     total = len(test_cases_dict.keys())
     with MyProgress(
@@ -139,11 +122,7 @@ def fetch_results(model: str, task_type: str) -> list[dict[str, Any]]:
         TimeRemainingColumn(),
         expand=True,
         console=Logger().console,
-        console=Logger().console,
     ) as progress:
-        task = progress.add_task(
-            f"[bold bright_green]Fetching {total} test cases results:[/bold bright_green]", total=total
-        )
         task = progress.add_task(
             f"[bold bright_green]Fetching {total} test cases results:[/bold bright_green]", total=total
         )
@@ -158,7 +137,6 @@ def fetch_results(model: str, task_type: str) -> list[dict[str, Any]]:
                 "output": test_case.get("actual_output", "None"),
             }
             metrics: list[dict[str, dict]] = cached_metrics_data.get("cached_metrics_data", [])
-            metrics: list[dict[str, dict]] = cached_metrics_data.get("cached_metrics_data", [])
             for metric in metrics:
                 metric_data: dict[str, dict] = metric.get("metric_data", {})
                 record = {
@@ -169,13 +147,11 @@ def fetch_results(model: str, task_type: str) -> list[dict[str, Any]]:
                     "threshold": metric_data.get("threshold", "None"),
                     "success": metric_data.get("success", "False"),
                     "evaluationCost": metric_data.get("evaluationCost", 0),
-                    "evaluationCost": metric_data.get("evaluationCost", 0),
                 }
                 benchmark_records.append(record)
             i += 1
             progress.update(task, advance=1)
     return benchmark_records
-
 
 
 def save_records(records: list[dict[str, Any]], output_file_name: str = "benchmark_cache.csv") -> str:
@@ -199,8 +175,6 @@ def save_records(records: list[dict[str, Any]], output_file_name: str = "benchma
     df.to_csv(
         out_file_path,
         index=False,  # Don't write index
-        mode="a" if file_exists else "w",  # Append mode
-        encoding="utf-8",
         mode="a" if file_exists else "w",  # Append mode
         encoding="utf-8",
         lineterminator="\n",
@@ -263,7 +237,6 @@ class evaluationPipeline:
 
         summary: dict[str, str] = {}
 
-        summary: dict[str, str] = {}
         for metric, values in totals.items():
             summary[metric] = (
                 f"average score: {values['total_score'] / values['count']}\n"
@@ -272,8 +245,6 @@ class evaluationPipeline:
             )
 
         Logger().print_information_table_panel(
-            [summary], title="[bold bright_green]Benchmark Summary[/bold bright_green]", border_style="green"
-        )
             [summary], title="[bold bright_green]Benchmark Summary[/bold bright_green]", border_style="green"
         )
 
@@ -296,44 +267,34 @@ class evaluationPipeline:
         """
         if self.task == BenchmarkType.CHOICE or self.task == BenchmarkType.TF:
             return [accuracy_score.ObjectiveAccuracyMetric()]
-            return [accuracy_score.ObjectiveAccuracyMetric()]
         else:
             return [
-                PromptAlignmentMetric(
-                    prompt_instructions=prompt_instruction, include_reason=True, model=GPT_JUDGE, threshold=0.5
-                ),
-                AnswerRelevancyMetric(threshold=0.5, model=GPT_JUDGE, include_reason=True),
-                GEval(
-                    prompt_instructions=prompt_instruction, include_reason=True, model=GPT_JUDGE, threshold=0.5
-                ),
-                AnswerRelevancyMetric(threshold=0.5, model=GPT_JUDGE, include_reason=True),
-                GEval(
-                    name="Correctness",
-                    model=GPT_JUDGE,
-                    evaluation_steps=[
-                        "Compare the actual output directly with the expected output to verify factual accuracy.",
-                        (
-                            "Check if all elements mentioned in the expected output are present"
-                            "and correctly represented in the actual output."
-                        ),
-                        (
-                            "Assess if there are any discrepancies"
-                            "in details, values, or information between the actual and expected outputs."
-                        ),
-                    ],
-                    evaluation_params=[
-                        LLMTestCaseParams.INPUT,
-                        LLMTestCaseParams.ACTUAL_OUTPUT,
-                        LLMTestCaseParams.EXPECTED_OUTPUT,
-                    ],
-                ),
-                BertSimilarityMetric(threshold=0.5),
-                ),
+                # PromptAlignmentMetric(
+                #     prompt_instructions=prompt_instruction, include_reason=True, model=GPT_JUDGE, threshold=0.5
+                # ),
+                # AnswerRelevancyMetric(threshold=0.5, model=GPT_JUDGE, include_reason=True),
+                # GEval(
+                #     name="Correctness",
+                #     model=GPT_JUDGE,
+                #     evaluation_steps=[
+                #         "Compare the actual output directly with the expected output to verify factual accuracy.",
+                #         (
+                #             "Check if all elements mentioned in the expected output are present"
+                #             "and correctly represented in the actual output."
+                #         ),
+                #         (
+                #             "Assess if there are any discrepancies"
+                #             "in details, values, or information between the actual and expected outputs."
+                #         ),
+                #     ],
+                #     evaluation_params=[
+                #         LLMTestCaseParams.INPUT,
+                #         LLMTestCaseParams.ACTUAL_OUTPUT,
+                #         LLMTestCaseParams.EXPECTED_OUTPUT,
+                #     ],
+                # ),
                 BertSimilarityMetric(threshold=0.5),
             ]
-            """
-
-            """
 
     def run(self, **kwargs: dict[str, Any]):
         """
@@ -343,7 +304,6 @@ class evaluationPipeline:
         kwargs (dict[str,any]): model kwargs
         """
         self._show_general_information()
-        logger.info("Fetching Geobench dataset...")
         logger.info("Fetching Geobench dataset...")
         provider: GeobenchProvider = GeobenchProvider()
         geobench_data = provider.benchmark_datasets_dict.get(self.task, {})
@@ -362,20 +322,9 @@ class evaluationPipeline:
             title="[bold bright_yellow]Prompt Instruction[/bold bright_yellow]",
             border_style="yellow",
         )
-        Logger().print_panel(
-            f"[yellow][align=left]{str(PROMPT_INSTRUCTION)}[/align][/yellow]",
-            title="[bold bright_yellow]Prompt Instruction[/bold bright_yellow]",
-            border_style="yellow",
-        )
         logger.info("Fetching benchmark metrics")
         metrics = self._fetch_metrics(PROMPT_INSTRUCTION)
         log_metrics = "\n".join([m.__name__ for m in metrics])
-        Logger().print_panel(
-            log_metrics,
-            title="[bold medium_orchid]Benchmark Metrics[/bold medium_orchid]",
-            border_style="purple",
-            justify="center",
-        )
         Logger().print_panel(
             log_metrics,
             title="[bold medium_orchid]Benchmark Metrics[/bold medium_orchid]",
@@ -387,7 +336,9 @@ class evaluationPipeline:
         model_instance = model_name_class_map.get(self.model_name, DeepEvalBaseLLM)(**kwargs)
         logger.info("Done.")
         logger.info("Building evaluation dataset...")
-        evaluation_dataset = build_llm_test_cases(model_instance, PROMPT_INSTRUCTION, geobench_data, self.limit)
+        evaluation_dataset = build_llm_test_cases(
+            model_instance, PROMPT_INSTRUCTION, geobench_data, self.limit, self.task
+        )
         logger.info("Done.")
         logger.info("Starting Deepeval Evaluation...")
         os.environ["TOKENIZERS_PARALLELISM"] = "false"
@@ -395,10 +346,9 @@ class evaluationPipeline:
         logger.info("Done.")
         logger.info("Fetching benchmark results...")
         results = fetch_results(model_instance.get_model_name(), self.task.value)
-        results = fetch_results(model_instance.get_model_name(), self.task.value)
         logger.info("Done.")
         self._show_benchmark_summary(results)
         logger.info("Saving benchmark into CSV file...")
-        # benchmark_path = save_records(results)
+        #benchmark_path = save_records(results)
         logger.info("Done.")
         # logger.info(f"Benchmark stored on: {benchmark_path}")

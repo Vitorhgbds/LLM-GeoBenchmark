@@ -1,7 +1,7 @@
 SEED = 42
 GPT_JUDGE = "gpt-4o-mini"
 
-MAX_NEW_TOKENS = 50  # Adjust for shorter output
+MAX_NEW_TOKENS = 150  # Adjust for shorter output
 MIN_NEW_TOKENS = 2  # Adjust for shorter output
 NO_REPEAT_NGRAM_SIZE = 2  # Prevent repetitive phrases
 REPETITION_PENALTY = 1.1  # Penalize repetition in word level

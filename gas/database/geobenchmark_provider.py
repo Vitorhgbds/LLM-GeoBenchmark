@@ -49,9 +49,11 @@ class GeobenchProvider:
         match banchmark_type:
             case BenchmarkType.NOUN:
                 return (
-                    "You are asked to provide a concise definition of a specific geoscience concept. "
-                    "Your answer should be short and to the point. "
-                    "Your response should have technical specifications and relevant numerical details if applicable."
+                    "The concept below is about college geoscience. "
+                    "Provide a concise definition of the specific geoscience concept. "
+                    "Answer should be short and to the point. "
+                    "Answer should have technical specifications. "
+                    "If applicable, answer should have relevant numerical details."
                 )
             case BenchmarkType.CHOICE:
                 return (
@@ -69,6 +71,7 @@ class GeobenchProvider:
                     'Blank spaces are represented by "_" and "()". '
                     "Answer the sentence by filling in the blank space. "
                     "Answer should be just the missing words that fits in each blank "
+                    "If there are no blank spaces, fill in the end. "
                     "without any additional information."
                 )
             case BenchmarkType.TF:
@@ -81,10 +84,11 @@ class GeobenchProvider:
                 )
             case BenchmarkType.QA:
                 return (
-                    "You are asked to provide a detailed answer to a specific geoscience question. "
-                    "Your answer should be thorough and detailed, providing all relevant information. "
-                    "Your response should have technical specifications and relevant numerical details if applicable. "
-                    "Your answer should be short and to the point. "
+                    "The question below is about college geoscience. "
+                    "Provide a concise definition of the specific geoscience question. "
+                    "Answer should be short and to the point. "
+                    "Answer should have technical specifications. "
+                    "If applicable, answer should have relevant numerical details."
                 )
             case _:
                 raise ValueError("Invalid benchmark type")

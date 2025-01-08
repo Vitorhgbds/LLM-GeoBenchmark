@@ -14,18 +14,18 @@ priority = "explicit"
 
 
 [tool.poetry.dependencies]
-python = ">=3.12, <3.13"
+python = ">=3.11, <3.13"
 openai = "^1.58.1"
 transformers = "^4.47.1"
 accelerate = "^1.2.1"
 bitsandbytes = "^0.45.0"
 rich = "^13.9.4"
 sentencepiece = "^0.2.0"
-torch = {version = "=2.6.0.dev20241226+cu126", allow-prereleases = true, source = "pytorch-gpu-src"}
 deepeval = "=2.0.9"
 bert-score = "^0.3.13"
 pandas = "^2.2.3"
 peft = "^0.14.0"
+torch = "^2.5.1"
 
 [tool.poetry.group.dev.dependencies]
 ruff = "^0.8.4"

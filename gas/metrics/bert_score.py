@@ -2,6 +2,10 @@ from deepeval.metrics import BaseMetric
 from deepeval.scorer import Scorer
 from deepeval.test_case import LLMTestCase
 
+from gas.logger import Logger
+
+logger = Logger().get_logger()
+
 
 class BertSimilarityMetric(BaseMetric):
     def __init__(self, threshold: float = 0.5):
@@ -9,10 +13,12 @@ class BertSimilarityMetric(BaseMetric):
         self.scorer = Scorer()
 
     def measure(self, test_case: LLMTestCase):
-        self.score = self.scorer.bert_score(
+        bert_scores = self.scorer.bert_score(
             references=test_case.expected_output,
             predictions=test_case.actual_output,
-        )["bert-f1"][0]
+        )
+        logger.debug(f"bert scores: {bert_scores}")
+        self.score = bert_scores["bert-f1"][0]
         self.success = self.score >= self.threshold
         return self.score
 

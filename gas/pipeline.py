@@ -1,5 +1,6 @@
 import csv
 import json
+import os
 from pathlib import Path
 from typing import Any
 
@@ -24,9 +25,7 @@ from gas.commons import (
 )
 from gas.database.geobenchmark_provider import BenchmarkType, GeobenchProvider
 from gas.logger import Logger, MyProgress
-from gas.metrics import (
-    accuracy_score,
-)
+from gas.metrics import accuracy_score
 from gas.metrics.bert_score import BertSimilarityMetric
 from gas.models import model_name_class_map
 
@@ -63,7 +62,7 @@ def build_llm_test_cases(
             question = dataset["question"][i]
             expected_output = dataset["answer"][i]
 
-            input_prompt = f"### Input:\n{question}\n\n" "### Response:\n"
+            input_prompt = f"### Input:\n{question}\n\n" "### Answer:\n"
             prompt = f"{prompt_instruction}" f"{input_prompt}"
 
             actual_output = model.generate(prompt)
@@ -286,6 +285,9 @@ class evaluationPipeline:
                 ),
                 BertSimilarityMetric(threshold=0.5),
             ]
+            """
+
+            """
 
     def run(self, **kwargs: dict[str, Any]):
         """
@@ -304,7 +306,7 @@ class evaluationPipeline:
             "Below is an instruction that describes a task, "
             "paired with an input that provides further context. "
             "Write a response that appropriately completes the request.\n\n"
-            f"### Instruction:\n{task_instruction}\n\n"
+            f"### Human:\n{task_instruction}\n\n"
         )
         logger.info("Done.")
         Logger().print_panel(
@@ -329,13 +331,14 @@ class evaluationPipeline:
         evaluation_dataset = build_llm_test_cases(model_instance, PROMPT_INSTRUCTION, geobench_data, self.limit)
         logger.info("Done.")
         logger.info("Starting Deepeval Evaluation...")
-        evaluate(evaluation_dataset, metrics, write_cache=True, print_results=False)
+        os.environ["TOKENIZERS_PARALLELISM"] = "false"
+        evaluate(evaluation_dataset, metrics, write_cache=True, print_results=True)
         logger.info("Done.")
         logger.info("Fetching benchmark results...")
         results = fetch_results(model_instance.get_model_name(), self.task.value)
         logger.info("Done.")
         self._show_benchmark_summary(results)
         logger.info("Saving benchmark into CSV file...")
-        benchmark_path = save_records(results)
+        # benchmark_path = save_records(results)
         logger.info("Done.")
-        logger.info(f"Benchmark stored on: {benchmark_path}")
+        # logger.info(f"Benchmark stored on: {benchmark_path}")

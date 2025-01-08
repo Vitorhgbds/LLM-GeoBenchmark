@@ -1,6 +1,7 @@
 import torch
 from deepeval.models import DeepEvalBaseLLM
 from peft import AutoPeftModelForCausalLM
+from peft import AutoPeftModelForCausalLM
 from transformers import (
     AutoTokenizer,
     BitsAndBytesConfig,
@@ -28,6 +29,7 @@ class PEFTModel(DeepEvalBaseLLM):
     """
 
     def __init__(self, **kwargs):
+    def __init__(self, **kwargs):
         # Configure quantization
         quantization_config = BitsAndBytesConfig(
             load_in_4bit=True,
@@ -45,6 +47,7 @@ class PEFTModel(DeepEvalBaseLLM):
             quantization_config=quantization_config,
             torch_dtype="auto",
             low_cpu_mem_usage=True,
+            cache_dir=kwargs.get("cache_dir", None),
             cache_dir=kwargs.get("cache_dir", None),
         )
 
@@ -96,6 +99,7 @@ class PEFTModel(DeepEvalBaseLLM):
             "pad_token_id": self.tokenizer.pad_token_id,
             "eos_token_id": self.tokenizer.eos_token_id,
         }
+
 
         # Generate output
         outputs = model.generate(**generation_params)

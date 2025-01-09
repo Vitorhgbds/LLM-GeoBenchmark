@@ -1,5 +1,3 @@
-import asyncio
-
 import torch
 from deepeval.models import DeepEvalBaseLLM
 from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig, set_seed
@@ -115,7 +113,7 @@ class K2(DeepEvalBaseLLM):
         Returns:
             The generated text.
         """
-        return await asyncio.to_thread(self.generate, prompt)
+        return self.generate(prompt)
 
     def get_model_name(self):
         """

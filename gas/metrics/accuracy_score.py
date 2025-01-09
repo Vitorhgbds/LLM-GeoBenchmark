@@ -1,5 +1,3 @@
-import asyncio
-
 from deepeval.metrics import BaseMetric
 from deepeval.test_case import LLMTestCase
 
@@ -17,7 +15,7 @@ class ObjectiveAccuracyMetric(BaseMetric):
     # Async implementation of measure(). If async version for
     # scoring method does not exist, just reuse the measure method.
     async def a_measure(self, test_case: LLMTestCase):
-        return await asyncio.to_thread(self.measure, test_case)
+        return self.measure(test_case)
 
     def is_successful(self):
         return self.success

@@ -1,5 +1,3 @@
-import asyncio
-
 import torch
 from deepeval.models import DeepEvalBaseLLM
 from transformers import (
@@ -117,7 +115,7 @@ class Llama32_3B_it(DeepEvalBaseLLM):
         Returns:
             The generated text.
         """
-        return await asyncio.to_thread(self.generate, prompt)
+        return self.generate(prompt)
 
     def get_model_name(self):
         """
@@ -222,7 +220,7 @@ class Llama31_8B_it(DeepEvalBaseLLM):
         Returns:
             The generated text.
         """
-        return await asyncio.to_thread(self.generate, prompt)
+        return self.generate(prompt)
 
     def get_model_name(self):
         """

@@ -1,5 +1,3 @@
-import asyncio
-
 import torch
 from deepeval.models import DeepEvalBaseLLM
 from peft import AutoPeftModelForCausalLM
@@ -114,7 +112,7 @@ class PEFTModel(DeepEvalBaseLLM):
         Returns:
             The generated text.
         """
-        return await asyncio.to_thread(self.generate, prompt)
+        return self.generate(prompt)
 
     def get_model_name(self):
         """

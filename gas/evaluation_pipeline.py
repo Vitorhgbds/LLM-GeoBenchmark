@@ -1,21 +1,19 @@
 import csv
-import glob
 import json
 import os
+from glob import glob
 from pathlib import Path
 from typing import Any
 
 import pandas as pd
 from deepeval import evaluate
 from deepeval.dataset import EvaluationDataset
-from deepeval.metrics import AnswerRelevancyMetric, BaseMetric, GEval, PromptAlignmentMetric
+from deepeval.metrics import BaseMetric
 from deepeval.models import DeepEvalBaseLLM
-from deepeval.test_case import LLMTestCase, LLMTestCaseParams
 from rich.progress import BarColumn, SpinnerColumn, TimeElapsedColumn, TimeRemainingColumn
 
 from gas.commons import (
     DO_SAMPLE,
-    GPT_JUDGE,
     MAX_NEW_TOKENS,
     MIN_NEW_TOKENS,
     PENALTY_ALPHA,
@@ -34,48 +32,49 @@ from gas.models import model_name_class_map
 
 logger = Logger().get_logger()
 
-def get_latest_file(directory: str, file_pattern: str = "*"):
+
+def get_latest_file(directory: Path | str, file_pattern: str = "*"):
     """
     Get the latest file based on timestamp in the name or modification time.
-    
+
     Args:
         directory (str): Directory path where files are stored.
         file_pattern (str): Pattern to match filenames (e.g., "*.txt", "*.log").
-        
+
     Returns:
         str: The path of the latest file.
     """
     # List files matching the pattern
-    files = glob.glob(os.path.join(directory, file_pattern))
-    
+    files = glob(f"{directory}/{file_pattern}")  # noqa: PTH207
+
     if not files:
-        print("No files found matching the pattern.")
-        return None
-    
+        logger.error("No files found matching the pattern.")
+        raise FileNotFoundError()
+
     # Sort files by their modification time
     latest_file = max(files, key=os.path.getmtime)
-    
+
     print(f"Latest file: {latest_file}")
     return latest_file
 
 
 def fetch_evaluation_dataset(file_name: str, **kwargs) -> EvaluationDataset:
-    
     full_file_path = Path().cwd() / file_name
     direcotry_path = kwargs.get("directory_full_path", None)
     if kwargs.get("directory_full_path", None):
-        full_file_path = f"{direcotry_path}/{file_name}" 
-        
+        full_file_path = Path(f"{direcotry_path}/{file_name}")
+
     dataset = EvaluationDataset()
-    
+
     dataset.add_test_cases_from_json_file(
         file_path=full_file_path,
         input_key_name="input",
         actual_output_key_name="actual_output",
-        expected_output_key_name="expected_output"
+        expected_output_key_name="expected_output",
     )
-    
+
     return dataset
+
 
 def fetch_results(model: str, task_type: str) -> list[dict[str, Any]]:
     """fetch benchmark results
@@ -89,15 +88,16 @@ def fetch_results(model: str, task_type: str) -> list[dict[str, Any]]:
     """
     result_folder = os.environ.get("DEEPEVAL_RESULTS_FOLDER", None)
     if not result_folder:
-        raise Exception("Not Found")
+        logger.error("File Not Found")
+        raise FileNotFoundError()
     result_folder_path = Path().cwd() / result_folder
-    
+
     latest_file = get_latest_file(result_folder_path)
-    
+
     benchmark_records: list[dict[str, Any]] = []
     with Path.open(latest_file, encoding="utf-8") as json_file:
         data = json.load(json_file)
-        
+
     test_cases: list[dict[str, Any]] = data["testCases"]
 
     i = 0

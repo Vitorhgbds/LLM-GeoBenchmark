@@ -122,4 +122,4 @@ class Ministral_8B_it(DeepEvalBaseLLM):
         """
         Get the model name.
         """
-        return "mistralai/Ministral-8B-Instruct-2410"
+        return "Ministral-8B-Instruct-2410"

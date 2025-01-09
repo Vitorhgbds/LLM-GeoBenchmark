@@ -3,9 +3,9 @@ import os
 
 from dotenv import load_dotenv
 
+from gas.evaluation_pipeline import evaluationPipeline
 from gas.logger import Logger
 from gas.models import __all__ as models
-from gas.evaluation_pipeline import evaluationPipeline
 from gas.test_cases_pipeline import testCasesPipeline
 
 logger = Logger().get_logger()
@@ -22,14 +22,14 @@ def execute_benchmark(model: str, task: str, limit: int | None, dotenv_path: str
     load_dotenv(dotenv_path=dotenv_path)
     key = os.environ.get("OPENAI_API_KEY")
     logger.debug(key)
-    
+
     command = kwargs.get("command")
     if command == "test_cases":
-        pipeline = testCasesPipeline(model,task,limit)
+        pipeline = testCasesPipeline(model, task, limit)
         pipeline.run(**kwargs)
     else:
-        pipeline = evaluationPipeline(model, task, limit)
-        pipeline.run(**kwargs)
+        test_pipeline = evaluationPipeline(model, task, limit)
+        test_pipeline.run(**kwargs)
 
 
 def cli() -> None:
@@ -122,7 +122,7 @@ def cli() -> None:
         metavar="<COMMAND>",
         help="Command to generate test cases or evaluate.\nChoices: [%(choices)s]\nDefault: %(default)s\n\n",
         default="test_cases",
-        required=True
+        required=True,
     )
     parser.add_argument(
         "-tp",

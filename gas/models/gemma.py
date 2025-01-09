@@ -116,4 +116,4 @@ class Gemma_9B_it(DeepEvalBaseLLM):
         """
         Get the model name.
         """
-        return "google/gemma-2-9b-it"
+        return "gemma-2-9b-it"

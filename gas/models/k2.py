@@ -119,4 +119,4 @@ class K2(DeepEvalBaseLLM):
         """
         Get the model name.
         """
-        return "daven3/k2"
+        return "k2"

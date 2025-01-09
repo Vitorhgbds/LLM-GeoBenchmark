@@ -1,19 +1,14 @@
-import csv
 import json
 from pathlib import Path
 from typing import Any
 
-import pandas as pd
-from deepeval import evaluate
 from deepeval.dataset import EvaluationDataset
-from deepeval.metrics import AnswerRelevancyMetric, BaseMetric, GEval, PromptAlignmentMetric
 from deepeval.models import DeepEvalBaseLLM
-from deepeval.test_case import LLMTestCase, LLMTestCaseParams
+from deepeval.test_case import LLMTestCase
 from rich.progress import BarColumn, SpinnerColumn, TimeElapsedColumn, TimeRemainingColumn
 
 from gas.commons import (
     DO_SAMPLE,
-    GPT_JUDGE,
     MAX_NEW_TOKENS,
     MIN_NEW_TOKENS,
     PENALTY_ALPHA,
@@ -24,10 +19,6 @@ from gas.commons import (
 )
 from gas.database.geobenchmark_provider import BenchmarkType, GeobenchProvider
 from gas.logger import Logger, MyProgress
-from gas.metrics import (
-    accuracy_score,
-)
-from gas.metrics.bert_score import BertSimilarityMetric
 from gas.models import model_name_class_map
 
 logger = Logger().get_logger()
@@ -94,11 +85,12 @@ def build_llm_test_cases(
 
     return EvaluationDataset(test_cases=test_cases)
 
+
 def save_evaluation_dataset(dataset: EvaluationDataset, file_name: str, **kwargs):
     full_file_path = Path().cwd() / file_name
     direcotry_path = kwargs.get("directory_full_path", None)
     if kwargs.get("directory_full_path", None):
-        full_file_path = f"{direcotry_path}/{file_name}" 
+        full_file_path = Path(f"{direcotry_path}/{file_name}")
     with open(full_file_path, "w", encoding="utf-8") as file:
         json_data = [
             {
@@ -109,7 +101,7 @@ def save_evaluation_dataset(dataset: EvaluationDataset, file_name: str, **kwargs
             for test_case in dataset
         ]
         json.dump(json_data, file, indent=4, ensure_ascii=False)
-        
+
 
 class testCasesPipeline:
     def __init__(self, model: str, task: str, limit: int | None):
@@ -147,7 +139,6 @@ class testCasesPipeline:
             expand=False,
             justify="center",
         )
-        
 
     def run(self, **kwargs: dict[str, Any]):
         """
@@ -182,6 +173,8 @@ class testCasesPipeline:
         evaluation_dataset = build_llm_test_cases(
             model_instance, PROMPT_INSTRUCTION, geobench_data, self.limit, self.task
         )
-        path = save_evaluation_dataset(evaluation_dataset, f"{model_instance.get_model_name()}_{self.task.value}.json", **kwargs)
+        path = save_evaluation_dataset(
+            evaluation_dataset, f"{model_instance.get_model_name()}_{self.task.value}.json", **kwargs
+        )
         logger.info("Done.")
         logger.info(f"Evaluation dataset stored in: {path}")

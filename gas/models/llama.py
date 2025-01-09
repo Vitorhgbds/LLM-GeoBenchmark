@@ -121,7 +121,7 @@ class Llama32_3B_it(DeepEvalBaseLLM):
         """
         Get the model name.
         """
-        return "meta-llama/Llama-3.2-3B-Instruct"
+        return "Llama-3-2-3B-Instruct"
 
 
 class Llama31_8B_it(DeepEvalBaseLLM):
@@ -226,4 +226,4 @@ class Llama31_8B_it(DeepEvalBaseLLM):
         """
         Get the model name.
         """
-        return "meta-llama/Meta-Llama-3.1-8B-Instruct"
+        return "Meta-Llama-3-1-8B-Instruct"

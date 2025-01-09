@@ -5,7 +5,8 @@ from dotenv import load_dotenv
 
 from gas.logger import Logger
 from gas.models import __all__ as models
-from gas.pipeline import evaluationPipeline
+from gas.evaluation_pipeline import evaluationPipeline
+from gas.test_cases_pipeline import testCasesPipeline
 
 logger = Logger().get_logger()
 
@@ -21,8 +22,14 @@ def execute_benchmark(model: str, task: str, limit: int | None, dotenv_path: str
     load_dotenv(dotenv_path=dotenv_path)
     key = os.environ.get("OPENAI_API_KEY")
     logger.debug(key)
-    pipeline = evaluationPipeline(model, task, limit)
-    pipeline.run(**kwargs)
+    
+    command = kwargs.get("command")
+    if command == "test_cases":
+        pipeline = testCasesPipeline(model,task,limit)
+        pipeline.run(**kwargs)
+    else:
+        pipeline = evaluationPipeline(model, task, limit)
+        pipeline.run(**kwargs)
 
 
 def cli() -> None:
@@ -104,6 +111,25 @@ def cli() -> None:
         type=str,
         dest="dotenv_path",
         help="dot env path\nDefault: %(default)s\n\n",
+        default=None,
+    )
+    parser.add_argument(
+        "-cm",
+        "--command",
+        type=str,
+        dest="command",
+        choices=["test_cases", "evaluate"],
+        metavar="<COMMAND>",
+        help="Command to generate test cases or evaluate.\nChoices: [%(choices)s]\nDefault: %(default)s\n\n",
+        default="test_cases",
+        required=True
+    )
+    parser.add_argument(
+        "-tp",
+        "--tests-path",
+        type=str,
+        dest="directory_full_path",
+        help="path to tests cases to be stored or consumed\nDefault: %(default)s\n\n",
         default=None,
     )
     parser.print_help = lambda: Logger.print_help(parser)  # type: ignore[method-assign, misc, assignment]

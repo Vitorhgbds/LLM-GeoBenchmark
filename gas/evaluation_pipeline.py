@@ -1,5 +1,7 @@
 import csv
+import glob
 import json
+import os
 from pathlib import Path
 from typing import Any
 
@@ -32,69 +34,48 @@ from gas.models import model_name_class_map
 
 logger = Logger().get_logger()
 
-
-def build_llm_test_cases(
-    model: DeepEvalBaseLLM,
-    prompt_instruction: str,
-    dataset: dict[str, list[str]],
-    limit: int | None,
-    obj_task: BenchmarkType,
-) -> EvaluationDataset:
+def get_latest_file(directory: str, file_pattern: str = "*"):
     """
-    Build an evaluation dataset with LLM Test Cases.
+    Get the latest file based on timestamp in the name or modification time.
+    
     Args:
-        model (DeepEvalBaseLLM): The model to evaluate.
-        prompt_instruction (str): prompt with task instruction
-        dataset (dict[str,str]): dataset with input and expected output
-        limit (int): total tests limit
+        directory (str): Directory path where files are stored.
+        file_pattern (str): Pattern to match filenames (e.g., "*.txt", "*.log").
+        
     Returns:
-        An EvaluationDataset containing the LLM test cases with generated output.
+        str: The path of the latest file.
     """
-    test_cases = []
-    total = limit if limit else len(dataset["question"])
-    with MyProgress(
-        "[progress.description]{task.description}",
-        SpinnerColumn(),
-        BarColumn(bar_width=None),
-        "[progress.completed]({task.completed}/{task.total})",
-        TimeElapsedColumn(),
-        TimeRemainingColumn(),
-        expand=True,
-        console=Logger().console,
-    ) as progress:
-        task = progress.add_task(f"[bold bright_green]Generating {total} Test Cases:[/bold bright_green]", total=total)
-        for i in range(total):
-            question = dataset["question"][i]
-            expected_output = dataset["answer"][i]
+    # List files matching the pattern
+    files = glob.glob(os.path.join(directory, file_pattern))
+    
+    if not files:
+        print("No files found matching the pattern.")
+        return None
+    
+    # Sort files by their modification time
+    latest_file = max(files, key=os.path.getmtime)
+    
+    print(f"Latest file: {latest_file}")
+    return latest_file
 
-            input_prompt = f"### Input:\n{question}\n\n" "### Response:\n"
-            prompt = f"{prompt_instruction}" f"{input_prompt}"
 
-            # # if not (obj_task == BenchmarkType.CHOICE or obj_task == BenchmarkType.TF):
-            # if not (obj_task == BenchmarkType.CHOICE):
-            prompt = model.tokenizer.apply_chat_template(
-                [{"role": "user", "content": prompt}], tokenize=False, add_generation_prompt=True
-            )
-
-            actual_output = model.generate(prompt)
-            test_case = LLMTestCase(
-                input=question,
-                expected_output=expected_output,
-                actual_output=actual_output,
-            )
-            test_cases.append(test_case)
-
-            if Logger().get_level() == "DEBUG":
-                Logger().print_information_table_panel(
-                    [{"Input:": question, "Expected:": expected_output, "Generated:": actual_output}],
-                    title=f"[bold bright_green]DEBUG Test Case {i + 1} Result[/bold bright_green]",
-                    border_style="green",
-                    justify="full",
-                )
-            progress.update(task, advance=1)
-
-    return EvaluationDataset(test_cases=test_cases)
-
+def fetch_evaluation_dataset(file_name: str, **kwargs) -> EvaluationDataset:
+    
+    full_file_path = Path().cwd() / file_name
+    direcotry_path = kwargs.get("directory_full_path", None)
+    if kwargs.get("directory_full_path", None):
+        full_file_path = f"{direcotry_path}/{file_name}" 
+        
+    dataset = EvaluationDataset()
+    
+    dataset.add_test_cases_from_json_file(
+        file_path=full_file_path,
+        input_key_name="input",
+        actual_output_key_name="actual_output",
+        expected_output_key_name="expected_output"
+    )
+    
+    return dataset
 
 def fetch_results(model: str, task_type: str) -> list[dict[str, Any]]:
     """fetch benchmark results
@@ -106,16 +87,21 @@ def fetch_results(model: str, task_type: str) -> list[dict[str, Any]]:
     Returns:
         list[dict[str,any]]: records with benchmark results
     """
-
+    result_folder = os.environ.get("DEEPEVAL_RESULTS_FOLDER", None)
+    if not result_folder:
+        raise Exception("Not Found")
+    result_folder_path = Path().cwd() / result_folder
+    
+    latest_file = get_latest_file(result_folder_path)
+    
     benchmark_records: list[dict[str, Any]] = []
-
-    json_path = Path.cwd() / ".deepeval-cache.json"
-    with Path.open(json_path, encoding="utf-8") as json_file:
+    with Path.open(latest_file, encoding="utf-8") as json_file:
         data = json.load(json_file)
-    test_cases_dict: dict[str, dict[str, list]] = data["test_cases_lookup_map"]
+        
+    test_cases: list[dict[str, Any]] = data["testCases"]
 
     i = 0
-    total = len(test_cases_dict.keys())
+    total = len(test_cases)
     with MyProgress(
         "[progress.description]{task.description}",
         SpinnerColumn(),
@@ -129,27 +115,25 @@ def fetch_results(model: str, task_type: str) -> list[dict[str, Any]]:
         task = progress.add_task(
             f"[bold bright_green]Fetching {total} test cases results:[/bold bright_green]", total=total
         )
-        for test_case_json, cached_metrics_data in test_cases_dict.items():
-            test_case: dict[str, str | None] = json.loads(test_case_json)
+        for test_case in test_cases:
             base_record = {
                 "model": model,
                 "task": task_type,
                 "testId": i,
                 "input": test_case.get("input", "None"),
-                "expected": test_case.get("expected_output", "None"),
-                "output": test_case.get("actual_output", "None"),
+                "expected": test_case.get("expectedOutput", "None"),
+                "output": test_case.get("actualOutput", "None"),
             }
-            metrics: list[dict[str, dict]] = cached_metrics_data.get("cached_metrics_data", [])
+            metrics: list[dict[str, Any]] = test_case.get("metricsData", [])
             for metric in metrics:
-                metric_data: dict[str, dict] = metric.get("metric_data", {})
                 record = {
                     **base_record,
-                    "metric": metric_data.get("name", "None"),
-                    "score": metric_data.get("score", "None"),
-                    "reason": metric_data.get("reason", "None"),
-                    "threshold": metric_data.get("threshold", "None"),
-                    "success": metric_data.get("success", "False"),
-                    "evaluationCost": metric_data.get("evaluationCost", 0),
+                    "metric": metric.get("name", "None"),
+                    "score": metric.get("score", "None"),
+                    "reason": metric.get("reason", "None"),
+                    "threshold": metric.get("threshold", "None"),
+                    "success": metric.get("success", "False"),
+                    "evaluationCost": metric.get("evaluationCost", 0),
                 }
                 benchmark_records.append(record)
             i += 1
@@ -272,30 +256,30 @@ class evaluationPipeline:
             return [accuracy_score.ObjectiveAccuracyMetric()]
         else:
             return [
-                PromptAlignmentMetric(
-                    prompt_instructions=[prompt_instruction], include_reason=True, model=GPT_JUDGE, threshold=0.5
-                ),
-                AnswerRelevancyMetric(threshold=0.5, model=GPT_JUDGE, include_reason=True),
-                GEval(
-                    name="Correctness",
-                    model=GPT_JUDGE,
-                    evaluation_steps=[
-                        "Compare the actual output directly with the expected output to verify factual accuracy.",
-                        (
-                            "Check if all elements mentioned in the expected output are present"
-                            "and correctly represented in the actual output."
-                        ),
-                        (
-                            "Assess if there are any discrepancies"
-                            "in details, values, or information between the actual and expected outputs."
-                        ),
-                    ],
-                    evaluation_params=[
-                        LLMTestCaseParams.INPUT,
-                        LLMTestCaseParams.ACTUAL_OUTPUT,
-                        LLMTestCaseParams.EXPECTED_OUTPUT,
-                    ],
-                ),
+                # PromptAlignmentMetric(
+                #     prompt_instructions=[prompt_instruction], include_reason=True, model=GPT_JUDGE, threshold=0.5
+                # ),
+                # AnswerRelevancyMetric(threshold=0.5, model=GPT_JUDGE, include_reason=True),
+                # GEval(
+                #     name="Correctness",
+                #     model=GPT_JUDGE,
+                #     evaluation_steps=[
+                #         "Compare the actual output directly with the expected output to verify factual accuracy.",
+                #         (
+                #             "Check if all elements mentioned in the expected output are present"
+                #             "and correctly represented in the actual output."
+                #         ),
+                #         (
+                #             "Assess if there are any discrepancies"
+                #             "in details, values, or information between the actual and expected outputs."
+                #         ),
+                #     ],
+                #     evaluation_params=[
+                #         LLMTestCaseParams.INPUT,
+                #         LLMTestCaseParams.ACTUAL_OUTPUT,
+                #         LLMTestCaseParams.EXPECTED_OUTPUT,
+                #     ],
+                # ),
                 BertSimilarityMetric(threshold=0.5),
             ]
 
@@ -307,11 +291,8 @@ class evaluationPipeline:
         kwargs (dict[str,any]): model kwargs
         """
         self._show_general_information()
-        logger.info("Fetching Geobench dataset...")
-        provider: GeobenchProvider = GeobenchProvider()
-        geobench_data = provider.benchmark_datasets_dict.get(self.task, {})
-        logger.info("Done.")
         logger.info("Fetching task instruction...")
+        provider: GeobenchProvider = GeobenchProvider()
         task_instruction = provider.fetch_task_instruction(self.task)
         PROMPT_INSTRUCTION = (
             "Below is an instruction that describes a task, "
@@ -338,9 +319,9 @@ class evaluationPipeline:
         logger.info("Trying to initialize model")
         model_instance = model_name_class_map.get(self.model_name, DeepEvalBaseLLM)(**kwargs)
         logger.info("Done.")
-        logger.info("Building evaluation dataset...")
-        evaluation_dataset = build_llm_test_cases(
-            model_instance, PROMPT_INSTRUCTION, geobench_data, self.limit, self.task
+        logger.info("Fetching evaluation dataset...")
+        evaluation_dataset = fetch_evaluation_dataset(
+            f"{model_instance.get_model_name()}_{self.task.value}.json", **kwargs
         )
         logger.info("Done.")
         logger.info("Starting Deepeval Evaluation...")
@@ -351,6 +332,4 @@ class evaluationPipeline:
         logger.info("Done.")
         self._show_benchmark_summary(results)
         logger.info("Saving benchmark into CSV file...")
-        benchmark_path = save_records(results)
-        logger.info("Done.")
-        logger.info(f"Benchmark stored on: {benchmark_path}")
+        save_records(results)

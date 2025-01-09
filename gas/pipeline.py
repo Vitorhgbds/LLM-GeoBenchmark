@@ -1,6 +1,6 @@
+import asyncio
 import csv
 import json
-import os
 from pathlib import Path
 from typing import Any
 
@@ -10,7 +10,7 @@ from deepeval.dataset import EvaluationDataset
 from deepeval.metrics import AnswerRelevancyMetric, BaseMetric, GEval, PromptAlignmentMetric
 from deepeval.models import DeepEvalBaseLLM
 from deepeval.test_case import LLMTestCase, LLMTestCaseParams
-from rich.progress import BarColumn, SpinnerColumn, TimeElapsedColumn, TimeRemainingColumn
+from rich.progress import BarColumn, SpinnerColumn, TaskID, TimeElapsedColumn, TimeRemainingColumn
 
 from gas.commons import (
     DO_SAMPLE,
@@ -34,8 +34,12 @@ from gas.models import model_name_class_map
 logger = Logger().get_logger()
 
 
-def build_llm_test_cases(
-    model: DeepEvalBaseLLM, prompt_instruction: str, dataset: dict[str, str], limit: int | None, obj_task: BenchmarkType
+async def build_llm_test_cases_async(
+    model: DeepEvalBaseLLM,
+    prompt_instruction: str,
+    dataset: dict[str, list[str]],
+    limit: int | None,
+    obj_task: BenchmarkType,
 ) -> EvaluationDataset:
     """
     Build an evaluation dataset with LLM Test Cases.
@@ -49,6 +53,9 @@ def build_llm_test_cases(
     """
     test_cases = []
     total = limit if limit else len(dataset["question"])
+    tasks = []
+
+    # Async progress bar
     with MyProgress(
         "[progress.description]{task.description}",
         SpinnerColumn(),
@@ -60,37 +67,62 @@ def build_llm_test_cases(
         console=Logger().console,
     ) as progress:
         task = progress.add_task(f"[bold bright_green]Generating {total} Test Cases:[/bold bright_green]", total=total)
+
+        # Collect tasks
         for i in range(total):
             question = dataset["question"][i]
             expected_output = dataset["answer"][i]
 
-            input_prompt = f"### Input:\n{question}\n\n" "### Response:\n"
-            prompt = f"{prompt_instruction}" f"{input_prompt}"
+            input_prompt = f"### Input:\n{question}\n\n### Response:\n"
+            prompt = f"{prompt_instruction}{input_prompt}"
 
-            # # if not (obj_task == BenchmarkType.CHOICE or obj_task == BenchmarkType.TF):
-            # if not (obj_task == BenchmarkType.CHOICE):
+            # if not (obj_task == BenchmarkType.CHOICE or obj_task == BenchmarkType.TF):
+            # Apply template
             prompt = model.tokenizer.apply_chat_template(
                 [{"role": "user", "content": prompt}], tokenize=False, add_generation_prompt=True
             )
 
-            actual_output = model.generate(prompt)
-            test_case = LLMTestCase(
-                input=question,
-                expected_output=expected_output,
-                actual_output=actual_output,
-            )
-            test_cases.append(test_case)
+            tasks.append(generate_test_case(model, prompt, question, expected_output, progress, task, i))
 
-            if Logger().get_level() == "DEBUG":
-                Logger().print_information_table_panel(
-                    [{"Input:": question, "Expected:": expected_output, "Generated:": actual_output}],
-                    title=f"[bold bright_green]DEBUG Test Case {i + 1} Result[/bold bright_green]",
-                    border_style="green",
-                    justify="full",
-                )
-            progress.update(task, advance=1)
+        # Run tasks concurrently
+        test_cases = await asyncio.gather(*tasks)
 
     return EvaluationDataset(test_cases=test_cases)
+
+
+async def generate_test_case(
+    model: DeepEvalBaseLLM,
+    prompt: str,
+    question: str,
+    expected_output: str,
+    progress: MyProgress,
+    task: TaskID,
+    index: int,
+) -> LLMTestCase:
+    """
+    Helper function for async generation of LLM test cases.
+    """
+    actual_output = await model.a_generate(prompt)
+    test_case = LLMTestCase(
+        input=question,
+        expected_output=expected_output,
+        actual_output=actual_output,
+    )
+
+    if Logger().get_level() == "DEBUG":
+        Logger().print_information_table_panel(
+            [{"Input:": question, "Expected:": expected_output, "Generated:": actual_output}],
+            title=f"[bold bright_green]DEBUG Test Case {index + 1} Result[/bold bright_green]",
+            border_style="green",
+            justify="full",
+        )
+    progress.update(task, advance=1)
+    return test_case
+
+
+# To run synchronously:
+def build_llm_test_cases(*args, **kwargs):
+    return asyncio.run(build_llm_test_cases_async(*args, **kwargs))
 
 
 def fetch_results(model: str, task_type: str) -> list[dict[str, Any]]:
@@ -269,30 +301,30 @@ class evaluationPipeline:
             return [accuracy_score.ObjectiveAccuracyMetric()]
         else:
             return [
-                # PromptAlignmentMetric(
-                #     prompt_instructions=prompt_instruction, include_reason=True, model=GPT_JUDGE, threshold=0.5
-                # ),
-                # AnswerRelevancyMetric(threshold=0.5, model=GPT_JUDGE, include_reason=True),
-                # GEval(
-                #     name="Correctness",
-                #     model=GPT_JUDGE,
-                #     evaluation_steps=[
-                #         "Compare the actual output directly with the expected output to verify factual accuracy.",
-                #         (
-                #             "Check if all elements mentioned in the expected output are present"
-                #             "and correctly represented in the actual output."
-                #         ),
-                #         (
-                #             "Assess if there are any discrepancies"
-                #             "in details, values, or information between the actual and expected outputs."
-                #         ),
-                #     ],
-                #     evaluation_params=[
-                #         LLMTestCaseParams.INPUT,
-                #         LLMTestCaseParams.ACTUAL_OUTPUT,
-                #         LLMTestCaseParams.EXPECTED_OUTPUT,
-                #     ],
-                # ),
+                PromptAlignmentMetric(
+                    prompt_instructions=[prompt_instruction], include_reason=True, model=GPT_JUDGE, threshold=0.5
+                ),
+                AnswerRelevancyMetric(threshold=0.5, model=GPT_JUDGE, include_reason=True),
+                GEval(
+                    name="Correctness",
+                    model=GPT_JUDGE,
+                    evaluation_steps=[
+                        "Compare the actual output directly with the expected output to verify factual accuracy.",
+                        (
+                            "Check if all elements mentioned in the expected output are present"
+                            "and correctly represented in the actual output."
+                        ),
+                        (
+                            "Assess if there are any discrepancies"
+                            "in details, values, or information between the actual and expected outputs."
+                        ),
+                    ],
+                    evaluation_params=[
+                        LLMTestCaseParams.INPUT,
+                        LLMTestCaseParams.ACTUAL_OUTPUT,
+                        LLMTestCaseParams.EXPECTED_OUTPUT,
+                    ],
+                ),
                 BertSimilarityMetric(threshold=0.5),
             ]
 
@@ -341,14 +373,13 @@ class evaluationPipeline:
         )
         logger.info("Done.")
         logger.info("Starting Deepeval Evaluation...")
-        os.environ["TOKENIZERS_PARALLELISM"] = "false"
-        evaluate(evaluation_dataset, metrics, write_cache=True, print_results=True)
+        evaluate(evaluation_dataset, metrics, write_cache=True, print_results=False, max_concurrent=30)
         logger.info("Done.")
         logger.info("Fetching benchmark results...")
         results = fetch_results(model_instance.get_model_name(), self.task.value)
         logger.info("Done.")
         self._show_benchmark_summary(results)
         logger.info("Saving benchmark into CSV file...")
-        #benchmark_path = save_records(results)
+        benchmark_path = save_records(results)
         logger.info("Done.")
-        # logger.info(f"Benchmark stored on: {benchmark_path}")
+        logger.info(f"Benchmark stored on: {benchmark_path}")

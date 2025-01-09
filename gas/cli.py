@@ -1,4 +1,7 @@
 import argparse
+import os
+
+from dotenv import load_dotenv
 
 from gas.logger import Logger
 from gas.models import __all__ as models
@@ -7,7 +10,7 @@ from gas.pipeline import evaluationPipeline
 logger = Logger().get_logger()
 
 
-def execute_benchmark(model: str, task: str, limit: int | None, **kwargs) -> None:
+def execute_benchmark(model: str, task: str, limit: int | None, dotenv_path: str | None, **kwargs) -> None:
     """
     Run the Geobenchmark evaluation suite.
     Args:
@@ -15,6 +18,9 @@ def execute_benchmark(model: str, task: str, limit: int | None, **kwargs) -> Non
         task: The task to evaluate.
         limit: The total number of test cases to generate.
     """
+    load_dotenv(dotenv_path=dotenv_path)
+    key = os.environ.get("OPENAI_API_KEY")
+    logger.debug(key)
     pipeline = evaluationPipeline(model, task, limit)
     pipeline.run(**kwargs)
 
@@ -91,6 +97,14 @@ def cli() -> None:
         dest="verbose",
         help="More logs will be added. Only works if log-level is DEBUG\nDefault: %(default)s\n\n",
         default=False,
+    )
+    parser.add_argument(
+        "-e",
+        "--dot-env",
+        type=str,
+        dest="dotenv_path",
+        help="dot env path\nDefault: %(default)s\n\n",
+        default=None,
     )
     parser.print_help = lambda: Logger.print_help(parser)  # type: ignore[method-assign, misc, assignment]
     parser.set_defaults(func=execute_benchmark)

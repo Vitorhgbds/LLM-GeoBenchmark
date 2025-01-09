@@ -1,3 +1,5 @@
+import asyncio
+
 import torch
 from deepeval.models import DeepEvalBaseLLM
 from transformers import (
@@ -116,7 +118,7 @@ class Ministral_8B_it(DeepEvalBaseLLM):
         Returns:
             The generated text.
         """
-        return self.generate(prompt)
+        return await asyncio.to_thread(self.generate, prompt)
 
     def get_model_name(self):
         """

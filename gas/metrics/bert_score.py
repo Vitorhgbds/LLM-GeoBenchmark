@@ -1,3 +1,5 @@
+import asyncio
+
 from deepeval.metrics import BaseMetric
 from deepeval.scorer import Scorer
 from deepeval.test_case import LLMTestCase
@@ -16,6 +18,7 @@ class BertSimilarityMetric(BaseMetric):
         bert_scores = self.scorer.bert_score(
             references=test_case.expected_output,
             predictions=test_case.actual_output,
+            lang="en",
         )
         logger.debug(f"bert scores: {bert_scores}")
         self.score = bert_scores["bert-f1"][0]
@@ -25,7 +28,7 @@ class BertSimilarityMetric(BaseMetric):
     # Async implementation of measure(). If async version for
     # scoring method does not exist, just reuse the measure method.
     async def a_measure(self, test_case: LLMTestCase):
-        return self.measure(test_case)
+        return await asyncio.to_thread(self.measure, test_case)
 
     def is_successful(self):
         return self.success

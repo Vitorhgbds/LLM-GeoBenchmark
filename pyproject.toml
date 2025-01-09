@@ -15,6 +15,8 @@ priority = "explicit"
 
 [tool.poetry.dependencies]
 python = ">=3.11, <3.13"
+python-dotenv = "^1.0.1"
+setuptools = "^75.8.0"
 openai = "^1.58.1"
 transformers = "^4.47.1"
 accelerate = "^1.2.1"

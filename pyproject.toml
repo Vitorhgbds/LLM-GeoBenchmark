@@ -28,6 +28,8 @@ bert-score = "^0.3.13"
 pandas = "^2.2.3"
 peft = "^0.14.0"
 torch = "^2.5.1"
+toml = "^0.10.2"
+types-toml = "^0.10.8.20240310"
 
 [tool.poetry.group.dev.dependencies]
 ruff = "^0.8.4"
@@ -36,7 +38,7 @@ mypy = "^1.14.0"
 pytest = "^8.3.4"
 
 [tool.ruff]
-exclude = [".git", ".mypy_cache", ".ruff_cache", ".venv"]
+exclude = [".git", ".mypy_cache", ".ruff_cache", ".venv", "./gas/models/deprecated"]
 line-length = 120
 indent-width = 4
 

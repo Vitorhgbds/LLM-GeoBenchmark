@@ -1,74 +1,63 @@
 import argparse
 import os
+from typing import Any
 
+import toml
 from dotenv import load_dotenv
 
-from gas.evaluation_pipeline import evaluationPipeline
 from gas.logger import Logger
-from gas.models import __all__ as models
-from gas.test_cases_pipeline import testCasesPipeline
+from gas.models.base import BaseModel
+from gas.pipelines import EvaluationPipeline, GenerationPipeline
 
-logger = Logger().get_logger()
-
-
-def execute_benchmark(model: str, task: str, limit: int | None, dotenv_path: str | None, **kwargs) -> None:
-    """
-    Run the Geobenchmark evaluation suite.
-    Args:
-        model: The model to evaluate.
-        task: The task to evaluate.
-        limit: The total number of test cases to generate.
-    """
-    load_dotenv(dotenv_path=dotenv_path)
-    key = os.environ.get("OPENAI_API_KEY")
-    logger.debug(key)
-
-    command = kwargs.get("command")
-    if command == "test_cases":
-        pipeline = testCasesPipeline(model, task, limit)
-        pipeline.run(**kwargs)
-    else:
-        test_pipeline = evaluationPipeline(model, task, limit)
-        test_pipeline.run(**kwargs)
+logging = Logger()
+logger = logging.get_logger()
 
 
-def cli() -> None:
-    """Main entry point for the gas command line interface."""
-    parser = argparse.ArgumentParser(
-        description="GAS: A command line tool for running the Geobenchmark evaluation suite.",
-        formatter_class=argparse.RawTextHelpFormatter,
+def show_info(
+    model: BaseModel, task: str, seed: int | None, generation_params: dict[str, Any], limit: int | None = None, **kwargs
+):
+    info = {
+        "Geoscience benchmark task:": task,
+        "Model for evaluation:": model.get_model_name(),
+        "LOG LEVEL:": f"{logging.get_level()}",
+        "Tests limit:": limit,
+        "SEED: ": seed,
+        **generation_params,
+    }
+    logging.print_table_panel(
+        info,
+        title="[bold medium_orchid]Benchmark General Information[/bold medium_orchid]",
+        border_style="purple",
+        expand=False,
+        justify="center",
     )
-    parser.add_argument(
-        "-m",
-        "--model",
-        type=str,
-        required=True,
-        metavar="<MODEL>",
-        dest="model",
-        help="Model to evaluate.\nChoices: [%(choices)s]\n\n",
-        choices=models,
-        default="Llama3_8B",
-    )
+
+
+def generate(model: BaseModel, task: str, limit: int | None, test_cases_path: str, **kwargs):
+    GenerationPipeline(model=model, task=task, test_cases_path=test_cases_path, limit=limit, **kwargs).run()
+
+
+def evaluate(model, task: str, model_judge: str, test_cases_path: str, results_path: str, **kwargs):
+    EvaluationPipeline(
+        model=model,
+        task=task,
+        test_cases_path=test_cases_path,
+        model_judge=model_judge,
+        results_path=results_path,
+        **kwargs,
+    ).run()
+
+
+def make_shared_commands(parser: argparse.ArgumentParser) -> argparse.ArgumentParser:
     parser.add_argument(
         "-t",
         "--task",
         type=str,
+        required=True,
         dest="task",
         metavar="<TASK>",
-        help="Task to evaluate.\nChoices: [%(choices)s]\nDefault: %(default)s\n\n",
+        help="Task to evaluate.\nChoices: [%(choices)s]\n\n",
         choices=["NOUN", "CHOICE", "COMPLETION", "TF", "QA"],
-        default="TF",
-    )
-    parser.add_argument(
-        "-l",
-        "--test-limit",
-        type=int,
-        dest="limit",
-        metavar="<LIMIT>",
-        help=(
-            "Total number of test cases for evaluation.\n"
-            "Type: %(type)s\nDefault: generates all test cases available\n\n"
-        ),
         default=None,
     )
     parser.add_argument(
@@ -83,68 +72,86 @@ def cli() -> None:
     )
     parser.add_argument(
         "-c",
-        "--cache_dir",
+        "--config",
         type=str,
-        dest="cache_dir",
-        help="cache directory to keep downloaded models from huggingFace\nDefault: %(default)s\n\n",
+        dest="config_path",
+        metavar="<PATH>",
+        help="Path to config file.\nDefault: %(default)s\n\n",
         default=None,
     )
-    parser.add_argument(
-        "-p",
-        "--path-cache",
-        type=str,
-        dest="path",
-        help="Path to the model checkpoint.\nDefault: %(default)s\n\n",
+    return parser
+
+
+def build_argparser() -> argparse.ArgumentParser:
+    parser = argparse.ArgumentParser(
+        description="GAS: A command line tool for running the Geobenchmark evaluation suite.",
+        formatter_class=argparse.RawTextHelpFormatter,
+    )
+    parser = make_shared_commands(parser)
+
+    subparsers = parser.add_subparsers(dest="command", required=True)
+
+    parent_parser = argparse.ArgumentParser(add_help=False)
+
+    parser_generate = subparsers.add_parser(
+        "generate",
+        help="Generate the test cases to evaluate.",
+        description="Generate test cases for a provided model.",
+        parents=[parent_parser],
+    )
+    parser_generate.add_argument(
+        "-l",
+        "--limit",
+        type=int,
+        dest="limit",
+        metavar="<LIMIT>",
+        help=(
+            "Total number of test cases to generate for evaluation.\n" "Default: generates all test cases available\n\n"
+        ),
         default=None,
     )
-    parser.add_argument(
-        "-v",
-        "--verbose",
-        type=bool,
-        dest="verbose",
-        help="More logs will be added. Only works if log-level is DEBUG\nDefault: %(default)s\n\n",
-        default=False,
-    )
-    parser.add_argument(
-        "-e",
-        "--dot-env",
-        type=str,
-        dest="dotenv_path",
-        help="dot env path\nDefault: %(default)s\n\n",
-        default=None,
-    )
-    parser.add_argument(
-        "-cm",
-        "--command",
-        type=str,
-        dest="command",
-        choices=["test_cases", "evaluate"],
-        metavar="<COMMAND>",
-        help="Command to generate test cases or evaluate.\nChoices: [%(choices)s]\nDefault: %(default)s\n\n",
-        default="test_cases",
-        required=True,
-    )
-    parser.add_argument(
-        "-tp",
-        "--tests-path",
-        type=str,
-        dest="directory_full_path",
-        help="path to tests cases to be stored or consumed\nDefault: %(default)s\n\n",
-        default=None,
+    parser_evaluate = subparsers.add_parser(
+        "evaluate",
+        help="Evaluate the generated test cases.",
+        description="Evaluate the generated test cases.",
+        parents=[parent_parser],
     )
     parser.print_help = lambda: Logger.print_help(parser)  # type: ignore[method-assign, misc, assignment]
-    parser.set_defaults(func=execute_benchmark)
-    try:
-        args = parser.parse_args()
-        if hasattr(args, "func"):
-            args_dict = vars(args).copy()
-            Logger().set_level(args_dict.pop("log_level"), args_dict.pop("verbose"))
-            args_dict.pop("func", None)
-            args.func(**args_dict)
-        else:
-            Logger.print_help(parser)
-    except Exception as e:
-        logger.exception(e)
+    parser_evaluate.print_help = lambda: Logger.print_help(parser_evaluate)  # type: ignore[method-assign, misc, assignment]
+    parser_generate.print_help = lambda: Logger.print_help(parser_generate)  # type: ignore[method-assign, misc, assignment]
+    return parser
+
+
+def cli() -> None:
+    """Main entry point for the gas command line interface."""
+    parser = build_argparser()
+
+    args = parser.parse_args()
+    args_dict = vars(args).copy()
+    logging.set_level(args_dict.pop("log_level"))
+
+    config = toml.load("./config.toml")
+    tc_path = config["environment"]["test_cases_path"]
+    dotenv_path = config["environment"].get("dotenv_path", None)
+    load_dotenv(dotenv_path=dotenv_path) if dotenv_path else load_dotenv()
+
+    key = os.environ.get("OPENAI_API_KEY")
+    logger.debug(key)
+
+    generation_params = config["generation"]
+    model_params = config["model"]
+    seed = config["environment"].get("seed", None)
+    model = BaseModel(model_params, generation_params, seed=seed)
+
+    show_info(model=model, seed=seed, generation_params=generation_params, **args_dict)
+    match args.command:
+        case "generate":
+            generate(model=model, test_cases_path=tc_path, **args_dict)
+        case "evaluate":
+            evaluation_params = config["evaluation"]
+            evaluate(model=model, test_cases_path=tc_path, **evaluation_params, **args_dict)
+        case _:
+            parser.print_help()
 
 
 if __name__ == "__main__":

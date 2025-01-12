@@ -100,9 +100,9 @@ class Llama32_3B_it(DeepEvalBaseLLM):
         outputs = model.generate(**generation_params)
         new_tokens = outputs[0][len(input_ids[0]) :]
         if Logger().is_verbose:
-            logger.debug(f"[bold dark_magenta]Attention mask: [/bold dark_magenta]{attention_mask}")
-            logger.debug(f"[bold dark_magenta]Total new tokens generated: [/bold dark_magenta]{len(new_tokens)}")
-            logger.debug(f"[bold dark_magenta]New tokens generated: [/bold dark_magenta]{new_tokens}")
+            logger.debug(f"Attention mask: {attention_mask}")
+            logger.debug(f"Total new tokens generated: {len(new_tokens)}")
+            logger.debug(f"New tokens generated: {new_tokens}")
         generated_text = self.tokenizer.decode(new_tokens, skip_special_tokens=True).strip()
 
         return generated_text

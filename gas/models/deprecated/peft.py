@@ -1,8 +1,6 @@
 import torch
 from deepeval.models import DeepEvalBaseLLM
-from peft import AutoPeftModelForCausalLM
 from transformers import (
-    AutoTokenizer,
     BitsAndBytesConfig,
 )
 
@@ -39,18 +37,18 @@ class PEFTModel(DeepEvalBaseLLM):
         self.path: str = kwargs.get("path", None)
         self.model_name = self.path.split("/")[-1]
         # Load the model with CUDA support
-        self.model = AutoPeftModelForCausalLM.from_pretrained(
-            pretrained_model_name_or_path=kwargs.get("path", None),
-            device_map="auto",
-            quantization_config=quantization_config,
-            torch_dtype="auto",
-            low_cpu_mem_usage=True,
-            cache_dir=kwargs.get("cache_dir", None),
-        )
+        # self.model = AutoPeftModelForCausalLM.from_pretrained(
+        #    pretrained_model_name_or_path=kwargs.get("path", None),
+        #    device_map="auto",
+        #    quantization_config=quantization_config,
+        #    torch_dtype="auto",
+        #    low_cpu_mem_usage=True,
+        #    cache_dir=kwargs.get("cache_dir", None),
+        # )
 
         # Load the tokenizer
-        self.tokenizer = AutoTokenizer.from_pretrained(self.model.peft_config["default"].base_model_name_or_path)
-        self.tokenizer.pad_token = self.tokenizer.eos_token  # Set pad token to eos token
+        # self.tokenizer = AutoTokenizer.from_pretrained(self.model.peft_config["default"].base_model_name_or_path)
+        # self.tokenizer.pad_token = self.tokenizer.eos_token  # Set pad token to eos token
 
     def load_model(self):
         """

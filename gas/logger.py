@@ -7,7 +7,7 @@ from typing import Any
 from rich.console import Console
 from rich.logging import RichHandler
 from rich.panel import Panel
-from rich.progress import Progress
+from rich.progress import BarColumn, Progress, SpinnerColumn, TextColumn, TimeElapsedColumn, TimeRemainingColumn
 from rich.table import Table
 
 
@@ -26,14 +26,15 @@ class Logger:
         if self._initialized:
             return  # Prevent re-initialization
         self._initialized = True
-        self.console = Console()
+        self.console = Console(emoji=False, stderr=False)
 
         # Configure Rich logging
         logging.basicConfig(
             level=logging.INFO,
             format="%(message)s",
             datefmt="[%X]",
-            handlers=[RichHandler(console=self.console, markup=True)],
+            handlers=[RichHandler(console=self.console)],
+            encoding="utf-8",
         )
         self.logger = logging.getLogger("rich_logger")
         self.logger.setLevel(logging.DEBUG)  # Default log level
@@ -72,30 +73,31 @@ class Logger:
         level = logging.getLevelName(self.logger.getEffectiveLevel())
         return level
 
-    def print_information_table_panel(self, records: list[dict[str, Any]], **kwargs) -> None:
+    def print_table_panel(self, record: dict[str, Any], **kwargs) -> None:
         """
         Display an information table inside a panel.
 
         Args:
-            records (list[tuple[str, any]]): List of tuples with information to fill the table.
+            record (dict[str, any]): List of tuples with information to fill the table.
             title (str): Panel title.
             border_style (str): Panel border style.
         """
         panel_kwargs = {k: v for k, v in kwargs.items() if k in self.panel_params}
         console_log_kwargs = {k: v for k, v in kwargs.items() if k in self.console_log_params}
         title = panel_kwargs.pop("title", None)
-        for i, row in enumerate(records):
-            table = Table(show_header=False, show_lines=False, show_edge=False, box=None)
-            table.add_column("Description", justify="left")
-            table.add_column("Value", justify="left")
-            for description, value in row.items():
-                table.add_row(str(description), str(value))
-            with self._lock:
-                self.console.log(
-                    Panel(table, title=f"{title}{' ' + str(i) if len(records) > 1 else ''}", **panel_kwargs),
-                    justify=console_log_kwargs.pop("justify", "center"),
-                    **console_log_kwargs,
-                )
+
+        table = Table(show_header=False, show_lines=False, show_edge=False, box=None)
+        table.add_column("Description", justify="left")
+        table.add_column("Value", justify="left")
+
+        for description, value in record.items():
+            table.add_row(str(description), str(value))
+        with self._lock:
+            self.console.log(
+                Panel(table, title=title, **panel_kwargs),
+                justify=console_log_kwargs.pop("justify", "center"),
+                **console_log_kwargs,
+            )
 
     def print_panel(self, information: str, **kwargs):
         panel_kwargs = {k: v for k, v in kwargs.items() if k in self.panel_params}
@@ -116,5 +118,18 @@ class Logger:
 
 
 class MyProgress(Progress):
+    def __init__(self, console, **kwargs):
+        # Default columns for the progress bar
+        default_columns = [
+            TextColumn("[progress.description]{task.description}"),
+            SpinnerColumn(),
+            BarColumn(bar_width=None),
+            TextColumn("[progress.completed]({task.completed}/{task.total})"),
+            TimeElapsedColumn(),
+            TimeRemainingColumn(),
+        ]
+        # Call parent constructor with explicit columns
+        super().__init__(*default_columns, console=console, **kwargs)
+
     def get_renderables(self):
         yield Panel(self.make_tasks_table(self.tasks))

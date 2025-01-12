@@ -144,7 +144,7 @@ def cli() -> None:
     seed = config["environment"].get("seed", None)
     model = (
         BaseModel(model_params, generation_params, seed=seed)
-        if not model_params.get("preft", False)
+        if not model_params.get("peft", False)
         else BasePeftModel(model_params, generation_params, seed=seed)
         )
 

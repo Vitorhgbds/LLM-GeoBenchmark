@@ -5,7 +5,6 @@ from deepeval.dataset import EvaluationDataset
 from deepeval.models import DeepEvalBaseLLM
 
 from gas.logger import Logger, MyProgress
-from gas.models.base import BaseModel
 
 from .prompt import PromptProvider
 
@@ -16,7 +15,7 @@ logger = logging.get_logger()
 class TestCasesProvider:
     @staticmethod
     def bulk_create(
-        model: BaseModel,
+        model: DeepEvalBaseLLM,
         prompt_instruction: str,
         dataset: dict[str, list[str]],
         limit: int | None,
@@ -39,6 +38,7 @@ class TestCasesProvider:
             task = progress.add_task(
                 f"[bold bright_green]Generating {total} Test Cases:[/bold bright_green]", total=total
             )
+            progress.log(f"Model Name: {model.get_model_name()}")
             for i in range(total):
                 question = dataset["question"][i]
                 expected_output = dataset["answer"][i]

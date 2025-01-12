@@ -57,8 +57,9 @@ class BasePeftModel(DeepEvalBaseLLM):
             cache_dir=self.model_params.get("cache_dir", None),
         )
         
-        tokenizer_name_or_path = self.model.peft_config["default"].base_model_name_or_path
-        self.tokenizer = AutoTokenizer.from_pretrained(tokenizer_name_or_path)
+        self.tokenizer = AutoTokenizer.from_pretrained(
+            self.model.peft_config["default"].base_model_name_or_path
+            )
         self.pad_token_id = (
             self.tokenizer.pad_token_id 
             if self.tokenizer.pad_token_id 

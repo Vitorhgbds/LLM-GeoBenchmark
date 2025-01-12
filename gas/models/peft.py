@@ -60,6 +60,7 @@ class BasePeftModel(DeepEvalBaseLLM):
         self.tokenizer = AutoTokenizer.from_pretrained(
             self.model.peft_config["default"].base_model_name_or_path
             )
+        
         self.pad_token_id = (
             self.tokenizer.pad_token_id 
             if self.tokenizer.pad_token_id 

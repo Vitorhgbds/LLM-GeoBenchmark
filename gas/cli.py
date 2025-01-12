@@ -130,7 +130,8 @@ def cli() -> None:
     args_dict = vars(args).copy()
     logging.set_level(args_dict.pop("log_level"))
 
-    config = toml.load("./config.toml")
+    config_path = args_dict.get("config_path", "./config.toml")
+    config = toml.load(config_path)
     tc_path = config["environment"]["test_cases_path"]
     dotenv_path = config["environment"].get("dotenv_path", None)
     load_dotenv(dotenv_path=dotenv_path) if dotenv_path else load_dotenv()

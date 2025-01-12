@@ -3,7 +3,7 @@ seed = 42
 # Directory to store and consume test cases
 test_cases_path = "./gas/data/test_cases"
 # dotenv path
-dotenv_path = ".env"
+dotenv_path = "./env/.env_v"
 
 [model]
 # Can be a huggingface model name or full path for a checkpoint file

@@ -128,6 +128,8 @@ class MyProgress(Progress):
             TimeElapsedColumn(),
             TimeRemainingColumn(),
         ]
+        if not console:
+            console = Console(stderr=True)
         # Call parent constructor with explicit columns
         super().__init__(*default_columns, console=console, **kwargs)
 

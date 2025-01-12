@@ -65,12 +65,14 @@ class BaseModel(DeepEvalBaseLLM):
         )
         if self.model_params.get("peft", False):
             tokenizer_name_or_path = self.model.peft_config["default"].base_model_name_or_path
+            self.tokenizer = AutoTokenizer.from_pretrained(tokenizer_name_or_path)
         else:
             tokenizer_name_or_path = (
                 self.model_params.get("tokenizer_name_or_path")
                 if self.model_params.get("tokenizer_name_or_path", None)
                 else self.model_path_or_name
             )
+            self.tokenizer = AutoTokenizer.from_pretrained(tokenizer_name_or_path)
             self.generation_config = GenerationConfig(
                 **{
                     **self.generation_params,
@@ -79,8 +81,8 @@ class BaseModel(DeepEvalBaseLLM):
             )
 
             self.pipeline = pipeline(task="text-generation", model=self.model, framework="pt", tokenizer=self.tokenizer)
-        self.tokenizer = AutoTokenizer.from_pretrained(tokenizer_name_or_path)
-
+        self.pad_token_id = self.tokenizer.pad_token_id if self.tokenizer.pad_token_id else self.tokenizer.pad_token_type_id
+        logger.debug(f"pad token id: {self.pad_token_id}")
         logger.debug("Done.")
         return self.model
 
@@ -98,13 +100,14 @@ class BaseModel(DeepEvalBaseLLM):
             set_seed(self.seed)
 
         if self.should_apply_chat_template:
+            logger.debug("trying to apply chat template...")
             prompt = self.tokenizer.apply_chat_template(prompt, tokenize=False, add_generation_prompt=True)
 
         if self.model_params.get("peft", False):
+            logger.debug("Trying to build inputs...")
             inputs = self.tokenizer(
                 prompt,
                 return_tensors="pt",
-                padding=True,
             )
             device = self.model.device
             input_ids = inputs.input_ids.to(device)
@@ -115,11 +118,11 @@ class BaseModel(DeepEvalBaseLLM):
                     "input_ids": input_ids,
                     "attention_mask": attention_mask,
                     **self.generation_params,
-                    "pad_token_id": self.tokenizer.pad_token_type_id,
+                    "pad_token_id": self.pad_token_id,
                 }
             )
             new_tokens = outputs[0][len(input_ids[0]) :]
-            generated_text = self.tokenizer.decode(new_tokens, skip_special_tokens=False).strip()
+            generated_text = self.tokenizer.decode(new_tokens, skip_special_tokens=True).strip()
             return generated_text
         else:
             self.pipeline.generation_config = self.generation_config

@@ -1,12 +1,10 @@
 from typing import Any
 
 from deepeval.models import DeepEvalBaseLLM
+from peft import AutoPeftModelForCausalLM
 from transformers import (
-    AutoModelForCausalLM,
     AutoTokenizer,
     BitsAndBytesConfig,
-    GenerationConfig,
-    pipeline,
     set_seed,
 )
 
@@ -16,7 +14,7 @@ logging = Logger()
 logger = logging.get_logger()
 
 
-class BaseModel(DeepEvalBaseLLM):
+class BasePeftModel(DeepEvalBaseLLM):
     """
     Base model for evaluation.
     """
@@ -27,21 +25,20 @@ class BaseModel(DeepEvalBaseLLM):
         self.seed = kwargs.get("seed", None)
         self.model_path_or_name: str = model_params.get("pretrained_model_name_or_path", "")
         self.model_name = self.model_path_or_name.split("/")[-1].replace(".", "_")
-
+        
         self.model = None
         self.tokenizer = None
-        self.pipeline = None
 
         self.should_apply_chat_template = model_params.get("should_apply_chat_template", True)
 
-    def load_model(self, *args, **kwargs) -> AutoModelForCausalLM:
+    def load_model(self, *args, **kwargs) -> AutoPeftModelForCausalLM:
         """
         Load the model.
         """
         if self.model:
             return self.model
 
-        logger.debug("Trying to initialize model...")
+        logger.debug("Trying to initialize peft model...")
         # Configure quantization
         quantization_config = BitsAndBytesConfig(
             load_in_4bit=True,
@@ -49,9 +46,9 @@ class BaseModel(DeepEvalBaseLLM):
             bnb_4bit_quant_type="nf4",
             bnb_4bit_use_double_quant=True,
         )
-
+ 
         # Load the model with CUDA support
-        self.model = AutoModelForCausalLM.from_pretrained(
+        self.model = AutoPeftModelForCausalLM.from_pretrained(
             pretrained_model_name_or_path=self.model_path_or_name,
             device_map="auto",
             quantization_config=quantization_config,
@@ -59,23 +56,16 @@ class BaseModel(DeepEvalBaseLLM):
             low_cpu_mem_usage=True,
             cache_dir=self.model_params.get("cache_dir", None),
         )
-
-
-        tokenizer_name_or_path = (
-            self.model_params.get("tokenizer_name_or_path")
-            if self.model_params.get("tokenizer_name_or_path", None)
-            else self.model_path_or_name
-        )
+        
+        tokenizer_name_or_path = self.model.peft_config["default"].base_model_name_or_path
         self.tokenizer = AutoTokenizer.from_pretrained(tokenizer_name_or_path)
-        self.pipeline = pipeline(task="text-generation", model=self.model, framework="pt", tokenizer=self.tokenizer)
-        self.pipeline.generation_config = GenerationConfig(
-                **{
-                    **self.generation_params,
-                    "pad_token_id": self.tokenizer.pad_token_type_id,
-                }
+        self.pad_token_id = (
+            self.tokenizer.pad_token_id 
+            if self.tokenizer.pad_token_id 
+            else self.tokenizer.pad_token_type_id
             )
         
-        logger.debug(f"pad token id: {self.tokenizer.pad_token_type_id}")
+        logger.debug(f"pad token id: {self.pad_token_id}")
         logger.debug("Done.")
         return self.model
 
@@ -95,9 +85,31 @@ class BaseModel(DeepEvalBaseLLM):
         if self.should_apply_chat_template:
             logger.debug("trying to apply chat template...")
             prompt = self.tokenizer.apply_chat_template(prompt, tokenize=False, add_generation_prompt=True)
+            logger.debug(prompt)
 
-        sequences: list = self.pipeline(prompt, return_full_text=False)
-        return sequences[0]["generated_text"]
+        logger.debug("Trying to build inputs...")
+        
+        inputs = self.tokenizer(
+            prompt,
+            return_tensors="pt",
+        )
+        
+        device = self.model.device
+        input_ids = inputs.input_ids.to(device)
+        attention_mask = inputs.attention_mask.to(device)
+        
+        outputs = self.model.generate(
+            **{
+                "input_ids": input_ids,
+                "attention_mask": attention_mask,
+                **self.generation_params,
+                "pad_token_id": self.pad_token_id,
+            }
+        )
+        new_tokens = outputs[0][len(input_ids[0]) :]
+        generated_text = self.tokenizer.decode(new_tokens, skip_special_tokens=True).strip()
+        return generated_text
+
 
     async def a_generate(self, prompt: str) -> str:
         """

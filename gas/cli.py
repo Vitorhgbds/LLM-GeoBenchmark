@@ -6,7 +6,7 @@ import toml
 from dotenv import load_dotenv
 
 from gas.logger import Logger
-from gas.models.base import BaseModel
+from gas.models import BaseModel, BasePeftModel
 from gas.pipelines import EvaluationPipeline, GenerationPipeline
 
 logging = Logger()
@@ -142,7 +142,11 @@ def cli() -> None:
     generation_params = config["generation"]
     model_params = config["model"]
     seed = config["environment"].get("seed", None)
-    model = BaseModel(model_params, generation_params, seed=seed)
+    model = (
+        BaseModel(model_params, generation_params, seed=seed)
+        if not model_params.get("preft", False)
+        else BasePeftModel(model_params, generation_params, seed=seed)
+        )
 
     show_info(model=model, seed=seed, generation_params=generation_params, **args_dict)
     match args.command:

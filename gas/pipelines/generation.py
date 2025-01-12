@@ -1,26 +1,21 @@
-
-
-
-from deepeval.dataset import EvaluationDataset
-from deepeval.test_case import LLMTestCase
 from gas.logger import Logger
 from gas.pipelines.pipeline import Pipeline
-from gas.providers import TestCasesProvider, PromptProvider
+from gas.providers import PromptProvider, TestCasesProvider
 
 logging = Logger()
 logger = logging.get_logger()
 
+
 class GenerationPipeline(Pipeline):
-    
     def __init__(self, limit: int | None, *args, **kwargs):
         super().__init__(**kwargs)
         self.limit = limit
-    
+
     def run(self, *args, **kwargs) -> None:
         """
         Method to generate the benchmark test cases.
         """
-        
+
         logger.info("Starting test cases generation pipeline.")
         logger.info("Fetching Geobench dataset...")
         test_data = self.data_provider.fetch_dataset(self.task)
@@ -29,9 +24,7 @@ class GenerationPipeline(Pipeline):
         instruction = PromptProvider.fetch_instruction(self.task)
         logger.info("Done.")
         logger.info("Generating test cases...")
-        test_cases: list[dict[str,str]] = TestCasesProvider.bulk_create(
-            self.model, instruction, test_data, self.limit
-        )
+        test_cases: list[dict[str, str]] = TestCasesProvider.bulk_create(self.model, instruction, test_data, self.limit)
         logger.info("Done.")
         logger.info("Saving test cases...")
         outfile = self.test_cases_path / f"{self.model.get_model_name()}_{self.task.value}.json"

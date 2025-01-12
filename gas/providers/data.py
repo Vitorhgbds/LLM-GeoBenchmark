@@ -1,19 +1,18 @@
-
-
 import csv
-from glob import glob
 import json
 import os
+from glob import glob
 from pathlib import Path
 from typing import Any
+
 from gas.commons import TaskType
 from gas.logger import Logger
 
 logging = Logger()
 logger = logging.get_logger()
 
+
 class DataProvider:
-    
     def __init__(self):
         # Load the JSON content into a dictionary
         json_path = Path().cwd() / "gas" / "data" / "geobench" / "geobenchmark_npee.json"
@@ -28,12 +27,10 @@ class DataProvider:
                 "question": data[type.value.lower()]["question"],
                 "answer": data[type.value.lower()]["answer"],
             }
-        
-            
+
     def fetch_dataset(self, task_type: TaskType) -> dict[str, list[str]]:
         return self._tasks_datasets[task_type]
-    
-    
+
     def find_last_file(self, directory: Path | str, file_pattern: str = "*"):
         """
         find the latest file based on timestamp in the name or modification time.
@@ -57,8 +54,7 @@ class DataProvider:
 
         logger.debug(f"Latest file path: {latest_file}")
         return latest_file
-    
-    
+
     def save(self, records: list[dict[str, Any]], output_file: Path, format: str = "json") -> str:
         """_summary_
 
@@ -75,8 +71,8 @@ class DataProvider:
             if format == "json":
                 json.dump(records, file, indent=4, ensure_ascii=False)
             elif format == "csv":
-                writer = csv.DictWriter(file, fieldnames=records[0].keys(),delimiter=";")
+                writer = csv.DictWriter(file, fieldnames=records[0].keys(), delimiter=";")
                 writer.writeheader()
                 writer.writerows(records)
-                
+
         return output_file

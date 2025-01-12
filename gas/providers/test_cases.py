@@ -1,26 +1,25 @@
 from os import PathLike
 from pathlib import Path
+
 from deepeval.dataset import EvaluationDataset
 from deepeval.models import DeepEvalBaseLLM
 
 from gas.logger import Logger, MyProgress
-from rich.progress import Progress
+
 from .prompt import PromptProvider
 
 logging = Logger()
 logger = logging.get_logger()
 
 
-
 class TestCasesProvider:
-    
     @staticmethod
     def bulk_create(
         model: DeepEvalBaseLLM,
         prompt_instruction: str,
         dataset: dict[str, list[str]],
         limit: int | None,
-    ) -> list[dict[str,str]]:
+    ) -> list[dict[str, str]]:
         """
         Create a list containing LLM Test Cases with generated output.
         Args:
@@ -32,26 +31,27 @@ class TestCasesProvider:
             A list containing the LLM test cases with generated output.
         """
         model.load_model()
-        test_cases: list[dict[str,str]] = []
+        test_cases: list[dict[str, str]] = []
         total = limit if limit else len(dataset["question"])
-        
+
         with MyProgress(logging.console) as progress:
-            task = progress.add_task(f"[bold bright_green]Generating {total} Test Cases:[/bold bright_green]", total=total)
+            task = progress.add_task(
+                f"[bold bright_green]Generating {total} Test Cases:[/bold bright_green]", total=total
+            )
             for i in range(total):
                 question = dataset["question"][i]
                 expected_output = dataset["answer"][i]
 
                 messages = PromptProvider.build_messages(
-                    prompt_instruction,
-                    question, 
-                    apply_chat_template=model.should_apply_chat_template)
+                    prompt_instruction, question, apply_chat_template=model.should_apply_chat_template
+                )
 
                 tc = {
                     "input": question,
                     "expected_output": expected_output,
                     "actual_output": model.generate(messages),
                 }
-                
+
                 test_cases.append(tc)
 
                 if logging.get_level() == "DEBUG":
@@ -61,13 +61,11 @@ class TestCasesProvider:
                         title=f"[bold bright_green]DEBUG Test Case {i + 1} Result[/bold bright_green]",
                         border_style="green",
                         justify="full",
-                        
                     )
-                    
+
                 progress.update(task, advance=1)
         return test_cases
-    
-    
+
     @staticmethod
     def fetch(path: str | PathLike) -> EvaluationDataset:
         full_file_path = Path(path).resolve()
@@ -79,5 +77,5 @@ class TestCasesProvider:
             actual_output_key_name="actual_output",
             expected_output_key_name="expected_output",
         )
-        
+
         return dataset

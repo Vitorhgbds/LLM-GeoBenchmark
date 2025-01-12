@@ -153,6 +153,7 @@ def cli() -> None:
             evaluate(model=model, test_cases_path=tc_path, **evaluation_params, **args_dict)
         case _:
             parser.print_help()
+    os._exit(0)
 
 
 if __name__ == "__main__":

@@ -1,10 +1,11 @@
-from gas.logger import Logger
 from gas.commons import TaskType
-    
+from gas.logger import Logger
+
 logging = Logger()
-logger = logging.get_logger()  
+logger = logging.get_logger()
+
+
 class PromptProvider:
-    
     @staticmethod
     def fetch_instruction(task_type: TaskType) -> str:
         """
@@ -60,7 +61,7 @@ class PromptProvider:
                 )
             case _:
                 raise ValueError("Invalid benchmark type")
-            
+
         task_instruction = (
             "Below is an instruction that describes a task, "
             "paired with an input that provides further context. "
@@ -74,25 +75,14 @@ class PromptProvider:
                 border_style="yellow",
             )
         return task_instruction
-        
+
     @staticmethod
-    def build_messages(instruction: str, input: str, apply_chat_template: bool) -> list[dict[str,str]] | str:
+    def build_messages(instruction: str, input: str, apply_chat_template: bool) -> list[dict[str, str]] | str:
         if apply_chat_template:
             return [
-                {
-                "role": "user", 
-                "content": f"{instruction}\n"
-                },
-                {
-                "role": "assistant", 
-                "content": "Okay, I'm ready. Please provide the input.\n"},
-                {
-                "role": "user", 
-                "content": f"### Input:\n{input}\n\n### Response:\n"
-                },
+                {"role": "user", "content": f"{instruction}\n"},
+                {"role": "assistant", "content": "Okay, I'm ready. Please provide the input.\n"},
+                {"role": "user", "content": f"### Input:\n{input}\n\n### Response:\n"},
             ]
         else:
-            return (
-                f"{instruction}\n"
-                f"### Input:\n{input}\n\n### Response:\n"
-            )
+            return f"{instruction}\n" f"### Input:\n{input}\n\n### Response:\n"

@@ -17,7 +17,7 @@ pretrained_model_name_or_path = "daven3/k2"
 # Can be a huggingface model name or full path for a checkpoint file
 tokenizer_name_or_path = "huggyllama/llama-7b"
 # Cache directory to store and consume models.
-cache_dir = ""
+cache_dir = "/mnt/D-SSD/parraga/LLMs/cache"
 should_apply_chat_template = false
 
 [generation]

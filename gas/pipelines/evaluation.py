@@ -1,47 +1,51 @@
-
 import json
 import os
 from pathlib import Path
 from typing import Any
-from gas.logger import Logger
-from gas.pipelines.pipeline import Pipeline
-from gas.commons import TaskType
-from gas.providers import PromptProvider, TestCasesProvider
-from deepeval.metrics import BaseMetric, AnswerRelevancyMetric, GEval, PromptAlignmentMetric
-from deepeval.test_case import LLMTestCaseParams
-from deepeval import evaluate
-from gas.metrics import BertSimilarityMetric, ObjectiveAccuracyMetric
 
+from deepeval import evaluate
+from deepeval.metrics import AnswerRelevancyMetric, BaseMetric, GEval, PromptAlignmentMetric
+from deepeval.test_case import LLMTestCaseParams
+
+from gas.commons import TaskType
+from gas.logger import Logger
+from gas.metrics import BertSimilarityMetric, ObjectiveAccuracyMetric
+from gas.pipelines.pipeline import Pipeline
+from gas.providers import PromptProvider, TestCasesProvider
 
 logging = Logger()
 logger = logging.get_logger()
+
+
 class EvaluationPipeline(Pipeline):
     def __init__(self, model_judge: str, results_path: str, *args, **kwargs):
         super().__init__(**kwargs)
         self.model_judge = model_judge
         self.results_path = Path(results_path)
-    
-    def _create_summary(self) -> list[dict[str,Any]]:
+
+    def _create_summary(self) -> list[dict[str, Any]]:
         deepEval_result_folder = os.environ.get("DEEPEVAL_RESULTS_FOLDER", None)
         if not deepEval_result_folder:
             logger.error("File Not Found")
             raise FileNotFoundError()
-        
+
         de_result_folder_path = Path(deepEval_result_folder)
         last_result_file = self.data_provider.find_last_file(de_result_folder_path)
-        
+
         de_result_path = Path(last_result_file)
-        tc_result_path = self.test_cases_path / "result" / f"result_{self.model.get_model_name()}_{self.task.value}.json"
+        tc_result_path = (
+            self.test_cases_path / "result" / f"result_{self.model.get_model_name()}_{self.task.value}.json"
+        )
         tc_result_path.parent.mkdir(parents=True, exist_ok=True)
         if tc_result_path.exists():
             tc_result_path.unlink()
         de_result_path = de_result_path.rename(tc_result_path)
-        
+
         with Path.open(de_result_path, encoding="utf-8") as json_file:
             data = json.load(json_file)
 
         test_cases: list[dict[str, Any]] = data["testCases"]
-        
+
         totals: dict[str, dict[str, float]] = {}
         for test_case in test_cases:
             metrics: list[dict[str, Any]] = test_case.get("metricsData", [])
@@ -56,20 +60,20 @@ class EvaluationPipeline(Pipeline):
                 totals[name]["total_success"] += 1 if success else 0
                 totals[name]["total_tests"] += 1
                 totals[name]["total_cost"] += cost
-        
+
+        def format_metric_values(values):
+            details = "\n".join([f"{k}: {v}" for k, v in values.items()])
+            avg_score = f"average score: {values['total_score'] / values['total_tests']:.2f}"
+            success_rate = f"success rate: {values['total_success'] / values['total_tests'] * 100:.2f}%"
+            return f"{details}\n{avg_score}\n{success_rate}"
+
         logging.print_table_panel(
-            {
-                metric : (
-                    f"{'\n'.join([f'{k}: {v}' for k,v in values.items()])}\n"
-                    f"average score: {values['total_score'] / values['total_tests']}\n"
-                    f"success rate: {values['total_success'] / values['total_tests'] * 100}"
-                    )
-                for metric, values in totals.items()
-            }, 
-            title="[bold bright_green]Benchmark Summary[/bold bright_green]", border_style="green"
-            )
-        
-        summary: list[dict[str,Any]] = []
+            {metric: format_metric_values(values) for metric, values in totals.items()},
+            title="[bold bright_green]Benchmark Summary[/bold bright_green]",
+            border_style="green",
+        )
+
+        summary: list[dict[str, Any]] = []
         for metric, values in totals.items():
             summary.append(
                 {
@@ -79,12 +83,12 @@ class EvaluationPipeline(Pipeline):
                     "metric": metric,
                     **values,
                     "average_score": values["total_score"] / values["total_tests"],
-                    "success_rate": values["total_success"] / values["total_tests"]
+                    "success_rate": values["total_success"] / values["total_tests"],
                 }
             )
-        
+
         return summary
-        
+
     def _fetch_metrics(self) -> list[BaseMetric]:
         """
         Fetches the evaluation metrics for the specified benchmark type.
@@ -108,10 +112,10 @@ class EvaluationPipeline(Pipeline):
             return [
                 BertSimilarityMetric(threshold=0.5),
                 PromptAlignmentMetric(
-                    prompt_instructions=[PromptProvider.fetch_instruction(self.task)], 
-                    include_reason=True, 
-                    model=self.model_judge, 
-                    threshold=0.5
+                    prompt_instructions=[PromptProvider.fetch_instruction(self.task)],
+                    include_reason=True,
+                    model=self.model_judge,
+                    threshold=0.5,
                 ),
                 AnswerRelevancyMetric(threshold=0.5, model=self.model_judge, include_reason=True),
                 GEval(
@@ -135,7 +139,7 @@ class EvaluationPipeline(Pipeline):
                     ],
                 ),
             ]
-        
+
     def run(self, *args, **kwargs):
         logger.info("Fetching benchmark metrics")
         metrics = self._fetch_metrics()
@@ -159,5 +163,5 @@ class EvaluationPipeline(Pipeline):
         logger.info("Done.")
         logger.info("Saving benchmark into CSV file...")
         outpath = Path(self.results_path) / f"summary_{self.model.get_model_name()}_{self.task.value}.json"
-        self.data_provider.save(summary,outpath,"json")
+        self.data_provider.save(summary, outpath, "json")
         logger.info("Done.")

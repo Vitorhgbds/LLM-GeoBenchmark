@@ -60,21 +60,25 @@ class BaseModel(DeepEvalBaseLLM):
             cache_dir=self.model_params.get("cache_dir", None),
         )
 
-
         tokenizer_name_or_path = (
             self.model_params.get("tokenizer_name_or_path")
             if self.model_params.get("tokenizer_name_or_path", None)
             else self.model_path_or_name
         )
         self.tokenizer = AutoTokenizer.from_pretrained(tokenizer_name_or_path)
+        if "galactica" in self.model_path_or_name:
+            logger.debug("Setting chat template for Galactica model...")
+            self.tokenizer.chat_template = (
+                "{% for message in messages %}{{ message.content }}{{ eos_token }}{% endfor %}"
+            )
         self.pipeline = pipeline(task="text-generation", model=self.model, framework="pt", tokenizer=self.tokenizer)
         self.pipeline.generation_config = GenerationConfig(
-                **{
-                    **self.generation_params,
-                    "pad_token_id": self.tokenizer.pad_token_type_id,
-                }
-            )
-        
+            **{
+                **self.generation_params,
+                "pad_token_id": self.tokenizer.pad_token_type_id,
+            }
+        )
+
         logger.debug(f"pad token id: {self.tokenizer.pad_token_type_id}")
         logger.debug("Done.")
         return self.model

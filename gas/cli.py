@@ -77,6 +77,15 @@ def make_shared_commands(parser: argparse.ArgumentParser) -> argparse.ArgumentPa
         dest="config_path",
         metavar="<PATH>",
         help="Path to config file.\nDefault: %(default)s\n\n",
+        required=True
+    )
+    parser.add_argument(
+        "-e",
+        "--dotenv",
+        type=str,
+        dest="dotenv_path",
+        metavar="<PATH>",
+        help="Path to Dotenv file.\nDefault: %(default)s\n\n",
         default=None,
     )
     return parser
@@ -130,11 +139,13 @@ def cli() -> None:
     args_dict = vars(args).copy()
     logging.set_level(args_dict.pop("log_level"))
 
+    dotenv_path = args_dict.get("dotenv_path", ".env")
+    load_dotenv(dotenv_path=dotenv_path) if dotenv_path else load_dotenv()
+    
     config_path = args_dict.get("config_path", "./config.toml")
     config = toml.load(config_path)
+    
     tc_path = config["environment"]["test_cases_path"]
-    dotenv_path = config["environment"].get("dotenv_path", None)
-    load_dotenv(dotenv_path=dotenv_path) if dotenv_path else load_dotenv()
 
     key = os.environ.get("OPENAI_API_KEY")
     logger.debug(key)
@@ -146,7 +157,7 @@ def cli() -> None:
         BaseModel(model_params, generation_params, seed=seed)
         if not model_params.get("peft", False)
         else BasePeftModel(model_params, generation_params, seed=seed)
-        )
+    )
 
     show_info(model=model, seed=seed, generation_params=generation_params, **args_dict)
     match args.command:

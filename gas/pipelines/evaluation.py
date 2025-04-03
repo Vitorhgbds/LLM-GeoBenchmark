@@ -156,7 +156,7 @@ class EvaluationPipeline(Pipeline):
         dataset = TestCasesProvider.fetch(tests_path)
         logger.info("Done.")
         logger.info("Starting Deepeval Evaluation...")
-        evaluate(dataset, metrics, write_cache=True, print_results=False, max_concurrent=30)
+        evaluate(dataset, metrics, write_cache=True, use_cache=True, print_results=False, max_concurrent=30)
         logger.info("Done.")
         logger.info("Creating benchmark summary...")
         summary = self._create_summary()

@@ -3,6 +3,7 @@ import os
 from typing import Any
 
 import toml
+from deepeval.models import DeepEvalBaseLLM
 from dotenv import load_dotenv
 
 from gas.logger import Logger
@@ -14,8 +15,23 @@ logger = logging.get_logger()
 
 
 def show_info(
-    model: BaseModel, task: str, seed: int | None, generation_params: dict[str, Any], limit: int | None = None, **kwargs
-):
+    model: DeepEvalBaseLLM,
+    task: str,
+    seed: int | None,
+    generation_params: dict[str, Any],
+    limit: int | None = None,
+    **kwargs,
+) -> None:
+    """
+    Show information about the benchmark task, model, and generation parameters.
+    Args:
+        model (DeepEvalBaseLLM): The model to evaluate.
+        task (str): The task type.
+        seed (int | None): The random seed for reproducibility.
+        generation_params (dict[str, Any]): The generation parameters for the model.
+        limit (int | None, optional): The limit for the number of test cases to generate. Defaults to None.
+        **kwargs: Additional arguments.
+    """
     info = {
         "Geoscience benchmark task:": task,
         "Model for evaluation:": model.get_model_name(),
@@ -33,11 +49,32 @@ def show_info(
     )
 
 
-def generate(model: BaseModel, task: str, limit: int | None, test_cases_path: str, **kwargs):
+def generate(model: DeepEvalBaseLLM, task: str, limit: int | None, test_cases_path: str, **kwargs) -> None:
+    """
+    Args:
+        model (DeepEvalBaseLLM): The model to evaluate.
+        task (str): The task type.
+        limit (int | None): The limit for the number of test cases to generate.
+        test_cases_path (str): Path to the test cases file.
+        **kwargs: Additional arguments for the generation pipeline.
+    """
     GenerationPipeline(model=model, task=task, test_cases_path=test_cases_path, limit=limit, **kwargs).run()
 
 
-def evaluate(model, task: str, model_judge: str, test_cases_path: str, results_path: str, **kwargs):
+def evaluate(
+    model: BasePeftModel, task: str, model_judge: str, test_cases_path: str, results_path: str, **kwargs
+) -> None:
+    """
+    Evaluate the generated test cases using the specified model judge.
+
+    Args:
+        model (BasePeftModel): The model to evaluate.
+        task (str): The task type.
+        model_judge (str): The model judge to use for evaluation.
+        test_cases_path (str): Path to the test cases file.
+        results_path (str): Path to save the evaluation results.
+        **kwargs: Additional arguments for the evaluation pipeline.
+    """
     EvaluationPipeline(
         model=model,
         task=task,
@@ -49,6 +86,14 @@ def evaluate(model, task: str, model_judge: str, test_cases_path: str, results_p
 
 
 def make_shared_commands(parser: argparse.ArgumentParser) -> argparse.ArgumentParser:
+    """
+    Add shared commands to the argument parser.
+    Args:
+        parser (argparse.ArgumentParser): The argument parser instance.
+
+    Returns:
+        argparse.ArgumentParser: The updated argument parser instance with shared commands.
+    """
     parser.add_argument(
         "-t",
         "--task",
@@ -77,7 +122,7 @@ def make_shared_commands(parser: argparse.ArgumentParser) -> argparse.ArgumentPa
         dest="config_path",
         metavar="<PATH>",
         help="Path to config file.\nDefault: %(default)s\n\n",
-        required=True
+        required=True,
     )
     parser.add_argument(
         "-e",
@@ -92,6 +137,11 @@ def make_shared_commands(parser: argparse.ArgumentParser) -> argparse.ArgumentPa
 
 
 def build_argparser() -> argparse.ArgumentParser:
+    """Build the argument parser for the command line interface.
+
+    Returns:
+        argparse.ArgumentParser: The argument parser object.
+    """
     parser = argparse.ArgumentParser(
         description="GAS: A command line tool for running the Geobenchmark evaluation suite.",
         formatter_class=argparse.RawTextHelpFormatter,
@@ -141,10 +191,10 @@ def cli() -> None:
 
     dotenv_path = args_dict.get("dotenv_path", ".env")
     load_dotenv(dotenv_path=dotenv_path) if dotenv_path else load_dotenv()
-    
+
     config_path = args_dict.get("config_path", "./config.toml")
     config = toml.load(config_path)
-    
+
     tc_path = config["environment"]["test_cases_path"]
 
     key = os.environ.get("OPENAI_API_KEY")

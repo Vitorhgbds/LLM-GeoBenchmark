@@ -1,10 +1,11 @@
 from typing import Any
 
 from deepeval.models import DeepEvalBaseLLM
-from peft import AutoPeftModelForCausalLM
+from peft import AutoPeftModelForCausalLM, PeftModel
 from transformers import (
     AutoTokenizer,
     BitsAndBytesConfig,
+    PreTrainedTokenizerBase,
     set_seed,
 )
 
@@ -26,16 +27,17 @@ class BasePeftModel(DeepEvalBaseLLM):
         self.model_path_or_name: str = model_params.get("pretrained_model_name_or_path", "")
         self.model_name = self.model_path_or_name.split("/")[-1].replace(".", "_")
 
-        self.model = None
-        self.tokenizer = None
+        self._model_init: bool = False
+        self.model: PeftModel
+        self.tokenizer: PreTrainedTokenizerBase
 
         self.should_apply_chat_template = model_params.get("should_apply_chat_template", True)
 
-    def load_model(self, *args, **kwargs) -> AutoPeftModelForCausalLM:
+    def load_model(self, *args, **kwargs) -> PeftModel:
         """
         Load the model.
         """
-        if self.model:
+        if self._model_init:
             return self.model
 
         logger.debug("Trying to initialize peft model...")
@@ -58,18 +60,21 @@ class BasePeftModel(DeepEvalBaseLLM):
         )
 
         self.tokenizer = AutoTokenizer.from_pretrained(self.model.peft_config["default"].base_model_name_or_path)
-        
+
         custom_chat_template = self.model_params.get("custom_chat_template", None)
         if custom_chat_template:
             logger.debug(f"Setting chat template {custom_chat_template}...")
             self.tokenizer.chat_template = custom_chat_template
-        
+
         self.pad_token_id = (
-            self.tokenizer.pad_token_id if self.tokenizer.pad_token_id else self.tokenizer.pad_token_type_id
+            self.tokenizer.pad_token_id  # mypy: ignore[attr-defined]
+            if self.tokenizer.pad_token_id  # mypy: ignore[attr-defined]
+            else self.tokenizer.pad_token_type_id
         )
 
         logger.debug(f"pad token id: {self.pad_token_id}")
         logger.debug("Done.")
+        self._model_init = True
         return self.model
 
     def generate(self, prompt: list[str] | str) -> str:
@@ -80,7 +85,7 @@ class BasePeftModel(DeepEvalBaseLLM):
         Returns:
             The generated text.
         """
-        self.load_model()
+        self.model = self.load_model()
 
         if self.seed:
             set_seed(self.seed)
@@ -97,14 +102,13 @@ class BasePeftModel(DeepEvalBaseLLM):
             return_tensors="pt",
         )
 
-        device = self.model.device
-        input_ids = inputs.input_ids.to(device)
-        attention_mask = inputs.attention_mask.to(device)
+        device = self.model.device  # mypy: ignore[attr-defined]
+        input_ids = inputs.to(device)
 
         outputs = self.model.generate(
             **{
-                "input_ids": input_ids,
-                "attention_mask": attention_mask,
+                "input_ids": inputs.get("input_ids"),
+                "attention_mask": inputs.get("attention_mask"),
                 **self.generation_params,
                 "pad_token_id": self.pad_token_id,
             }

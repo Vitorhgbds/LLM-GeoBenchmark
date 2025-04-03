@@ -12,6 +12,8 @@ from rich.table import Table
 
 
 class Logger:
+    """Logger class for rich console logging."""
+
     _instance = None
     _lock = Lock()  # Thread-safe initialization
 
@@ -47,6 +49,10 @@ class Logger:
         ]
 
     def get_logger(self) -> logging.Logger:
+        """Get the logger instance
+        Returns:
+            logging.Logger: The logger instance.
+        """
         return self.logger
 
     def set_level(self, level: str, is_verbose: bool = False) -> None:
@@ -99,7 +105,16 @@ class Logger:
                 **console_log_kwargs,
             )
 
-    def print_panel(self, information: str, **kwargs):
+    def print_panel(self, information: str, **kwargs) -> None:
+        """Display information inside a panel.
+        This function takes a string and displays it inside a panel with optional
+        parameters for customization. The panel can have a title, border style,
+        and other attributes. The function also allows for console logging
+        with specific parameters.
+
+        Args:
+            information (str): The information to display inside the panel.
+        """
         panel_kwargs = {k: v for k, v in kwargs.items() if k in self.panel_params}
         console_log_kwargs = {k: v for k, v in kwargs.items() if k in self.console_log_params}
         with self._lock:
@@ -111,13 +126,21 @@ class Logger:
 
     @staticmethod
     def print_help(parser: argparse.ArgumentParser) -> None:
-        """Print the parser's help message beautifully."""
+        """Print the parser's help message beautifully.
+
+        Args:
+            parser (argparse.ArgumentParser): The argument parser instance.
+        """
         console = Console()
         help_text = parser.format_help()
         console.print(Panel(help_text, title="[bold cyan]Help[/bold cyan]", border_style="blue"))
 
 
 class MyProgress(Progress):
+    """Custom progress bar for displaying tasks in a panel.
+    This class extends the Progress class from the rich library to provide
+    """
+
     def __init__(self, console, **kwargs):
         # Default columns for the progress bar
         default_columns = [
@@ -134,4 +157,10 @@ class MyProgress(Progress):
         super().__init__(*default_columns, console=console, **kwargs)
 
     def get_renderables(self):
+        """
+        Get the renderables for the progress bar.
+
+        Yields:
+            Renderable: The renderables for the progress bar.
+        """
         yield Panel(self.make_tasks_table(self.tasks))

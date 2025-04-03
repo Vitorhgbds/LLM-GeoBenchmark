@@ -25,7 +25,6 @@ rich = "^13.9.4"
 sentencepiece = "^0.2.0"
 deepeval = "=2.0.9"
 bert-score = "^0.3.13"
-pandas = "^2.2.3"
 peft = "^0.14.0"
 torch = "^2.5.1"
 toml = "^0.10.2"
@@ -38,7 +37,7 @@ mypy = "^1.14.0"
 pytest = "^8.3.4"
 
 [tool.ruff]
-exclude = [".git", ".mypy_cache", ".ruff_cache", ".venv", "./gas/models/deprecated/"]
+exclude = [".git", ".mypy_cache", ".ruff_cache", ".venv", "./paper/"]
 line-length = 120
 indent-width = 4
 
@@ -103,7 +102,7 @@ case-sensitive = true
 combine-as-imports = true
 
 [tool.mypy]
-exclude = ["./gas/models/deprecated/"]
+exclude = ["./paper/"]
 mypy_path = "gas"
 follow_imports = "silent"
 no_implicit_optional = true

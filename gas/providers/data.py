@@ -29,6 +29,14 @@ class DataProvider:
             }
 
     def fetch_dataset(self, task_type: TaskType) -> dict[str, list[str]]:
+        """Fetches the dataset for the specified task type.
+
+        Args:
+            task_type (TaskType): The type of task for which to fetch the dataset.
+
+        Returns:
+            dict[str, list[str]]: A dictionary containing the dataset for the specified task type.
+        """
         return self._tasks_datasets[task_type]
 
     def find_last_file(self, directory: Path | str, file_pattern: str = "*"):
@@ -55,14 +63,15 @@ class DataProvider:
         logger.debug(f"Latest file path: {latest_file}")
         return latest_file
 
-    def save(self, records: list[dict[str, Any]], output_file: Path, format: str = "json") -> str:
-        """_summary_
+    def save(self, records: list[dict[str, Any]], output_file: Path, format: str = "json") -> Path:
+        """
+        Save records to a file in JSON or CSV format.
 
         Args:
-            records (list[dict[str, Any]]): _description_
+            records (list[dict[str, Any]]): List of dictionaries to save.
 
         Returns:
-            str: _description_
+            Path: Path to the saved file.
         """
         # Create the directory if it doesn't exist
         output_file.parent.mkdir(parents=True, exist_ok=True)

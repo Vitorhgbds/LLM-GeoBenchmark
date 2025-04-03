@@ -78,6 +78,22 @@ class PromptProvider:
 
     @staticmethod
     def build_messages(instruction: str, input: str, apply_chat_template: bool) -> list[dict[str, str]] | str:
+        """
+        Build messages for the chat template.
+        This function takes an instruction and input, and returns a list of messages
+        formatted for the chat template. The messages include the instruction, a prompt
+        for the user, and a prompt for the assistant. The function also includes an
+        option to apply the chat template, which determines whether the messages are
+        formatted as a list of dictionaries or as a single string.
+
+        Args:
+            instruction (str): instruction for the task
+            input (str): input for the task
+            apply_chat_template (bool): whether to apply the chat template
+
+        Returns:
+            list[dict[str, str]] | str: formatted messages for the prompt
+        """
         if apply_chat_template:
             return [
                 {"role": "user", "content": f"{instruction}\n"},

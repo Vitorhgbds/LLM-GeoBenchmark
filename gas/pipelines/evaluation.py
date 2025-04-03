@@ -24,6 +24,27 @@ class EvaluationPipeline(Pipeline):
         self.results_path = Path(results_path)
 
     def _create_summary(self) -> list[dict[str, Any]]:
+        """
+        Create a summary of the evaluation results.
+        This method reads the evaluation results from a JSON file, processes the data,
+        and generates a summary report.
+        It calculates the total score, success rate, and other metrics for each test case.
+        The summary is then printed in a formatted table.
+
+        NOTE: The summary includes the following metrics:
+            - average_score: The average score for the test case.
+            - success_rate: The success rate for the test case.
+            - total_score: The total score for the test case.
+            - total_success: The total number of successful evaluations.
+            - total_tests: The total number of tests conducted.
+            - total_cost: The total cost of the evaluation.
+
+        Raises:
+            FileNotFoundError: If the evaluation results file is not found.
+
+        Returns:
+            list[dict[str, Any]]: A list of dictionaries containing the summary of the evaluation results.
+        """
         deepEval_result_folder = os.environ.get("DEEPEVAL_RESULTS_FOLDER", None)
         if not deepEval_result_folder:
             logger.error("File Not Found")
@@ -61,7 +82,14 @@ class EvaluationPipeline(Pipeline):
                 totals[name]["total_tests"] += 1
                 totals[name]["total_cost"] += cost
 
-        def format_metric_values(values):
+        def format_metric_values(values: dict[str, float]) -> str:
+            """
+            Format the metric values for display.
+            args:
+                values (dict[str, float]): The metric values to format.
+            returns:
+                str: The formatted metric values.
+            """
             details = "\n".join([f"{k}: {v}" for k, v in values.items()])
             avg_score = f"average score: {values['total_score'] / values['total_tests']:.2f}"
             success_rate = f"success rate: {values['total_success'] / values['total_tests'] * 100:.2f}%"
@@ -74,13 +102,13 @@ class EvaluationPipeline(Pipeline):
         )
 
         summary: list[dict[str, Any]] = []
-        for metric, values in totals.items():
+        for m, values in totals.items():
             summary.append(
                 {
                     "model": self.model.get_model_name(),
                     "judge": self.model_judge,
                     "task": self.task.value,
-                    "metric": metric,
+                    "metric": m,
                     **values,
                     "average_score": values["total_score"] / values["total_tests"],
                     "success_rate": values["total_success"] / values["total_tests"],
@@ -141,6 +169,12 @@ class EvaluationPipeline(Pipeline):
             ]
 
     def run(self, *args, **kwargs):
+        """
+        Run the evaluation pipeline.
+        args:
+            *args: Additional positional arguments.
+            **kwargs: Additional keyword arguments.
+        """
         logger.info("Fetching benchmark metrics")
         metrics = self._fetch_metrics()
         log_metrics = "\n".join([m.__name__ for m in metrics])

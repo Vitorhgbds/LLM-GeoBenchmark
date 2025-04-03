@@ -6,6 +6,9 @@ from transformers import (
     AutoTokenizer,
     BitsAndBytesConfig,
     GenerationConfig,
+    Pipeline,
+    PreTrainedModel,
+    PreTrainedTokenizerBase,
     pipeline,
     set_seed,
 )
@@ -28,9 +31,10 @@ class BaseModel(DeepEvalBaseLLM):
         self.model_path_or_name: str = model_params.get("pretrained_model_name_or_path", "")
         self.model_name = self.model_path_or_name.split("/")[-1].replace(".", "_")
 
-        self.model = None
-        self.tokenizer = None
-        self.pipeline = None
+        self._model_init: bool = False
+        self.model: PreTrainedModel
+        self.tokenizer: PreTrainedTokenizerBase
+        self.pipeline: Pipeline
 
         self.should_apply_chat_template = model_params.get("should_apply_chat_template", True)
 
@@ -38,7 +42,7 @@ class BaseModel(DeepEvalBaseLLM):
         """
         Load the model.
         """
-        if self.model:
+        if self._model_init:
             return self.model
 
         logger.debug("Trying to initialize model...")
@@ -70,12 +74,8 @@ class BaseModel(DeepEvalBaseLLM):
         if custom_chat_template:
             logger.debug(f"Setting chat template {custom_chat_template}...")
             self.tokenizer.chat_template = custom_chat_template
-            
-        pad_token_id = (
-            self.tokenizer.pad_token_id
-            if self.tokenizer.pad_token_id
-            else self.tokenizer.pad_token_type_id
-            )
+
+        pad_token_id = self.tokenizer.pad_token_id if self.tokenizer.pad_token_id else self.tokenizer.pad_token_type_id
         self.pipeline = pipeline(task="text-generation", model=self.model, framework="pt", tokenizer=self.tokenizer)
         self.pipeline.generation_config = GenerationConfig(
             **{
@@ -86,6 +86,7 @@ class BaseModel(DeepEvalBaseLLM):
 
         logger.debug(f"pad token id: {self.tokenizer.pad_token_type_id}")
         logger.debug("Done.")
+        self._model_init = True
         return self.model
 
     def generate(self, prompt: list[str] | str) -> str:

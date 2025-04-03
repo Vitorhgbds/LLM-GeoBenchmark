@@ -69,6 +69,26 @@ class TestCasesProvider:
 
     @staticmethod
     def fetch(path: str | PathLike) -> EvaluationDataset:
+        """
+        Fetch the test cases from a JSON file.
+        The test cases should be in the following format:
+
+        ..code-block:: json
+        [
+            {
+                "input": "input text",
+                "actual_output": "actual output",
+                "expected_output": "expected output"
+            },
+            ...
+        ]
+
+        Args:
+            path (str | PathLike): path to the JSON file containing test cases
+
+        Returns:
+            EvaluationDataset: An EvaluationDataset object containing the test cases.
+        """
         full_file_path = Path(path).resolve()
         dataset = EvaluationDataset()
 

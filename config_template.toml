@@ -2,8 +2,6 @@
 seed = 42
 # Directory to store and consume test cases
 test_cases_path = "./tc"
-# dotenv path
-dotenv_path = ".env"
 
 [model]
 # Can be a huggingface model name or full path for a checkpoint file

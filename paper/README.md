@@ -1,6 +1,6 @@
 # PAPER: WHICH IS THE BEST LLM FOR GEOSCIENCES?
 
-This folder contains the generated test cases and results for the paper WHICH IS THE BEST LLM FOR GEOSCIENCES? (Garcez Vitor, 2025).
+This folder contains the generated test cases and results for the paper WHICH IS THE BEST LLM FOR GEOSCIENCES? (Garcez et al., 2025).
 
 Folder structure:
 ```

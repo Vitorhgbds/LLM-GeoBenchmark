@@ -127,5 +127,5 @@ gas --log-level DEBUG --task TF --config ./config.toml --dotenv ./.env evaluate
 
 ## Paper results reproduction
 
-- The results of the paper "WICH LLM IS THE BEST FOR GEOSCIENCE?" can be reproduced using the `paper/run_evaluate_all.sh` script. This script will run the evaluation for all models specified in the `paper/configs` folder using the pre-generated test cases in the `paper/test_cases` folder. The results will be saved in the `paper/test_cases/result` folder.
+- The results of the paper "WICH IS THE BEST LLM FOR GEOSCIENCE?" can be reproduced using the `paper/run_evaluate_all.sh` script. This script will run the evaluation for all models specified in the `paper/configs` folder using the pre-generated test cases in the `paper/test_cases` folder. The results will be saved in the `paper/test_cases/result` folder.
 - Paper results are available in the `paper/test_cases/results_summarized` and `paper/test_cases/result` folders.

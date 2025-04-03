@@ -1,0 +1,50 @@
+[
+    {
+        "model": "Llama-3_2-3B-Instruct",
+        "judge": "gpt-4o-mini",
+        "task": "NOUN",
+        "metric": "Bert Similarity Metric",
+        "total_score": 61.24595569900703,
+        "total_success": 3.0,
+        "total_cost": 0.0,
+        "total_tests": 454.0,
+        "average_score": 0.13490298612116086,
+        "success_rate": 0.006607929515418502
+    },
+    {
+        "model": "Llama-3_2-3B-Instruct",
+        "judge": "gpt-4o-mini",
+        "task": "NOUN",
+        "metric": "Prompt Alignment",
+        "total_score": 157.0,
+        "total_success": 157.0,
+        "total_cost": 0.08357594999999995,
+        "total_tests": 454.0,
+        "average_score": 0.3458149779735683,
+        "success_rate": 0.3458149779735683
+    },
+    {
+        "model": "Llama-3_2-3B-Instruct",
+        "judge": "gpt-4o-mini",
+        "task": "NOUN",
+        "metric": "Answer Relevancy",
+        "total_score": 425.42889610389625,
+        "total_success": 435.0,
+        "total_cost": 0.12282405000000002,
+        "total_tests": 454.0,
+        "average_score": 0.9370680530922825,
+        "success_rate": 0.9581497797356828
+    },
+    {
+        "model": "Llama-3_2-3B-Instruct",
+        "judge": "gpt-4o-mini",
+        "task": "NOUN",
+        "metric": "Correctness (GEval)",
+        "total_score": 107.85724680026391,
+        "total_success": 20.0,
+        "total_cost": 0.03847215000000002,
+        "total_tests": 454.0,
+        "average_score": 0.2375710281944139,
+        "success_rate": 0.04405286343612335
+    }
+]

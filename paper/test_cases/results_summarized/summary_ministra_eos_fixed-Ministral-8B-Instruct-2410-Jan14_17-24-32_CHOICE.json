@@ -1,0 +1,14 @@
+[
+    {
+        "model": "ministra_eos_fixed-Ministral-8B-Instruct-2410-Jan14_17-24-32",
+        "judge": "gpt-4o-mini",
+        "task": "CHOICE",
+        "metric": "Objective Task Accuracy Metric",
+        "total_score": 89.0,
+        "total_success": 89.0,
+        "total_cost": 0.0,
+        "total_tests": 182.0,
+        "average_score": 0.489010989010989,
+        "success_rate": 0.489010989010989
+    }
+]

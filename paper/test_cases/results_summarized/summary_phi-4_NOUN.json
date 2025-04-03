@@ -1,0 +1,50 @@
+[
+    {
+        "model": "phi-4",
+        "judge": "gpt-4o-mini",
+        "task": "NOUN",
+        "metric": "Bert Similarity Metric",
+        "total_score": 60.98456450854428,
+        "total_success": 0.0,
+        "total_cost": 0.0,
+        "total_tests": 454.0,
+        "average_score": 0.1343272346003178,
+        "success_rate": 0.0
+    },
+    {
+        "model": "phi-4",
+        "judge": "gpt-4o-mini",
+        "task": "NOUN",
+        "metric": "Prompt Alignment",
+        "total_score": 278.33333333333337,
+        "total_success": 278.0,
+        "total_cost": 0.08032229999999994,
+        "total_tests": 454.0,
+        "average_score": 0.6130690161527167,
+        "success_rate": 0.6123348017621145
+    },
+    {
+        "model": "phi-4",
+        "judge": "gpt-4o-mini",
+        "task": "NOUN",
+        "metric": "Answer Relevancy",
+        "total_score": 443.7845265845267,
+        "total_success": 449.0,
+        "total_cost": 0.14096369999999994,
+        "total_tests": 454.0,
+        "average_score": 0.9774989572346403,
+        "success_rate": 0.9889867841409692
+    },
+    {
+        "model": "phi-4",
+        "judge": "gpt-4o-mini",
+        "task": "NOUN",
+        "metric": "Correctness (GEval)",
+        "total_score": 126.99476791187004,
+        "total_success": 25.0,
+        "total_cost": 0.03878024999999998,
+        "total_tests": 454.0,
+        "average_score": 0.2797241583961895,
+        "success_rate": 0.05506607929515418
+    }
+]

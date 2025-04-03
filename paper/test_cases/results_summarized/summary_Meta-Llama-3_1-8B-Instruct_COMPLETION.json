@@ -1,0 +1,50 @@
+[
+    {
+        "model": "Meta-Llama-3_1-8B-Instruct",
+        "judge": "gpt-4o-mini",
+        "task": "COMPLETION",
+        "metric": "Bert Similarity Metric",
+        "total_score": 20.51259767031297,
+        "total_success": 15.0,
+        "total_cost": 0.0,
+        "total_tests": 150.0,
+        "average_score": 0.13675065113541982,
+        "success_rate": 0.1
+    },
+    {
+        "model": "Meta-Llama-3_1-8B-Instruct",
+        "judge": "gpt-4o-mini",
+        "task": "COMPLETION",
+        "metric": "Prompt Alignment",
+        "total_score": 75.0,
+        "total_success": 75.0,
+        "total_cost": 0.025232699999999993,
+        "total_tests": 150.0,
+        "average_score": 0.5,
+        "success_rate": 0.5
+    },
+    {
+        "model": "Meta-Llama-3_1-8B-Instruct",
+        "judge": "gpt-4o-mini",
+        "task": "COMPLETION",
+        "metric": "Answer Relevancy",
+        "total_score": 132.13214285714284,
+        "total_success": 136.0,
+        "total_cost": 0.02693624999999999,
+        "total_tests": 150.0,
+        "average_score": 0.8808809523809522,
+        "success_rate": 0.9066666666666666
+    },
+    {
+        "model": "Meta-Llama-3_1-8B-Instruct",
+        "judge": "gpt-4o-mini",
+        "task": "COMPLETION",
+        "metric": "Correctness (GEval)",
+        "total_score": 18.230643006639472,
+        "total_success": 4.0,
+        "total_cost": 0.010815150000000006,
+        "total_tests": 150.0,
+        "average_score": 0.12153762004426315,
+        "success_rate": 0.02666666666666667
+    }
+]

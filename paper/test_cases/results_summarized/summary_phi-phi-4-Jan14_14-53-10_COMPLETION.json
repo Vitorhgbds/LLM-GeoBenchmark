@@ -1,0 +1,50 @@
+[
+    {
+        "model": "phi-phi-4-Jan14_14-53-10",
+        "judge": "gpt-4o-mini",
+        "task": "COMPLETION",
+        "metric": "Bert Similarity Metric",
+        "total_score": 21.655554017983377,
+        "total_success": 12.0,
+        "total_cost": 0.0,
+        "total_tests": 150.0,
+        "average_score": 0.14437036011988919,
+        "success_rate": 0.08
+    },
+    {
+        "model": "phi-phi-4-Jan14_14-53-10",
+        "judge": "gpt-4o-mini",
+        "task": "COMPLETION",
+        "metric": "Prompt Alignment",
+        "total_score": 36.0,
+        "total_success": 36.0,
+        "total_cost": 0.022562250000000002,
+        "total_tests": 150.0,
+        "average_score": 0.24,
+        "success_rate": 0.24
+    },
+    {
+        "model": "phi-phi-4-Jan14_14-53-10",
+        "judge": "gpt-4o-mini",
+        "task": "COMPLETION",
+        "metric": "Answer Relevancy",
+        "total_score": 141.44285714285715,
+        "total_success": 144.0,
+        "total_cost": 0.024524249999999997,
+        "total_tests": 150.0,
+        "average_score": 0.942952380952381,
+        "success_rate": 0.96
+    },
+    {
+        "model": "phi-phi-4-Jan14_14-53-10",
+        "judge": "gpt-4o-mini",
+        "task": "COMPLETION",
+        "metric": "Correctness (GEval)",
+        "total_score": 25.958628074668315,
+        "total_success": 9.0,
+        "total_cost": 0.009248099999999997,
+        "total_tests": 150.0,
+        "average_score": 0.17305752049778877,
+        "success_rate": 0.06
+    }
+]

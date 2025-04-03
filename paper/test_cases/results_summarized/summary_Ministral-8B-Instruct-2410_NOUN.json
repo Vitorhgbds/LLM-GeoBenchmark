@@ -1,0 +1,50 @@
+[
+    {
+        "model": "Ministral-8B-Instruct-2410",
+        "judge": "gpt-4o-mini",
+        "task": "NOUN",
+        "metric": "Bert Similarity Metric",
+        "total_score": 82.50109465186051,
+        "total_success": 0.0,
+        "total_cost": 0.0,
+        "total_tests": 454.0,
+        "average_score": 0.18172047280145487,
+        "success_rate": 0.0
+    },
+    {
+        "model": "Ministral-8B-Instruct-2410",
+        "judge": "gpt-4o-mini",
+        "task": "NOUN",
+        "metric": "Prompt Alignment",
+        "total_score": 171.0,
+        "total_success": 171.0,
+        "total_cost": 0.007263749999999999,
+        "total_tests": 454.0,
+        "average_score": 0.3766519823788546,
+        "success_rate": 0.3766519823788546
+    },
+    {
+        "model": "Ministral-8B-Instruct-2410",
+        "judge": "gpt-4o-mini",
+        "task": "NOUN",
+        "metric": "Answer Relevancy",
+        "total_score": 441.18888888888887,
+        "total_success": 451.0,
+        "total_cost": 0.01002555,
+        "total_tests": 454.0,
+        "average_score": 0.9717816935878609,
+        "success_rate": 0.9933920704845814
+    },
+    {
+        "model": "Ministral-8B-Instruct-2410",
+        "judge": "gpt-4o-mini",
+        "task": "NOUN",
+        "metric": "Correctness (GEval)",
+        "total_score": 120.88719262890623,
+        "total_success": 17.0,
+        "total_cost": 0.003239699999999999,
+        "total_tests": 454.0,
+        "average_score": 0.26627134940287717,
+        "success_rate": 0.037444933920704845
+    }
+]

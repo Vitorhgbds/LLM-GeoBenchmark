@@ -1,0 +1,672 @@
+[
+    {
+        "input": "Minerals all have cleavage",
+        "expected_output": "False",
+        "actual_output": "False. Not all minerals have cleavage. Some minerals have cleavage, while others do not. Cleavage is a property of a mineral that describes how it breaks along a plane of weakness. However, some minerals do not have a plane of weakness and therefore do not have cleavage. For example, diamond has no cleavage, while halite (table salt) has cleavage. So, the statement that minerals all have cleavage is false."
+    },
+    {
+        "input": "According to the content of quartz, magmatic rocks can be further divided into four categories: ultrabasic, basic, neutral and acidic",
+        "expected_output": "False",
+        "actual_output": "True. Magmatic rocks can be further divided into four categories: ultrabasic, basic, neutral and acidic. This is based on the content of quartz. If the content of quartz is less than 5%, it is called an ultrabasic rock. If the content of quartz is between 5% and 25%, it is called a basic rock. If the content of quartz is between 25% and 65%, it is called a neutral rock. If the content of quartz is more than 65%, it is called an acidic rock. Therefore, the statement is true."
+    },
+    {
+        "input": "The upper wall of a fault refers to the ascending disk of a fault",
+        "expected_output": "False",
+        "actual_output": "False. The upper wall of a fault refers to the hanging wall. The hanging wall is the side of the fault that is raised during the faulting process. The foot wall is the side of the fault that is lowered during the faulting process. The ascending disk of a fault is the side that is pushed up during the faulting process. The descending disk is the side that is pushed down during the faulting process. The ascending disk is the opposite side of the fault from the hanging wall. The descending disk is the opposite side of the fault from the foot wall. The ascending disk is also known as the overthrust block. The descending disk is also known as the underthrust block. The hanging wall is the side of the fault"
+    },
+    {
+        "input": "The first period of Mesozoic is called Triassic",
+        "expected_output": "True",
+        "actual_output": "True. The first period of the Mesozoic Era is indeed called the Triassic. It is followed by the Jurassic and Cretaceous periods. The Mesozoic Era is the middle of the three geologic periods that make up the Phanerozoic Eon, which is the current eon of Earth's history. The Mesozoic Era lasted from 252.17 to 66.0 million years ago. The Mesozoic Era is known for the rise of the dinosaurs, the evolution of mammals, and the development of the first flowering plants. The Triassic Period is further divided into three epochs, the Early Triassic, Middle Triassic, and Late Triassic. The Triassic Period is the shortest"
+    },
+    {
+        "input": "Permian is the last period of Paleozoic",
+        "expected_output": "True",
+        "actual_output": "False. Permian is the last period of the Mesozoic era. The Paleozoic era is the second of the three geologic eras of the Paleozoic time, which is the first of the three geologic eras of the Paleozoic time. The Paleozoic era is followed by the Mesozoic era, which is followed by the Cenozoic era. The Permian period is the last period of the Mesozoic era. The Mesozoic era is the second of the three geologic eras of the Paleozoic time, which is the first of the three geologic eras of the Paleozoic time. The Paleozoic era is followed by the Mesozoic era, which is followed by the C"
+    },
+    {
+        "input": "Physical weathering does not change the chemical composition of rocks",
+        "expected_output": "True",
+        "actual_output": "False. Physical weathering can change the chemical composition of rocks by breaking them down into smaller pieces and exposing them to the elements, which can alter their chemical composition over time. For example, the breakdown of rocks by wind, water, and ice can lead to the formation of new minerals and the release of chemicals that can change the overall composition of the rock. Additionally, the physical weathering process can also lead to the formation of new minerals and the release of chemicals that can change the overall composition of the rock. Therefore, the statement is false."
+    },
+    {
+        "input": "The largest flat surface of gravel in alluvium tends to the upper reaches of rivers",
+        "expected_output": "True",
+        "actual_output": "False. The largest flat surface of gravel in alluvium is found in the lower reaches of rivers. The upper reaches of rivers have steeper slopes and the gravel is deposited in the form of scree or talus. The lower reaches of rivers have gentler slopes and the gravel is deposited in the form of a flat surface. This is because the water velocity decreases as it moves downstream, allowing the gravel to settle and form a flat surface. The gravel in the upper reaches is transported downstream by the river and deposited in the lower reaches. Therefore, the largest flat surface of gravel in alluvium is found in the lower reaches of rivers. The statement is false."
+    },
+    {
+        "input": "There is no groundwater in magmatic rock area",
+        "expected_output": "False",
+        "actual_output": "False. Groundwater can be found in magmatic rock areas. The presence of groundwater in magmatic rock areas depends on the geological conditions and the type of rock. Some magmatic rocks, such as basalt, can contain groundwater due to their porous nature. Additionally, groundwater can be found in the fractures and fissures of magmatic rocks. Therefore, the statement that there is no groundwater in magmatic rock areas is false."
+    },
+    {
+        "input": "Most glacial deposits have obvious bedding",
+        "expected_output": "False",
+        "actual_output": "False. Many glacial deposits do not have obvious bedding. For example, till, which is a type of glacial deposit, is usually unsorted and does not have any obvious bedding. Glacial striations, which are scratches on the surface of rocks, are also not considered bedding. Bedding is a characteristic of sedimentary rocks that are deposited in a horizontal or nearly horizontal position. Glacial deposits are usually deposited in a vertical or near-vertical position. Therefore, the statement is false."
+    },
+    {
+        "input": "Sediments in the ocean are carried by rivers",
+        "expected_output": "False",
+        "actual_output": "True. Sediments in the ocean are carried by rivers. Rivers transport sediment from land to the ocean through erosion and weathering processes. This sediment is then deposited in the ocean, contributing to the formation of new land and changing the shape of the ocean floor. This process is known as fluvial transport. The sediment can also be carried by wind and ice, but rivers are the primary means of transporting sediment to the ocean. The sediment can be composed of sand, gravel, clay, and other materials, and it can have a significant impact on the ocean's ecosystem and the organisms that live there. The sediment can also affect the clarity of the water and the health of the marine environment. Overall, the transport of sediment by rivers is an important process"
+    },
+    {
+        "input": "Desert is mainly formed by the geological action of wind",
+        "expected_output": "False",
+        "actual_output": "False. Deserts are primarily formed by the geological action of wind, but they are also influenced by other factors such as climate, topography, and vegetation. The combination of these factors creates the arid conditions that characterize deserts. Wind erosion is one of the main processes that shape desert landscapes, but it is not the only factor. Other processes such as tectonic activity, volcanic activity, and the presence of mountains can also contribute to the formation of deserts. Therefore, the statement is false."
+    },
+    {
+        "input": "In the anticline structure, the rock strata in the central part are relatively old",
+        "expected_output": "True",
+        "actual_output": "True. In an anticline, the rock strata in the central part are relatively old. The rock strata in the central part of an anticline are older than those in the surrounding areas. This is because the rock strata in the central part have been uplifted and exposed to erosion, while the rock strata in the surrounding areas have been buried and preserved. Therefore, the rock strata in the central part are relatively old compared to those in the surrounding areas. This is a characteristic feature of anticline structures. The rock strata in the surrounding areas are younger than those in the central part. This is because the rock strata in the surrounding areas have been uplifted and exposed to erosion, while the rock strata in the central part have been buried and"
+    },
+    {
+        "input": "Weathering is the geological action of wind",
+        "expected_output": "False",
+        "actual_output": "False. Weathering is the process of breaking down rocks and minerals by the action of wind, water, and other natural forces. It is not the geological action of wind. The geological action of wind is erosion. Weathering is the process of breaking down rocks and minerals by the action of wind, water, and other natural forces. It is not the geological action of wind. The geological action of wind is erosion. Weathering is the process of breaking down rocks and minerals by the action of wind, water, and other natural forces. It is not the geological action of wind. The geological action of wind is erosion. Weathering is the process of breaking down rocks and minerals by the action of wind, water, and other natural forces. It"
+    },
+    {
+        "input": "Bedding is an important structure of sedimentary rocks",
+        "expected_output": "True",
+        "actual_output": "True. Bedding is an important structure of sedimentary rocks. It refers to the layering of sedimentary rocks that are deposited in horizontal layers. These layers are formed by the accumulation of sediment over time, and they can be identified by the different colors, textures, and compositions of the layers. Bedding is an important feature of sedimentary rocks because it can provide information about the environment in which the rocks were formed, as well as the processes that shaped them. It can also be used to determine the age of the rocks, as different types of sedimentary rocks are deposited at different times in the geological history of the Earth. Therefore, the statement is true."
+    },
+    {
+        "input": "If the strike of rock strata is known, the tendency of rock strata will be known",
+        "expected_output": "True",
+        "actual_output": "True. The strike of rock strata refers to the direction in which the layers of rock are oriented. If the strike is known, it can help determine the orientation and dip of the rock layers, which can provide information about the tendency of the rock strata. However, it is important to note that the strike of rock strata is just one piece of information that can be used to determine the orientation and dip of the rock layers. Other factors such as the dip angle and the dip direction can also play a role in determining the tendency of the rock strata. Therefore, while the strike of rock strata can provide useful information, it is not the only factor that determines the tendency of the rock strata. It is also important to consider other factors such as the dip"
+    },
+    {
+        "input": "Sea earthquakes often lead to turbidity current on the seabed",
+        "expected_output": "True",
+        "actual_output": "True. Sea earthquakes can cause turbidity currents on the seabed. These currents are caused by the sudden release of water and sediment from the seabed during an earthquake, which can lead to the formation of turbidity currents that transport sediment and other materials across the seabed. These currents can have significant impacts on the marine environment, including the destruction of habitats and the redistribution of nutrients and sediments. The formation of turbidity currents is a well-documented phenomenon that has been observed in many different marine environments, including the deep ocean and coastal areas. The frequency and intensity of these currents can vary depending on the size and location of the earthquake, as well as the characteristics of the seabed and surrounding water column. Overall, sea earthquakes can have significant impacts"
+    },
+    {
+        "input": "Rock folds are mainly formed by external dynamic geological processes",
+        "expected_output": "False",
+        "actual_output": "False. Rock folds are mainly formed by internal dynamic geological processes. External dynamic geological processes are not the main cause of rock folds. Internal dynamic geological processes such as tectonic forces, pressure, and temperature changes are the main causes of rock folds. External dynamic geological processes such as erosion, weathering, and deposition can affect the shape and form of rock folds, but they are not the main cause of their formation. Therefore, the statement is false."
+    },
+    {
+        "input": "The contact relationship between two sets of strata with the same occurrence is called integrated contact",
+        "expected_output": "False",
+        "actual_output": "False. The contact relationship between two sets of strata with the same occurrence is called conformable contact. Integrated contact is a type of unconformity. Unconformity is a type of contact relationship between two sets of strata with different ages. Integrated contact is a type of unconformity where the two sets of strata are not parallel to each other. Conformable contact is a type of unconformity where the two sets of strata are parallel to each other. Unconformity is a type of contact relationship where there is a gap in the rock record between the two sets of strata. Conformable contact is a type of unconformity where the two sets of strata are parallel to each other. Integrated contact is a type of uncon"
+    },
+    {
+        "input": "The gravity sold by matter on the earth is the universal gravitation of the earth",
+        "expected_output": "False",
+        "actual_output": "True. The gravity experienced on Earth is due to the universal gravitation of the Earth. This is the force of attraction between the Earth and any object on its surface, including people, buildings, and other objects. This force is the result of the mass of the Earth and the mass of the object, and it is proportional to the product of these two masses and inversely proportional to the distance between them. This is described by Newton's law of universal gravitation. So, the statement is true."
+    },
+    {
+        "input": "The hardness of quartz is greater than that of calcite",
+        "expected_output": "True",
+        "actual_output": "False. The hardness of quartz is 7, while the hardness of calcite is 3. Therefore, the hardness of quartz is not greater than that of calcite. The Mohs scale of mineral hardness is a qualitative ordinal scale that characterizes the scratch resistance of various minerals through the ability of a harder material to scratch a softer material. The scale is named after the German mineralogist Friedrich Mohs, who in 1812 first proposed a set of ten minerals to serve as reference minerals for this scale. The scale is ordered from 1 to 10, with talc being the softest and diamond being the hardest. Quartz is a mineral that is found in many different types of rocks and is used in a variety"
+    },
+    {
+        "input": "Stomatal structures are common in volcanic rocks",
+        "expected_output": "True",
+        "actual_output": "False. Stomatal structures are common in sedimentary rocks, not volcanic rocks. Volcanic rocks are formed by the solidification of magma or lava, while sedimentary rocks are formed by the accumulation of sediments over time. Sedimentary rocks can contain fossils, including stomata, which are structures found in plants that allow for gas exchange. Volcanic rocks do not contain stomata. Therefore, the statement is false."
+    },
+    {
+        "input": "Differential weathering is caused by different climates",
+        "expected_output": "False",
+        "actual_output": "True. Differential weathering occurs when different types of weathering processes act on different types of rock or soil, leading to different rates of erosion and degradation. This can be due to variations in climate, such as differences in temperature, precipitation, and vegetation cover, which can affect the intensity and type of weathering processes. For example, in a tropical climate, chemical weathering may be more prevalent, while in a desert climate, physical weathering may be more common. Therefore, the statement is true."
+    },
+    {
+        "input": "Bedrock is a rock foundation",
+        "expected_output": "False",
+        "actual_output": "True. Bedrock is a rock foundation. It is a layer of solid rock that underlies the soil and provides a stable base for buildings and other structures. It is often used as a foundation for buildings and other structures because it is strong and stable, and it does not shift or settle over time. Bedrock is typically found at a depth of several feet to several hundred feet below the surface of the earth. It is usually composed of igneous, metamorphic, or sedimentary rock. Bedrock is an important geological feature that can affect the stability of the land and the risk of natural hazards such as landslides and earthquakes. It is also an important resource for mining and construction. Bedrock is often used as a foundation for buildings and"
+    },
+    {
+        "input": "In the original horizontal state, the overlying strata are newer and the underlying strata are older",
+        "expected_output": "True",
+        "actual_output": "True. This is a fundamental principle of geology, known as the Law of Superposition. It states that in a sequence of sedimentary rocks, the layers that are on top are younger than the layers that are below them. This is because sedimentary rocks are formed by the accumulation of sediments over time, and the oldest sediments are at the bottom, while the newest sediments are at the top. Therefore, the overlying strata are newer and the underlying strata are older. This principle is used to determine the relative ages of rocks and to reconstruct the history of the Earth's surface. It is also used in the study of fossils, as the oldest fossils are found in the oldest rocks. The Law of Superposition is one of the most important principles"
+    },
+    {
+        "input": "Earthquake damage to the ground and buildings is called earthquake intensity",
+        "expected_output": "True",
+        "actual_output": "True. Earthquake damage to the ground and buildings is called earthquake intensity. This is measured using the Modified Mercalli Intensity Scale, which rates the severity of an earthquake based on its effects on the environment and human activity. The scale ranges from I (not felt) to XII (total destruction). The higher the number, the more severe the earthquake. The scale is based on the observations of people and the damage caused by the earthquake. It is important to note that the Modified Mercalli Intensity Scale is not the same as the Richter scale, which measures the magnitude of an earthquake based on the amplitude of seismic waves. The Richter scale is a logarithmic scale, meaning that each whole number increase on the scale represents a tenfold increase in the"
+    },
+    {
+        "input": "The coastline is the boundary between continental crust and oceanic crust",
+        "expected_output": "False",
+        "actual_output": "False. The coastline is the boundary between continental crust and the ocean. The boundary between continental crust and oceanic crust is the continental margin. The continental margin is the boundary between the continental crust and the oceanic crust. It is the area where the continental crust meets the oceanic crust. The continental margin is divided into three parts: the continental shelf, the continental slope, and the continental rise. The continental shelf is the flat area of the continental margin that extends out into the ocean. The continental slope is the steep area of the continental margin that drops down to the continental rise. The continental rise is the flat area of the continental margin that connects the continental slope to the oceanic crust. The continental margin is the boundary between the continental crust and"
+    },
+    {
+        "input": "The higher the position of the valley terrace, the earlier the terrace formed",
+        "expected_output": "True",
+        "actual_output": "True. The higher the position of the valley terrace, the earlier the terrace formed. This is because the higher the position, the longer the time it has been exposed to erosion and weathering, which results in the formation of the terrace. The lower the position, the shorter the time it has been exposed, and thus, the younger the terrace is. This is a common pattern observed in geomorphology. The statement is true."
+    },
+    {
+        "input": "Plate structure, thousand-piece structure and sheet structure are common structures in metamorphic rocks",
+        "expected_output": "True",
+        "actual_output": "True. Plate structure, thousand-piece structure and sheet structure are common structures in metamorphic rocks. These structures are formed due to the deformation of the rocks under high pressure and temperature. Plate structure is formed when the rock is subjected to compressional stress, resulting in the formation of parallel layers or bands. Thousand-piece structure is formed when the rock is subjected to shear stress, resulting in the formation of small, irregular pieces. Sheet structure is formed when the rock is subjected to extensional stress, resulting in the formation of thin, flat layers. These structures are important in understanding the history of the rock and the forces that acted upon it. They are also used in the identification of metamorphic rocks. Is this helpful? Let me know if you need further"
+    },
+    {
+        "input": "The surface gravity value increases with the increase of latitude and decreases with the increase of altitude",
+        "expected_output": "False",
+        "actual_output": "False. The surface gravity value decreases with the increase of latitude and decreases with the increase of altitude. The surface gravity value is inversely proportional to the square of the distance from the center of the Earth. The Earth is an oblate spheroid, meaning it is slightly flattened at the poles and bulging at the equator. Therefore, the surface gravity is slightly less at the poles and slightly more at the equator. Additionally, the surface gravity decreases with altitude because the gravitational force decreases with the square of the distance from the center of the Earth. Therefore, the surface gravity value decreases with the increase of latitude and altitude."
+    },
+    {
+        "input": "Lithosphere refers to the crust",
+        "expected_output": "False",
+        "actual_output": "False. Lithosphere refers to the rigid outer shell of the Earth, which includes the crust and the uppermost mantle. The crust is only one of the layers that make up the lithosphere. The lithosphere is the outermost layer of the Earth, which is composed of the crust and the uppermost mantle. It is the rigid outer shell of the Earth, which is about 100 kilometers thick. The lithosphere is divided into several tectonic plates, which move and interact with each other to create geological features such as mountains, volcanoes, and earthquakes. The lithosphere is the outermost layer of the Earth, which is composed of the crust and the uppermost mantle. It is the rigid outer shell of the Earth, which"
+    },
+    {
+        "input": "Quartz has well developed cleavage",
+        "expected_output": "False",
+        "actual_output": "False. Quartz does not have well developed cleavage. It has a conchoidal fracture. It is a hard, brittle mineral. It is used in making glass and as a gemstone. It is a common mineral found in many types of rocks. It is a silicate mineral. It is a 7 on the Mohs scale of mineral hardness. It is a common mineral found in many types of rocks. It is a silicate mineral. It is a 7 on the Mohs scale of mineral hardness. It is a common mineral found in many types of rocks. It is a silicate mineral. It is a 7 on the Mohs scale of mineral hardness. It is a common mineral found in many types of rocks."
+    },
+    {
+        "input": "Marine geological processes are mainly sedimentation",
+        "expected_output": "False",
+        "actual_output": "False. Marine geological processes include sedimentation, erosion, tectonic activity, and biological activity. Sedimentation is one of the processes, but not the only one. Tectonic activity, such as earthquakes and volcanic eruptions, can also significantly impact marine geology. Additionally, biological activity, such as the growth of coral reefs and the movement of marine organisms, can also shape marine geology. Therefore, the statement that marine geological processes are mainly sedimentation is false."
+    },
+    {
+        "input": "When side erosion occurs, the convex banks of rivers are scoured and collapsed",
+        "expected_output": "False",
+        "actual_output": "True. Side erosion occurs when the river flows over the bank and erodes the bank material. This can cause the bank to collapse and the river to become wider. The convex banks are usually the ones that are eroded and collapsed. This is because the river flows faster over the convex banks, causing more erosion. The concave banks, on the other hand, are usually protected by the slower flow of water. This is why the river tends to form a meander pattern, with convex bends on the outside of the meander and concave bends on the inside. The erosion of the convex banks and the deposition of sediment on the concave banks help to maintain the meander pattern. This process is known as lateral erosion. It is an important process"
+    },
+    {
+        "input": "Jointed plane refers to the plane formed by the fracture of minerals along a certain direction inside the crystal after being acted by mechanical force",
+        "expected_output": "False",
+        "actual_output": "True. Joints are formed by the fracture of minerals along a certain direction inside the crystal after being acted by mechanical force. This is a common process in the formation of joints in rocks. Joints are a type of discontinuity in rocks that are formed by the separation of rock along a plane of weakness. This can be caused by a variety of processes, including tectonic forces, weathering, and erosion. Joints can be further classified based on their orientation, such as bedding joints, cleavage joints, and fracture joints. The orientation of the joint plane is determined by the direction of the applied force. Joints can also be classified based on their shape, such as planar joints, which are flat and smooth, and irregular joints, which"
+    },
+    {
+        "input": "The type of glaciers in China belongs to mountain glaciers",
+        "expected_output": "True",
+        "actual_output": "True. China has many mountain glaciers. The largest glacier in China is the Muztag Glacier, which is located in the Karakoram Range in the Himalayas. It is also one of the longest glaciers in the world. There are also many other mountain glaciers in China, such as the Gangdise Glacier and the Qilian Glacier. These glaciers are important sources of water for the local communities and play a significant role in the region's ecosystem. Additionally, they are also important for scientific research and tourism. Therefore, the statement is true."
+    },
+    {
+        "input": "Diluvium is the product of river flood period",
+        "expected_output": "True",
+        "actual_output": "False. Diluvium is the product of a river flood period. Diluvium is a geological term that refers to the sedimentary deposits left behind by a river flood. These deposits are typically composed of sand, gravel, and other materials that are transported and deposited by the river during a flood event. Diluvium is often found in river valleys and floodplains, and it can be an important indicator of past flood events. However, the statement is false because it incorrectly states that diluvium is the product of a river flood period, rather than the product of a river flood. The correct statement would be that diluvium is the product of a river flood."
+    },
+    {
+        "input": "The geological process of swamp is mainly biological sedimentation",
+        "expected_output": "True",
+        "actual_output": "False. The geological process of swamp is mainly physical sedimentation. The biological process is the growth of plants and animals. The physical process is the deposition of sediments. The biological process is the growth of plants and animals. The physical process is the deposition of sediments. The physical process is the deposition of sediments. The physical process is the deposition of sediments. The physical process is the deposition of sediments. The physical process is the deposition of sediments. The physical process is the deposition of sediments. The physical process is the deposition of sediments. The physical process is the deposition of sediments. The physical process is the deposition of sediments. The physical process is the deposition of sediments. The physical process is the deposition of sediments. The physical process is the deposition of sediments"
+    },
+    {
+        "input": "Differential weathering is caused by different climates",
+        "expected_output": "False",
+        "actual_output": "True. Differential weathering occurs when different types of weathering processes act on different types of rock or soil, leading to different rates of erosion and degradation. This can be due to variations in climate, such as differences in temperature, precipitation, and vegetation cover, which can affect the intensity and type of weathering processes. For example, in a tropical climate, chemical weathering may be more prevalent, while in a desert climate, physical weathering may be more common. Therefore, the statement is true."
+    },
+    {
+        "input": "Bottom erosion is the erosion that widens the riverbed and valley floor",
+        "expected_output": "False",
+        "actual_output": "True. Bottom erosion is the erosion that widens the riverbed and valley floor. It is caused by the flow of water and the movement of sediments. The water carries the sediments and erodes the riverbed and valley floor, creating a wider and deeper channel. This process is an important part of the natural shaping of river valleys and can also have significant impacts on the surrounding landscape. Bottom erosion can also be caused by other factors such as ice, waves, and wind, depending on the location and environment. Overall, bottom erosion is a natural and ongoing process that shapes the landscape over time. However, it can also be influenced by human activities such as mining, agriculture, and urban development, which can accelerate or alter the natural erosion process. It"
+    },
+    {
+        "input": "The hardness of quartz is greater than that of calcite",
+        "expected_output": "True",
+        "actual_output": "False. The hardness of quartz is 7, while the hardness of calcite is 3. Therefore, the hardness of quartz is not greater than that of calcite. The Mohs scale of mineral hardness is a qualitative ordinal scale that characterizes the scratch resistance of various minerals through the ability of a harder material to scratch a softer material. The scale is named after the German mineralogist Friedrich Mohs, who in 1812 first proposed a set of ten minerals to serve as reference minerals for this scale. The scale is ordered from 1 to 10, with talc being the softest and diamond being the hardest. Quartz is a mineral that is found in many different types of rocks and is used in a variety"
+    },
+    {
+        "input": "Shear waves cannot pass through liquid objects",
+        "expected_output": "True",
+        "actual_output": "False. Shear waves can pass through liquid objects. They are a type of elastic wave that can travel through fluids, including liquids. However, they are not as efficient as they are in solids because the fluid's viscosity and density can dampen the wave's energy. However, they can still travel through liquids, especially in the case of low viscosity fluids. So, the statement is false."
+    },
+    {
+        "input": "Ice stains have good bedding, sorting and roundness",
+        "expected_output": "False",
+        "actual_output": "False. Ice stains have poor bedding, sorting and roundness. They are angular and irregular in shape. They are also poorly sorted and have poor bedding. They are formed by the freezing of water in the soil. They are also called ice wedges. They are found in permafrost regions. They are not suitable for construction purposes. They are also called ice wedges. They are found in permafrost regions. They are not suitable for construction purposes. They are also called ice wedges. They are found in permafrost regions. They are not suitable for construction purposes. They are also called ice wedges. They are found in permafrost regions. They are not suitable for construction purposes. They"
+    },
+    {
+        "input": "When the river turns, the sedimentation mainly occurs on the convex bank side",
+        "expected_output": "True",
+        "actual_output": "False. Sedimentation mainly occurs on the concave bank side. The river's flow is faster on the convex side, so the water has more energy to carry sediment. On the concave side, the flow is slower, so the sediment is deposited. This is known as the concave bank effect. The opposite is true for erosion, which occurs on the convex bank side. This is known as the convex bank effect. So, the statement is false."
+    },
+    {
+        "input": "The water level in general civil wells can represent the water level of the phreatic surface in this area",
+        "expected_output": "True",
+        "actual_output": "True. The water level in general civil wells can represent the water level of the phreatic surface in this area. The phreatic surface is the level at which the pressure of the water column is equal to the atmospheric pressure. This is the level at which water will rise in an open pipe or well. The water level in a well is a measure of the height of the water column in the well, and it can be used to estimate the water level of the phreatic surface in the surrounding area. However, it is important to note that the water level in a well can be affected by factors such as pumping, evaporation, and infiltration, so it may not always be an accurate representation of the phreatic surface. Additionally,"
+    },
+    {
+        "input": "The crystal plane of quartz has grease luster, and its fracture surface has glass luster",
+        "expected_output": "False",
+        "actual_output": "False. The crystal plane of quartz has glass luster, and its fracture surface has greasy luster."
+    },
+    {
+        "input": "The chemical formula of calcite is “CaCO3”",
+        "expected_output": "True",
+        "actual_output": "True. The chemical formula of calcite is indeed CaCO3. It is a common form of calcium carbonate. It is a mineral that is found in rocks and is used in various industrial applications. It is also the primary component of limestone and chalk. It is also used in the production of cement and lime. It is also used in the production of lime and cement. It is also used in the production of lime and cement. It is also used in the production of lime and cement. It is also used in the production of lime and cement. It is also used in the production of lime and cement. It is also used in the production of lime and cement. It is also used in the production of lime and cement. It is also"
+    },
+    {
+        "input": "Karst caves are mainly formed near the phreatic surface",
+        "expected_output": "True",
+        "actual_output": "False. Karst caves are mainly formed near the phreatic surface. However, the statement is false. Karst caves are formed by the dissolution of soluble rocks such as limestone, dolomite, and gypsum. The dissolution process is driven by the flow of water through the rock, which can occur at any depth, not just near the phreatic surface. The phreatic surface is the level at which the water table is at atmospheric pressure, but karst caves can form above or below this level depending on the local geology and hydrology. Therefore, the statement is false. True or False? False."
+    },
+    {
+        "input": "Almond-shaped structure mainly occurs in volcanic rocks",
+        "expected_output": "True",
+        "actual_output": "False. Almond-shaped structures are typically found in sedimentary rocks, not volcanic rocks. They are formed by the precipitation of minerals around a nucleus, such as a grain of sand or a fossil. The shape is due to the growth of the mineral around the nucleus, which causes the structure to take on an almond-like shape. In volcanic rocks, the almond-shaped structures are not typically found. Instead, volcanic rocks are characterized by their igneous mineral composition and their formation through the cooling and solidification of magma or lava. The almond-shaped structures are not a characteristic feature of volcanic rocks. Therefore, the statement is false."
+    },
+    {
+        "input": "Calcite has two groups of cleavage",
+        "expected_output": "False",
+        "actual_output": "False. Calcite has three groups of cleavage. The three groups are rhombohedral, prismatic, and scalene. The rhombohedral cleavage is the most prominent and is often referred to as the \"diamond\" cleavage. The prismatic cleavage is less prominent and is often referred to as the \"straw\" cleavage. The scalene cleavage is the least prominent and is often referred to as the \"conchoidal\" cleavage. All three cleavages are present in calcite, but the rhombohedral cleavage is the most easily observed. The other two cleavages are more difficult to see and are often only observed under a microscope. The cleavage of calcite is an important property that is used in the identification of the"
+    },
+    {
+        "input": "Most earthquakes in the world belong to tectonic earthquakes",
+        "expected_output": "True",
+        "actual_output": "True. Tectonic earthquakes are the most common type of earthquake, accounting for about 90% of all earthquakes. They occur when the Earth's tectonic plates move and slip past each other, releasing energy in the form of seismic waves. The other types of earthquakes, such as volcanic and explosion earthquakes, are much less common. So, the statement is true."
+    },
+    {
+        "input": "Calcite is the main mineral composition of limestone and marble",
+        "expected_output": "True",
+        "actual_output": "True. Calcite is the primary mineral found in limestone and marble. It is a common carbonate mineral that is composed of calcium carbonate (CaCO3). Limestone is a sedimentary rock that is formed from the accumulation of shells, coral, and other organic materials, while marble is a metamorphic rock that is formed from the transformation of limestone under high heat and pressure. Both limestone and marble are composed of calcite crystals, which give them their characteristic white or light-colored appearance. Additionally, calcite is also found in other types of rocks such as chalk, dolomite, and travertine. It is also used in various industrial applications such as in the production of cement, glass, and paper. Overall, calcite is an important"
+    },
+    {
+        "input": "Field investigation is the most basic and important link in earth science work, which can obtain the first-hand information of the studied objects.",
+        "expected_output": "True",
+        "actual_output": "True. Field investigation is indeed the most basic and important link in earth science work, as it allows scientists to gather first-hand information about the objects they are studying. This information is crucial for understanding the characteristics and behavior of geological features and processes. Therefore, the statement is true."
+    },
+    {
+        "input": "The shape and size of the earth refers to the shape and size of the geoid.",
+        "expected_output": "True",
+        "actual_output": "True. The geoid is the shape and size of the earth. It is the surface of the earth that is defined by the gravitational field of the earth. It is the reference surface used for geodetic measurements. It is an equipotential surface, meaning that the gravitational potential is constant at every point on the surface. It is the shape and size of the earth that is used in geodetic calculations and measurements. It is the reference surface used for mapping and navigation. It is the shape and size of the earth that is used in the International Terrestrial Reference Frame (ITRF). It is the shape and size of the earth that is used in the Global Positioning System (GPS). It is the shape and size of"
+    },
+    {
+        "input": "Each ocean floor has a ridge or uplift, of which the Pacific Ocean floor is an uplift and the other three ocean floors are ridges.",
+        "expected_output": "True",
+        "actual_output": "False. The Pacific Ocean floor is a ridge, not an uplift. The Atlantic Ocean floor has a ridge, the Indian Ocean floor has a ridge, and the Arctic Ocean floor has an uplift. The other three ocean floors are ridges. The Pacific Ocean floor is a ridge. The Atlantic Ocean floor has a ridge, the Indian Ocean floor has a ridge, and the Arctic Ocean floor has an uplift. The other three ocean floors are ridges. The Pacific Ocean floor is a ridge. The Atlantic Ocean floor has a ridge, the Indian Ocean floor has a ridge, and the Arctic Ocean floor has an uplift. The other three ocean floors are ridges. The Pacific Ocean floor is a ridge. The Atlantic Ocean floor has a ridge, the"
+    },
+    {
+        "input": "Flat-topped seamounts are seamounts near sea level, which are formed by regional subsidence and submergence after their tops are leveled by weathering, denudation and seawater erosion.",
+        "expected_output": "True",
+        "actual_output": "True. Flat-topped seamounts are indeed formed by regional subsidence and submergence after their tops are leveled by weathering, denudation and seawater erosion. They are typically found near sea level and are characterized by their flat or gently sloping summits. The process of erosion and weathering gradually wears down the seamount's peak, resulting in a flat or gently sloping surface. This process can take millions of years, depending on the rate of erosion and the size of the seamount. Flat-topped seamounts are often found in areas with high wave energy, such as the Pacific Ocean, and are often associated with coral reefs and other marine ecosystems. They are important habitats for many marine species and are often"
+    },
+    {
+        "input": "The earth's crust consists of two layers: silicon-aluminum layer and silicon-magnesium layer.",
+        "expected_output": "False",
+        "actual_output": "False. The earth's crust is composed of three layers: the continental crust, the oceanic crust, and the transition zone between them. The continental crust is composed of silicon-aluminum layer, while the oceanic crust is composed of silicon-magnesium layer. The transition zone is the area where the two types of crust meet. The statement is false."
+    },
+    {
+        "input": "The boundary between continental crust and oceanic crust is at the coastline.",
+        "expected_output": "False",
+        "actual_output": "False. The boundary between continental crust and oceanic crust is not at the coastline. It is located at the continental shelf, which is the submerged extension of the continental crust that gradually slopes down to the continental slope, which is the boundary between the continental crust and the oceanic crust. The continental shelf is not always visible at the surface because it is often covered by water. The coastline is the line where the land meets the sea, and it is not the boundary between the two types of crust. The boundary between continental crust and oceanic crust is located at the continental slope, which is the steep slope that marks the transition from the continental shelf to the deep ocean floor. The continental slope is typically located at a depth of about 200"
+    },
+    {
+        "input": "The gravity of the surface decreases with the increase of latitude.",
+        "expected_output": "False",
+        "actual_output": "False. The gravity of the surface increases with the increase of latitude. This is because the Earth is an oblate spheroid, meaning it is slightly flattened at the poles and bulging at the equator. Therefore, the gravitational force is stronger at the poles and weaker at the equator. As you move towards the poles, the gravitational force increases. So, the statement is false."
+    },
+    {
+        "input": "The electrical properties of the earth's interior are mainly related to the magnetic permeability and conductivity of the materials in the earth.",
+        "expected_output": "True",
+        "actual_output": "True. The electrical properties of the earth's interior are indeed mainly related to the magnetic permeability and conductivity of the materials in the earth. These properties are crucial for understanding the behavior of the earth's magnetic field and the generation of the earth's magnetic field. The magnetic permeability of the earth's core is responsible for the strength and direction of the magnetic field, while the conductivity of the mantle and crust affects the flow of electrical currents within the earth. These properties are studied by geophysicists to understand the structure and dynamics of the earth's interior. The answer is True."
+    },
+    {
+        "input": "Radioactive elements are generally concentrated in the surface of the solid earth, and mainly concentrated in metamorphic rocks.",
+        "expected_output": "False",
+        "actual_output": "False. Radioactive elements are generally concentrated in the crust of the Earth, not the surface. They are also found in all types of rocks, not just metamorphic rocks. They are more concentrated in igneous rocks, which are formed from the cooling of magma or lava."
+    },
+    {
+        "input": "Crustal movement can be divided into horizontal movement and vertical movement according to the direction of movement.",
+        "expected_output": "True",
+        "actual_output": "True. Crustal movement can indeed be divided into horizontal movement and vertical movement. Horizontal movement includes the movement of tectonic plates, while vertical movement includes the uplift or subsidence of the Earth's crust. This classification helps geologists understand the different types of geological processes that can occur at the Earth's surface. Is there anything else you would like me to do?"
+    },
+    {
+        "input": "The crustal movement after Quaternary is generally called neotectonic movement.",
+        "expected_output": "True",
+        "actual_output": "True. The crustal movement after Quaternary is generally called neotectonic movement. This is a true statement. The Quaternary period is the most recent geological period, which began about 2.6 million years ago and continues to the present day. During this time, the Earth's crust has experienced significant tectonic activity, including the formation of mountain ranges, the movement of continents, and the creation of new landforms. This activity is referred to as neotectonic movement. Neotectonic movement is an important area of study in geoscience, as it helps scientists understand the dynamic nature of the Earth's crust and the processes that shape the planet's surface. Therefore, the statement is true."
+    },
+    {
+        "input": "The root cause of earthquakes lies in plate movement.",
+        "expected_output": "False",
+        "actual_output": "True. The movement of tectonic plates is the primary cause of earthquakes. When plates move, they can collide, slide, or diverge, which can result in the release of energy in the form of seismic waves, causing earthquakes. This movement is driven by the convection currents in the Earth's mantle, which cause the plates to move over time. Therefore, the statement is true."
+    },
+    {
+        "input": "Active volcanoes can only be distributed at the edge of plates.",
+        "expected_output": "False",
+        "actual_output": "False. Active volcanoes can be found anywhere on Earth, not just at the edge of plates. They can occur in the middle of plates as well. The distribution of volcanoes is determined by the underlying geology and tectonic activity, not just plate boundaries. For example, the Hawaiian Islands are a chain of volcanoes that formed in the middle of the Pacific Plate. So, the statement is false."
+    },
+    {
+        "input": "The whole interior of the earth is molten, and magma exists everywhere.",
+        "expected_output": "False",
+        "actual_output": "False. The interior of the earth is not entirely molten. The outer core is liquid, but the inner core is solid. Magma is found in the mantle and crust, not everywhere in the earth."
+    },
+    {
+        "input": "In metamorphism, the main function of static pressure is to raise the temperature of metamorphic reaction.",
+        "expected_output": "True",
+        "actual_output": "False. The main function of static pressure in metamorphism is to raise the temperature of metamorphic reaction. However, the statement is false because the main function of static pressure in metamorphism is to raise the temperature of metamorphic reaction. The statement is false because it is a tautology. The main function of static pressure in metamorphism is to raise the temperature of metamorphic reaction. The statement is false because it is a tautology. The main function of static pressure in metamorphism is to raise the temperature of metamorphic reaction. The statement is false because it is a tautology. The main function of static pressure in metamorphism is to raise the temperature of metamorphic reaction. The statement is false because it is a tautology. The main"
+    },
+    {
+        "input": "When clastic material is transported in flowing water, clay-grade particles once deposited are eroded again, which requires greater flowing water speed.",
+        "expected_output": "True",
+        "actual_output": "True."
+    },
+    {
+        "input": "The retreat of the waterfall is caused by the erosion of the river.",
+        "expected_output": "True",
+        "actual_output": "True. The retreat of the waterfall is caused by the erosion of the river. The river's flow erodes the rock at the base of the waterfall, causing it to move upstream and eventually retreat. This process is known as headward erosion. Over time, the waterfall can retreat significantly, changing the landscape of the area. This is a natural process that occurs over thousands of years. The erosion is caused by the force of the water as it flows over the edge of the waterfall, breaking up the rock and carrying it downstream. The force of the water is also responsible for the formation of potholes and other features in the riverbed. The retreat of the waterfall can also be influenced by changes in the river's flow"
+    },
+    {
+        "input": "The stone forest in Lunan, Yunnan Province was formed by river erosion.",
+        "expected_output": "False",
+        "actual_output": "False. The stone forest in Lunan, Yunnan Province was formed by wind erosion. It is a unique geological landscape with a large number of stone pillars, towers, and other shapes. The stone pillars are formed by the weathering of sandstone and the erosion of wind and rain. The stone forest is a UNESCO World Heritage site. The statement that it was formed by river erosion is incorrect. The correct answer is False."
+    },
+    {
+        "input": "Finland, a country of thousands of lakes, has many lakes that are the causes of rivers.",
+        "expected_output": "False",
+        "actual_output": "False. Finland has many lakes, but most of them are not the sources of rivers. Most of the rivers in Finland are formed by the melting of snow and ice in the spring. The largest river in Finland is the Muonio River, which is formed by the melting of snow and ice in the spring. The largest lake in Finland is Lake Saimaa, which is not the source of any river."
+    },
+    {
+        "input": "The amygdala in volcanic rocks belongs to the form of crystalline aggregates.",
+        "expected_output": "False",
+        "actual_output": "False. The amygdala in volcanic rocks is a type of cavity formed by the escape of gas during the cooling of lava. It is not a form of crystalline aggregates. Crystalline aggregates are formed by the crystallization of minerals from a magma or lava. Amygdules are not formed by crystallization, but by the escape of gas from the lava. They are usually filled with secondary minerals. The term \"amygdala\" comes from the Greek word for \"breast,\" referring to the shape of the cavity. Amygdules are often found in basaltic rocks, such as obsidian, and are typically filled with secondary minerals such as calcite, quartz, or opal. They are also found in other types of volcanic rocks, such"
+    },
+    {
+        "input": "According to Rick's Law, deep in the earth's crust, minerals precipitate in the direction of maximum stress and dissolve in the direction of minimum stress.",
+        "expected_output": "False",
+        "actual_output": "True. This is a fundamental principle in geoscience, known as Rick's Law. It states that minerals will precipitate in the direction of maximum stress and dissolve in the direction of minimum stress. This is due to the fact that minerals are more stable in the direction of maximum stress, and thus, they tend to precipitate there. Conversely, they are less stable in the direction of minimum stress, and thus, they tend to dissolve there. This law is used to explain the formation of mineral deposits and the distribution of minerals in the earth's crust. It is an important concept in understanding the processes that shape the earth's geology. Is there anything else you would like me to do? Let me know. I'm here to help. If you"
+    },
+    {
+        "input": "According to the classification standard of debris particle size in petroleum industry, the debris particles of 0.25 ~ 0.5 mm are medium sand.",
+        "expected_output": "True",
+        "actual_output": "False. The correct classification of debris particle size in the petroleum industry is as follows:\n- Fine sand: 0.074 ~ 0.25 mm\n- Medium sand: 0.25 ~ 0.5 mm\n- Coarse sand: 0.5 ~ 1.0 mm\n- Gravel: 1.0 ~ 2.0 mm\n- Boulder: > 2.0 mm. Therefore, the statement is false. The correct answer is False."
+    },
+    {
+        "input": "Generally speaking, clastic particles with good roundness have higher sphericity.",
+        "expected_output": "False",
+        "actual_output": "True. Generally speaking, clastic particles with good roundness have higher sphericity. This is because the more rounded the particles are, the more they resemble a sphere, and the higher their sphericity. The sphericity of a particle is a measure of how close it is to a perfect sphere, and it is calculated as the ratio of the surface area of a sphere with the same volume as the particle to the surface area of the particle itself. Rounded particles have a higher sphericity because they have a smaller surface area for their volume, compared to angular particles. Therefore, the statement is true."
+    },
+    {
+        "input": "Alluvial fan facies sediments are generally poorly sorted and rounded.",
+        "expected_output": "True",
+        "actual_output": "True. Alluvial fan facies sediments are generally poorly sorted and rounded. This is because they are deposited by the action of water, which carries and transports sediments from upstream, and the sediments are deposited in a fan-shaped pattern as the water slows down. The sediments are often composed of a mixture of different sizes and shapes, and the water's flow can cause them to be rounded and sorted. Additionally, the sediments are often deposited in a non-uniform manner, leading to a poorly sorted deposit. Therefore, the statement is true."
+    },
+    {
+        "input": "Salty lakes refer to lakes with salinity greater than 35%.",
+        "expected_output": "True",
+        "actual_output": "True. Salty lakes refer to lakes with salinity greater than 35%. This is a common definition used to distinguish between saltwater and freshwater lakes. For example, the Dead Sea is considered a salty lake with a salinity of 34.2%. The Great Salt Lake in Utah is another example of a salty lake with a salinity of 10.2%. On the other hand, freshwater lakes have a salinity of less than 0.5%. Examples of freshwater lakes include Lake Superior and Lake Michigan. The Great Lakes are a group of five freshwater lakes located in North America. They are the largest group of freshwater lakes on Earth by total area. The Great Lakes are also known for their diverse ecosystems and are home to a"
+    },
+    {
+        "input": "According to PH value, seawater belongs to weakly alkaline medium.",
+        "expected_output": "True",
+        "actual_output": "True. Seawater has a pH value of about 8.1, which is slightly alkaline. This is due to the presence of bicarbonate ions (HCO3-) and carbonate ions (CO32-) in seawater, which help to neutralize the acidity of the water. Therefore, the statement is true."
+    },
+    {
+        "input": "The change of material composition and bedding structure of turbidite in vertical direction follows Bowma sequence, and turbidite profiles in nature should show complete Bowma sequence.",
+        "expected_output": "False",
+        "actual_output": "False. The change of material composition and bedding structure of turbidite in vertical direction does not necessarily follow Bowma sequence, and turbidite profiles in nature do not always show complete Bowma sequence. The Bowma sequence is a theoretical model and may not always be observed in nature. Therefore, the statement is false."
+    },
+    {
+        "input": "The code name of Cretaceous is T.",
+        "expected_output": "False",
+        "actual_output": "False. The code name of Cretaceous is K. The code names for the geological time periods are as follows:\n- Cambrian - C\n- Ordovician - O\n- Silurian - S\n- Devonian - D\n- Carboniferous - C\n- Permian - P\n- Triassic - T\n- Jurassic - J\n- Cretaceous - K\n- Paleogene - Pg\n- Neogene - Ng\n- Quaternary - Q."
+    },
+    {
+        "input": "The original occurrence of volcanic eruptions is mostly inclined.",
+        "expected_output": "True",
+        "actual_output": "False. The original occurrence of volcanic eruptions is mostly inclined. The statement is false. The original occurrence of volcanic eruptions is mostly inclined. The statement is false. The original occurrence of volcanic eruptions is mostly inclined. The statement is false. The original occurrence of volcanic eruptions is mostly inclined. The statement is false. The original occurrence of volcanic eruptions is mostly inclined. The statement is false. The original occurrence of volcanic eruptions is mostly inclined. The statement is false. The original occurrence of volcanic eruptions is mostly inclined. The statement is false. The original occurrence of volcanic eruptions is mostly inclined. The statement is false. The original occurrence of volcanic eruptions is mostly inclined. The statement is false. The original occurrence of"
+    },
+    {
+        "input": "On the plane, the dome structure is characterized by old rock strata at the center and young rock strata around it.",
+        "expected_output": "True",
+        "actual_output": "True. The dome structure is characterized by old rock strata at the center and young rock strata around it. This is because the dome structure is formed by the uplift of the earth's crust, which causes the older rock strata to be exposed at the surface while the younger rock strata are pushed up around it. This is a common feature of dome structures in geology. Therefore, the statement is true."
+    },
+    {
+        "input": "Field investigation is the most basic and important link in earth science work, which can obtain the first-hand information of the studied objects.",
+        "expected_output": "True",
+        "actual_output": "True. Field investigation is indeed the most basic and important link in earth science work, as it allows scientists to gather first-hand information about the objects they are studying. This information is crucial for understanding the characteristics and behavior of geological features and processes. Therefore, the statement is true."
+    },
+    {
+        "input": "The shape and size of the earth refers to the shape and size of the geoid.",
+        "expected_output": "True",
+        "actual_output": "True. The geoid is the shape and size of the earth. It is the surface of the earth that is defined by the gravitational field of the earth. It is the reference surface used for geodetic measurements. It is an equipotential surface, meaning that the gravitational potential is constant at every point on the surface. It is the shape and size of the earth that is used in geodetic calculations and measurements. It is the reference surface used for mapping and navigation. It is the shape and size of the earth that is used in the International Terrestrial Reference Frame (ITRF). It is the shape and size of the earth that is used in the Global Positioning System (GPS). It is the shape and size of"
+    },
+    {
+        "input": "Each ocean floor has a ridge or uplift, of which the Pacific Ocean floor is an uplift and the other three ocean floors are ridges.",
+        "expected_output": "True",
+        "actual_output": "False. The Pacific Ocean floor is a ridge, not an uplift. The Atlantic Ocean floor has a ridge, the Indian Ocean floor has a ridge, and the Arctic Ocean floor has an uplift. The other three ocean floors are ridges. The Pacific Ocean floor is a ridge. The Atlantic Ocean floor has a ridge, the Indian Ocean floor has a ridge, and the Arctic Ocean floor has an uplift. The other three ocean floors are ridges. The Pacific Ocean floor is a ridge. The Atlantic Ocean floor has a ridge, the Indian Ocean floor has a ridge, and the Arctic Ocean floor has an uplift. The other three ocean floors are ridges. The Pacific Ocean floor is a ridge. The Atlantic Ocean floor has a ridge, the"
+    },
+    {
+        "input": "Flat-topped seamounts are seamounts near sea level, which are formed by regional subsidence and submergence after their tops are leveled by weathering, denudation and seawater erosion.",
+        "expected_output": "True",
+        "actual_output": "True. Flat-topped seamounts are indeed formed by regional subsidence and submergence after their tops are leveled by weathering, denudation and seawater erosion. They are typically found near sea level and are characterized by their flat or gently sloping summits. The process of erosion and weathering gradually wears down the seamount's peak, resulting in a flat or gently sloping surface. This process can take millions of years, depending on the rate of erosion and the size of the seamount. Flat-topped seamounts are often found in areas with high wave energy, such as the Pacific Ocean, and are often associated with coral reefs and other marine ecosystems. They are important habitats for many marine species and are often"
+    },
+    {
+        "input": "The earth's crust consists of two layers: silicon-aluminum layer and silicon-magnesium layer.",
+        "expected_output": "False",
+        "actual_output": "False. The earth's crust is composed of three layers: the continental crust, the oceanic crust, and the transition zone between them. The continental crust is composed of silicon-aluminum layer, while the oceanic crust is composed of silicon-magnesium layer. The transition zone is the area where the two types of crust meet. The statement is false."
+    },
+    {
+        "input": "The boundary between continental crust and oceanic crust is at the coastline.",
+        "expected_output": "False",
+        "actual_output": "False. The boundary between continental crust and oceanic crust is not at the coastline. It is located at the continental shelf, which is the submerged extension of the continental crust that gradually slopes down to the continental slope, which is the boundary between the continental crust and the oceanic crust. The continental shelf is not always visible at the surface because it is often covered by water. The coastline is the line where the land meets the sea, and it is not the boundary between the two types of crust. The boundary between continental crust and oceanic crust is located at the continental slope, which is the steep slope that marks the transition from the continental shelf to the deep ocean floor. The continental slope is typically located at a depth of about 200"
+    },
+    {
+        "input": "The gravity of the surface decreases with the increase of latitude.",
+        "expected_output": "False",
+        "actual_output": "False. The gravity of the surface increases with the increase of latitude. This is because the Earth is an oblate spheroid, meaning it is slightly flattened at the poles and bulging at the equator. Therefore, the gravitational force is stronger at the poles and weaker at the equator. As you move towards the poles, the gravitational force increases. So, the statement is false."
+    },
+    {
+        "input": "The electrical properties of the earth's interior are mainly related to the magnetic permeability and conductivity of the materials in the earth.",
+        "expected_output": "True",
+        "actual_output": "True. The electrical properties of the earth's interior are indeed mainly related to the magnetic permeability and conductivity of the materials in the earth. These properties are crucial for understanding the behavior of the earth's magnetic field and the generation of the earth's magnetic field. The magnetic permeability of the earth's core is responsible for the strength and direction of the magnetic field, while the conductivity of the mantle and crust affects the flow of electrical currents within the earth. These properties are studied by geophysicists to understand the structure and dynamics of the earth's interior. The answer is True."
+    },
+    {
+        "input": "Radioactive elements are generally concentrated in the surface of the solid earth, and mainly concentrated in metamorphic rocks.",
+        "expected_output": "False",
+        "actual_output": "False. Radioactive elements are generally concentrated in the crust of the Earth, not the surface. They are also found in all types of rocks, not just metamorphic rocks. They are more concentrated in igneous rocks, which are formed from the cooling of magma or lava."
+    },
+    {
+        "input": "Crustal movement can be divided into horizontal movement and vertical movement according to the direction of movement.",
+        "expected_output": "True",
+        "actual_output": "True. Crustal movement can indeed be divided into horizontal movement and vertical movement. Horizontal movement includes the movement of tectonic plates, while vertical movement includes the uplift or subsidence of the Earth's crust. This classification helps geologists understand the different types of geological processes that can occur at the Earth's surface. Is there anything else you would like me to do?"
+    },
+    {
+        "input": "The crustal movement after Quaternary is generally called neotectonic movement.",
+        "expected_output": "True",
+        "actual_output": "True. The crustal movement after Quaternary is generally called neotectonic movement. This is a true statement. The Quaternary period is the most recent geological period, which began about 2.6 million years ago and continues to the present day. During this time, the Earth's crust has experienced significant tectonic activity, including the formation of mountain ranges, the movement of continents, and the creation of new landforms. This activity is referred to as neotectonic movement. Neotectonic movement is an important area of study in geoscience, as it helps scientists understand the dynamic nature of the Earth's crust and the processes that shape the planet's surface. Therefore, the statement is true."
+    },
+    {
+        "input": "The root cause of earthquakes lies in plate movement.",
+        "expected_output": "False",
+        "actual_output": "True. The movement of tectonic plates is the primary cause of earthquakes. When plates move, they can collide, slide, or diverge, which can result in the release of energy in the form of seismic waves, causing earthquakes. This movement is driven by the convection currents in the Earth's mantle, which cause the plates to move over time. Therefore, the statement is true."
+    },
+    {
+        "input": "Active volcanoes can only be distributed at the edge of plates.",
+        "expected_output": "False",
+        "actual_output": "False. Active volcanoes can be found anywhere on Earth, not just at the edge of plates. They can occur in the middle of plates as well. The distribution of volcanoes is determined by the underlying geology and tectonic activity, not just plate boundaries. For example, the Hawaiian Islands are a chain of volcanoes that formed in the middle of the Pacific Plate. So, the statement is false."
+    },
+    {
+        "input": "The whole interior of the earth is molten, and magma exists everywhere.",
+        "expected_output": "False",
+        "actual_output": "False. The interior of the earth is not entirely molten. The outer core is liquid, but the inner core is solid. Magma is found in the mantle and crust, not everywhere in the earth."
+    },
+    {
+        "input": "In metamorphism, the main function of static pressure is to raise the temperature of metamorphic reaction.",
+        "expected_output": "True",
+        "actual_output": "False. The main function of static pressure in metamorphism is to raise the temperature of metamorphic reaction. However, the statement is false because the main function of static pressure in metamorphism is to raise the temperature of metamorphic reaction. The statement is false because it is a tautology. The main function of static pressure in metamorphism is to raise the temperature of metamorphic reaction. The statement is false because it is a tautology. The main function of static pressure in metamorphism is to raise the temperature of metamorphic reaction. The statement is false because it is a tautology. The main function of static pressure in metamorphism is to raise the temperature of metamorphic reaction. The statement is false because it is a tautology. The main"
+    },
+    {
+        "input": "When clastic material is transported in flowing water, clay-grade particles once deposited are eroded again, which requires greater flowing water speed.",
+        "expected_output": "True",
+        "actual_output": "True."
+    },
+    {
+        "input": "The retreat of the waterfall is caused by the erosion of the river.",
+        "expected_output": "True",
+        "actual_output": "True. The retreat of the waterfall is caused by the erosion of the river. The river's flow erodes the rock at the base of the waterfall, causing it to move upstream and eventually retreat. This process is known as headward erosion. Over time, the waterfall can retreat significantly, changing the landscape of the area. This is a natural process that occurs over thousands of years. The erosion is caused by the force of the water as it flows over the edge of the waterfall, breaking up the rock and carrying it downstream. The force of the water is also responsible for the formation of potholes and other features in the riverbed. The retreat of the waterfall can also be influenced by changes in the river's flow"
+    },
+    {
+        "input": "The stone forest in Lunan, Yunnan Province was formed by river erosion.",
+        "expected_output": "False",
+        "actual_output": "False. The stone forest in Lunan, Yunnan Province was formed by wind erosion. It is a unique geological landscape with a large number of stone pillars, towers, and other shapes. The stone pillars are formed by the weathering of sandstone and the erosion of wind and rain. The stone forest is a UNESCO World Heritage site. The statement that it was formed by river erosion is incorrect. The correct answer is False."
+    },
+    {
+        "input": "Finland, a country of thousands of lakes, has many lakes that are the causes of rivers.",
+        "expected_output": "False",
+        "actual_output": "False. Finland has many lakes, but most of them are not the sources of rivers. Most of the rivers in Finland are formed by the melting of snow and ice in the spring. The largest river in Finland is the Muonio River, which is formed by the melting of snow and ice in the spring. The largest lake in Finland is Lake Saimaa, which is not the source of any river."
+    },
+    {
+        "input": "The amygdala in volcanic rocks belongs to the form of crystalline aggregates.",
+        "expected_output": "False",
+        "actual_output": "False. The amygdala in volcanic rocks is a type of cavity formed by the escape of gas during the cooling of lava. It is not a form of crystalline aggregates. Crystalline aggregates are formed by the crystallization of minerals from a magma or lava. Amygdules are not formed by crystallization, but by the escape of gas from the lava. They are usually filled with secondary minerals. The term \"amygdala\" comes from the Greek word for \"breast,\" referring to the shape of the cavity. Amygdules are often found in basaltic rocks, such as obsidian, and are typically filled with secondary minerals such as calcite, quartz, or opal. They are also found in other types of volcanic rocks, such"
+    },
+    {
+        "input": "Gutenberg surface is the interface between crust and mantle",
+        "expected_output": "False",
+        "actual_output": "False. Gutenberg surface is the boundary between the mantle and the outer core. The interface between the crust and mantle is called Mohorovičić discontinuity. The Gutenberg surface is located at a depth of about 2,900 kilometers. The Mohorovičić discontinuity is located at a depth of about 30 kilometers. The Mohorovičić discontinuity is the boundary between the crust and the mantle. The Gutenberg surface is the boundary between the mantle and the outer core. The Gutenberg surface is located at a depth of about 2,900 kilometers. The Mohorovičić discontinuity is located at a depth of about 30 kilometers. The Mohorovičić discontinuity is the boundary"
+    },
+    {
+        "input": "The Earth's crust consists of silicon-aluminum layer and silicon-magnesium layer",
+        "expected_output": "False",
+        "actual_output": "False. The Earth's crust is composed of several types of rocks, including igneous, sedimentary, and metamorphic rocks. The crust is not composed of silicon-aluminum or silicon-magnesium layers. It is composed of various minerals and rocks that are formed through geological processes such as volcanic activity, erosion, and tectonic activity. The crust is the outermost layer of the Earth and is about 30-70 kilometers thick. It is the only part of the Earth that is accessible to humans and is the source of most of the Earth's natural resources. The crust is made up of about 47% oxygen, 28% silicon, 8% aluminum, 8% iron, 5%"
+    },
+    {
+        "input": "The whole interior of the earth is molten and magma exists everywhere",
+        "expected_output": "False",
+        "actual_output": "False. The interior of the Earth is not entirely molten. The outer core is liquid, but the inner core is solid. Magma is found in the mantle and crust, not everywhere in the Earth."
+    },
+    {
+        "input": "In metamorphism, the main function of static pressure is to raise the temperature of metamorphic reaction",
+        "expected_output": "True",
+        "actual_output": "False. The main function of static pressure in metamorphism is to raise the temperature of metamorphic reaction. However, the statement is false because the main function of static pressure in metamorphism is to raise the temperature of metamorphic reaction. The statement is false because it is not clear what the main function of static pressure in metamorphism is. The main function of static pressure in metamorphism is to raise the temperature of metamorphic reaction. The statement is false because it is not clear what the main function of static pressure in metamorphism is. The main function of static pressure in metamorphism is to raise the temperature of metamorphic reaction. The statement is false because it is not clear what the main function of static pressure in metamorphism is. The main"
+    },
+    {
+        "input": "Mylonite is a rock formed by dynamic metamorphism",
+        "expected_output": "True",
+        "actual_output": "True. Mylonite is a rock formed by dynamic metamorphism. It is a foliated rock that forms when a rock is subjected to intense pressure and heat, causing the minerals to recrystallize and align in a preferred orientation. This process is known as mylonitization. The resulting rock has a banded or layered appearance, with the bands being parallel to the direction of the applied stress. Mylonite is typically found in regions of high tectonic activity, such as mountain belts and fault zones. It is often associated with other metamorphic rocks such as gneiss and schist. The minerals that make up mylonite can vary depending on the original rock type and the conditions of metamorphism. Common minerals found in mylon"
+    },
+    {
+        "input": "Hydration does not belong to chemical weathering",
+        "expected_output": "False",
+        "actual_output": "False. Hydration is a process of chemical weathering. It occurs when water molecules react with minerals in rocks, causing them to break down and change into new minerals. This process is an important part of the rock cycle and is responsible for the formation of many geological features. Therefore, the statement is false."
+    },
+    {
+        "input": "Under the same climatic conditions, rocks with amorphous, fine grained, isogranular structure or large porosity are less likely to be chemically weathered than rocks with the same composition, such as crystalline, unisogranular and coarse grains",
+        "expected_output": "False",
+        "actual_output": "True."
+    },
+    {
+        "input": "In weathering, quartz is the most difficult mineral component of rock to be weathered",
+        "expected_output": "True",
+        "actual_output": "False. Quartz is one of the most resistant minerals to weathering. It is often the last mineral to be weathered in a rock. It is not the most difficult mineral component of rock to be weathered."
+    },
+    {
+        "input": "Honeycomb stone is the product of wind erosion",
+        "expected_output": "True",
+        "actual_output": "False. Honeycomb stone is the product of water erosion. Wind erosion can create structures like sand dunes, but it does not create honeycomb structures. Honeycomb structures are typically formed by water erosion, such as in the case of honeycomb limestone or honeycomb sandstone. Wind erosion can create structures like sand dunes, but it does not create honeycomb structures. Honeycomb structures are typically formed by water erosion, such as in the case of honeycomb limestone or honeycomb sandstone. Wind erosion can create structures like sand dunes, but it does not create honeycomb structures. Honeycomb structures are typically formed by water erosion, such as in the case of honeycomb limestone or honeycomb sandstone. Wind erosion can create structures like sand dunes"
+    },
+    {
+        "input": "Aeolian deposits include Aeolian sand and Aeolian loess",
+        "expected_output": "True",
+        "actual_output": "True. Aeolian deposits are formed by wind and include Aeolian sand and Aeolian loess. Aeolian sand is sand that is transported and deposited by wind, while Aeolian loess is a type of loess that is deposited by wind. Loess is a type of sedimentary rock that is formed by the accumulation of windblown silt and clay. It is typically found in areas with a dry climate and is often found in large, flat areas. Aeolian loess is often found in areas with strong winds, such as deserts and steppes. It is typically light in color and has a fine texture. Aeolian loess is an important resource for agriculture and is often used as"
+    },
+    {
+        "input": "Structural water does not participate in crystal composition and has nothing to do with mineral crystals",
+        "expected_output": "False",
+        "actual_output": "False. Structural water is an integral part of the crystal lattice and is essential for the formation and stability of many minerals. It is often found in the interstices of the crystal structure and can be lost or gained by the mineral during dehydration or hydration reactions. Therefore, the statement is false."
+    },
+    {
+        "input": "The amygdala in volcanic rocks belongs to the morphology of crystalline aggregates",
+        "expected_output": "False",
+        "actual_output": "False. The amygdala in volcanic rocks is a type of cavity formed by the escape of gas during the cooling of lava. It is not a morphology of crystalline aggregates. Crystalline aggregates are formed by the growth of crystals from a solution or melt. Amygdules are not formed by the growth of crystals, but by the escape of gas from the lava. Therefore, the statement is false."
+    },
+    {
+        "input": "The color of minerals can be described by analogy, such as the pig liver color of hematite",
+        "expected_output": "True",
+        "actual_output": "True. Hematite is a mineral with a reddish-brown color, which is often compared to the color of a pig's liver. This is a common way to describe the color of minerals, using analogies to help remember their appearance. The statement is true."
+    },
+    {
+        "input": "The luster of mineral actually refers to the luminescence of mineral surface",
+        "expected_output": "False",
+        "actual_output": "False. The luster of mineral refers to the way a mineral surface reflects light. It is not related to the luminescence of the mineral surface. Luminescence is a property of some minerals that causes them to glow or emit light when exposed to certain types of radiation. Luster, on the other hand, is a visual property that describes the way a mineral's surface reflects light. It can be metallic, non-metallic, or even pearly. Examples of luster include metallic, vitreous, pearly, silky, earthy, and resinous. Luminescence is a separate property that is not related to luster. Therefore, the statement is false."
+    },
+    {
+        "input": "The Mohs hardness of diamond is 10",
+        "expected_output": "True",
+        "actual_output": "True. The Mohs hardness of diamond is 10. It is the hardest natural substance known to man. The Mohs scale is a measure of the resistance of a mineral to scratching. Diamond is the hardest mineral on the scale. It is used to scratch other minerals and is used in cutting and polishing other minerals. It is also used in drill bits and other tools because of its hardness. The Mohs scale was created by the German mineralogist Friedrich Mohs in 1812. It is a relative scale, meaning that the hardness of a mineral is compared to the hardness of other minerals. The scale ranges from 1 to 10, with 10 being the hardest. Diamond is the only mineral that"
+    },
+    {
+        "input": "The cleavage of muscovite is incomplete",
+        "expected_output": "False",
+        "actual_output": "False. The cleavage of muscovite is perfect. It is a good example of a mineral with a perfect cleavage. It is a type of phyllosilicate mineral that is commonly found in metamorphic rocks. It has a sheet-like structure and is often used in the production of mica. It is also used in the production of electrical insulators and as a lubricant. It is also used in the production of glass and ceramics. It is also used in the production of paint and varnish. It is also used in the production of paper and as a filler in plastics. It is also used in the production of cosmetics and as a filler in toothpaste. It is also used in the production of soap and as a filler"
+    },
+    {
+        "input": "Both augite and hornblende are chain structure silicate minerals",
+        "expected_output": "True",
+        "actual_output": "False. Hornblende is a chain structure silicate mineral, but augite is not. Augite is a pyroxene mineral. Pyroxenes are double chain structure silicate minerals. Hornblende is a chain structure silicate mineral. It is a member of the amphibole group. Amphiboles are chain structure silicate minerals. They are similar to pyroxenes, but have a different structure. They are also more complex in their chemical composition. They are also more flexible and can change their structure in response to temperature and pressure. Pyroxenes are more rigid and have a more stable structure. They are also more common in igneous rocks. Amphiboles are more common in metamorphic rocks. They are also more"
+    },
+    {
+        "input": "Kaolinite and mica are silicate minerals with layered structure",
+        "expected_output": "True",
+        "actual_output": "True. Kaolinite and mica are both silicate minerals with layered structures. Kaolinite is a clay mineral with a 1:1 layer structure, while mica has a 2:1 layer structure. Both minerals are composed of tetrahedral and octahedral sheets that form layers held together by weak bonds. Mica is a group of minerals that includes muscovite, biotite, and phlogopite, among others. Kaolinite is a type of clay mineral that is commonly found in soil and sedimentary rocks. It is often used in ceramics, paper, and as a filler in paint and rubber. Mica is used in electronics, cosmetics, and as a lubricant. Both minerals are important in various"
+    },
+    {
+        "input": "Sedimentary rocks and metamorphic rocks can be transformed into each other",
+        "expected_output": "True",
+        "actual_output": "False. Sedimentary rocks are formed from the accumulation of sediments, while metamorphic rocks are formed from the transformation of existing rocks under high pressure and temperature. They cannot be transformed into each other."
+    },
+    {
+        "input": "Quartz and amphibole in magmatic rocks have special significance and can reflect SiO2 saturation in magmatic rocks, so they can be called acidity indicator minerals",
+        "expected_output": "False",
+        "actual_output": "True."
+    },
+    {
+        "input": "Bowen reaction series explains the general law of mineral symbiosis and association in magmatic rocks",
+        "expected_output": "True",
+        "actual_output": "True. The Bowen reaction series is a sequence of minerals that form as magma cools, and it explains the general law of mineral symbiosis and association in magmatic rocks. It was developed by American geologist Norman Bowen in 1922. The series is based on the melting points of minerals, with the most heat-resistant minerals forming first, and the least heat-resistant minerals forming last. The Bowen reaction series is an important concept in petrology, as it helps to explain the composition and texture of igneous rocks. It is also used to determine the origin and evolution of magmas. The Bowen reaction series is as follows:\n\n1. Olivine\n2. Pyroxene\n3. Amphibole\n4. Biot"
+    },
+    {
+        "input": "Granite is an acid plutonic intrusive rock",
+        "expected_output": "True",
+        "actual_output": "False. Granite is an igneous rock, but it is not an acid plutonic rock. It is a felsic rock, which means it is composed of feldspar, quartz, and mica. It is formed from the slow cooling of magma deep within the Earth's crust. It is not an acid rock. Acid rocks are rocks that contain a high amount of silica, such as granite, but they are not classified as acid plutonic rocks. Plutonic rocks are rocks that are formed from the slow cooling of magma deep within the Earth's crust, such as granite, gabbro, and diorite. They are not classified as acid rocks. So, the statement is false. Granite is an igneous rock,"
+    },
+    {
+        "input": "Andesite is a neutral extrusive rock",
+        "expected_output": "True",
+        "actual_output": "False. Andesite is an extrusive rock, but it is basic, not neutral. It is composed of plagioclase feldspar, pyroxene, and hornblende. It is typically dark gray or black in color. It is found in volcanic regions, such as the Andes Mountains. It is used as a building material and for making bricks. It is also used in the production of cement. It is a type of igneous rock that is formed from the rapid cooling of magma. It is a type of basalt. It is a type of volcanic rock that is formed from the rapid cooling of magma. It is a type of igneous rock that is formed from the rapid cooling of magma. It is a"
+    },
+    {
+        "input": "Metamorphic rocks formed by metamorphism of sedimentary rocks are called orthomorphic rocks",
+        "expected_output": "False",
+        "actual_output": "False. Metamorphic rocks formed by metamorphism of sedimentary rocks are called para-morphic rocks. Orthomorphic rocks are formed by metamorphism of igneous rocks."
+    },
+    {
+        "input": "Gneiss is a regional metamorphic rock",
+        "expected_output": "True",
+        "actual_output": "True. Gneiss is a regional metamorphic rock. It is formed when a rock is subjected to high temperatures and pressures, causing it to recrystallize into a banded texture. Gneiss is typically found in mountain ranges and other areas where rocks have been subjected to intense metamorphism. It is a common rock type in the Earth's crust. Is there anything else you would like me to do?"
+    },
+    {
+        "input": "As a result of mechanical sedimentary differentiation, sediments are distributed regularly along the transport direction in the order of gravel-sand-silt-clay",
+        "expected_output": "True",
+        "actual_output": "False. Sediments are distributed irregularly along the transport direction. The size of the sediment particles decreases in the order of gravel-sand-silt-clay."
+    },
+    {
+        "input": "The white color of pure quartz sandstone inherits the color of quartz, which is a kind of inherited color",
+        "expected_output": "True",
+        "actual_output": "True. The color of sandstone is inherited from the color of the quartz grains that make up the sandstone. Pure quartz is colorless, but it can appear white due to the way light is reflected off its surface. When quartz grains are cemented together to form sandstone, the color of the sandstone will be the same as the color of the quartz grains. Therefore, pure quartz sandstone will appear white. This is an example of inherited color. The color of a rock is determined by the minerals that make up the rock, and the color of the minerals is inherited from the elements that make up the minerals. This is why rocks can have a wide range of colors, from white to black, and everything in between. The color of a rock is also"
+    },
+    {
+        "input": "Rock strata with a thickness of 0.5 ~ 0.lm are called thin strata",
+        "expected_output": "False",
+        "actual_output": "False."
+    },
+    {
+        "input": "A clastic rock containing 8% medium gravel, 10% fine gravel, 17% coarse sand, 16% medium sand, 18% fine sand, 14% coarse silty sand and 17% fine silty sand should be named as \"gravel-bearing silty sandstone\"",
+        "expected_output": "True",
+        "actual_output": "False. The correct name for this rock would be \"sandy gravelly sandstone\". The term \"sandy\" is used when the rock contains more than 10% sand, and \"gravelly\" is used when the rock contains more than 10% gravel. In this case, the rock contains 17% medium sand, 18% fine sand, and 17% fine silty sand, which is more than 10% sand, and 8% medium gravel, 10% fine gravel, which is more than 10% gravel. Therefore, the rock should be named as \"sandy gravelly sandstone\". The term \"silty\" is used when the rock contains more"
+    },
+    {
+        "input": "Detrital particles with good roundness generally have higher sphericity",
+        "expected_output": "False",
+        "actual_output": "True. Detrital particles with good roundness generally have higher sphericity. This is because the more rounded a particle is, the more it has been transported and abraded by water or ice, which tends to round off sharp edges and corners, resulting in a more spherical shape. The sphericity of a particle is a measure of how close it is to a perfect sphere, and it is often used as an indicator of the degree of transport and abrasion that the particle has undergone. Therefore, particles with good roundness tend to have higher sphericity. However, it is important to note that other factors such as the composition and hardness of the rock can also affect the shape of detrital particles. So, while the"
+    },
+    {
+        "input": "Basement cementation represents the simultaneous deposition of debris and cementation, which is the product of rapid accumulation",
+        "expected_output": "True",
+        "actual_output": "False. Basement cementation is the process of cementation of the basement rock, not the product of rapid accumulation. The product of rapid accumulation is called breccia. The statement is false."
+    },
+    {
+        "input": "Clay rock is mainly composed of fine particles with grain size < 0.05 mm, and contains a large amount of clay minerals (kaolinite, montmorillonite, hydromica, etc.) loose or consolidated rock",
+        "expected_output": "False",
+        "actual_output": "True. Clay minerals are the main components of clay rocks. Clay minerals are fine-grained, and their grain size is less than 0.05 mm. Clay rocks are loose or consolidated rocks. Clay rocks are composed of fine particles. Clay minerals are the main components of clay rocks. Clay minerals are fine-grained, and their grain size is less than 0.05 mm. Clay rocks are loose or consolidated rocks. Clay rocks are composed of fine particles. Clay minerals are the main components of clay rocks. Clay minerals are fine-grained, and their grain size is less than 0.05 mm. Clay rocks are loose or consolidated rocks. Clay rocks are composed of fine particles. Clay minerals are the main components of clay rocks."
+    },
+    {
+        "input": "The \"bamboo leaf\" body in bamboo leaf limestone widely distributed in North China is a typical internal clastic",
+        "expected_output": "False",
+        "actual_output": "False. The \"bamboo leaf\" body in bamboo leaf limestone widely distributed in North China is a typical internal mold."
+    }
+]

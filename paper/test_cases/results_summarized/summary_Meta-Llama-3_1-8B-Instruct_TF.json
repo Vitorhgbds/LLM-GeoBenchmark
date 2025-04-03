@@ -1,0 +1,14 @@
+[
+    {
+        "model": "Meta-Llama-3_1-8B-Instruct",
+        "judge": "gpt-4o-mini",
+        "task": "TF",
+        "metric": "Objective Task Accuracy Metric",
+        "total_score": 76.0,
+        "total_success": 76.0,
+        "total_cost": 0.0,
+        "total_tests": 134.0,
+        "average_score": 0.5671641791044776,
+        "success_rate": 0.5671641791044776
+    }
+]

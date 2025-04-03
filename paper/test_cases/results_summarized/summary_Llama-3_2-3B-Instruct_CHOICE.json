@@ -1,0 +1,14 @@
+[
+    {
+        "model": "Llama-3_2-3B-Instruct",
+        "judge": "gpt-4o-mini",
+        "task": "CHOICE",
+        "metric": "Objective Task Accuracy Metric",
+        "total_score": 83.0,
+        "total_success": 83.0,
+        "total_cost": 0.0,
+        "total_tests": 182.0,
+        "average_score": 0.45604395604395603,
+        "success_rate": 0.45604395604395603
+    }
+]

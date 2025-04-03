@@ -1,0 +1,14 @@
+[
+    {
+        "model": "k2",
+        "judge": "gpt-4o-mini",
+        "task": "CHOICE",
+        "metric": "Objective Task Accuracy Metric",
+        "total_score": 60.0,
+        "total_success": 60.0,
+        "total_cost": 0.0,
+        "total_tests": 182.0,
+        "average_score": 0.32967032967032966,
+        "success_rate": 0.32967032967032966
+    }
+]

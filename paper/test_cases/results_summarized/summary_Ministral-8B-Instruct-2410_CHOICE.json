@@ -1,0 +1,14 @@
+[
+    {
+        "model": "Ministral-8B-Instruct-2410",
+        "judge": "gpt-4o-mini",
+        "task": "CHOICE",
+        "metric": "Objective Task Accuracy Metric",
+        "total_score": 88.0,
+        "total_success": 88.0,
+        "total_cost": 0.0,
+        "total_tests": 182.0,
+        "average_score": 0.4835164835164835,
+        "success_rate": 0.4835164835164835
+    }
+]

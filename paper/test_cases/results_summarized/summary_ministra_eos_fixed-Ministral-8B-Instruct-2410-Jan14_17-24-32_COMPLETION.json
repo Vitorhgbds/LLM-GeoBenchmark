@@ -1,0 +1,50 @@
+[
+    {
+        "model": "ministra_eos_fixed-Ministral-8B-Instruct-2410-Jan14_17-24-32",
+        "judge": "gpt-4o-mini",
+        "task": "COMPLETION",
+        "metric": "Bert Similarity Metric",
+        "total_score": 7.89640033361502,
+        "total_success": 2.0,
+        "total_cost": 0.0,
+        "total_tests": 150.0,
+        "average_score": 0.0526426688907668,
+        "success_rate": 0.013333333333333334
+    },
+    {
+        "model": "ministra_eos_fixed-Ministral-8B-Instruct-2410-Jan14_17-24-32",
+        "judge": "gpt-4o-mini",
+        "task": "COMPLETION",
+        "metric": "Prompt Alignment",
+        "total_score": 12.0,
+        "total_success": 12.0,
+        "total_cost": 0.027446999999999992,
+        "total_tests": 150.0,
+        "average_score": 0.08,
+        "success_rate": 0.08
+    },
+    {
+        "model": "ministra_eos_fixed-Ministral-8B-Instruct-2410-Jan14_17-24-32",
+        "judge": "gpt-4o-mini",
+        "task": "COMPLETION",
+        "metric": "Answer Relevancy",
+        "total_score": 132.8761904761905,
+        "total_success": 141.0,
+        "total_cost": 0.029886750000000004,
+        "total_tests": 150.0,
+        "average_score": 0.8858412698412699,
+        "success_rate": 0.94
+    },
+    {
+        "model": "ministra_eos_fixed-Ministral-8B-Instruct-2410-Jan14_17-24-32",
+        "judge": "gpt-4o-mini",
+        "task": "COMPLETION",
+        "metric": "Correctness (GEval)",
+        "total_score": 20.411380507295753,
+        "total_success": 4.0,
+        "total_cost": 0.010987049999999996,
+        "total_tests": 150.0,
+        "average_score": 0.13607587004863836,
+        "success_rate": 0.02666666666666667
+    }
+]

@@ -1,0 +1,14 @@
+[
+    {
+        "model": "gemma-2-9b-it",
+        "judge": "gpt-4o-mini",
+        "task": "CHOICE",
+        "metric": "Objective Task Accuracy Metric",
+        "total_score": 98.0,
+        "total_success": 98.0,
+        "total_cost": 0.0,
+        "total_tests": 182.0,
+        "average_score": 0.5384615384615384,
+        "success_rate": 0.5384615384615384
+    }
+]

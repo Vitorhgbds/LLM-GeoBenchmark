@@ -1,0 +1,50 @@
+[
+    {
+        "model": "gemma_eos_fixed-gemma-2-9b-it-Jan14_09-39-19",
+        "judge": "gpt-4o-mini",
+        "task": "QA",
+        "metric": "Bert Similarity Metric",
+        "total_score": 18.02208020148919,
+        "total_success": 2.0,
+        "total_cost": 0.0,
+        "total_tests": 153.0,
+        "average_score": 0.1177913738659424,
+        "success_rate": 0.013071895424836602
+    },
+    {
+        "model": "gemma_eos_fixed-gemma-2-9b-it-Jan14_09-39-19",
+        "judge": "gpt-4o-mini",
+        "task": "QA",
+        "metric": "Prompt Alignment",
+        "total_score": 11.0,
+        "total_success": 11.0,
+        "total_cost": 0.030271499999999982,
+        "total_tests": 153.0,
+        "average_score": 0.0718954248366013,
+        "success_rate": 0.0718954248366013
+    },
+    {
+        "model": "gemma_eos_fixed-gemma-2-9b-it-Jan14_09-39-19",
+        "judge": "gpt-4o-mini",
+        "task": "QA",
+        "metric": "Answer Relevancy",
+        "total_score": 144.6825396825397,
+        "total_success": 147.0,
+        "total_cost": 0.04120679999999998,
+        "total_tests": 153.0,
+        "average_score": 0.9456375142649653,
+        "success_rate": 0.9607843137254902
+    },
+    {
+        "model": "gemma_eos_fixed-gemma-2-9b-it-Jan14_09-39-19",
+        "judge": "gpt-4o-mini",
+        "task": "QA",
+        "metric": "Correctness (GEval)",
+        "total_score": 30.87045287751839,
+        "total_success": 1.0,
+        "total_cost": 0.016255649999999993,
+        "total_tests": 153.0,
+        "average_score": 0.20176766586613326,
+        "success_rate": 0.006535947712418301
+    }
+]

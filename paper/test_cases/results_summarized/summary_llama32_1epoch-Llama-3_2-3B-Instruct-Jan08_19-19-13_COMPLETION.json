@@ -1,0 +1,50 @@
+[
+    {
+        "model": "llama32_1epoch-Llama-3_2-3B-Instruct-Jan08_19-19-13",
+        "judge": "gpt-4o-mini",
+        "task": "COMPLETION",
+        "metric": "Bert Similarity Metric",
+        "total_score": 15.882825563690858,
+        "total_success": 5.0,
+        "total_cost": 0.0,
+        "total_tests": 150.0,
+        "average_score": 0.10588550375793905,
+        "success_rate": 0.03333333333333333
+    },
+    {
+        "model": "llama32_1epoch-Llama-3_2-3B-Instruct-Jan08_19-19-13",
+        "judge": "gpt-4o-mini",
+        "task": "COMPLETION",
+        "metric": "Prompt Alignment",
+        "total_score": 13.0,
+        "total_success": 13.0,
+        "total_cost": 0.02744535,
+        "total_tests": 150.0,
+        "average_score": 0.08666666666666667,
+        "success_rate": 0.08666666666666667
+    },
+    {
+        "model": "llama32_1epoch-Llama-3_2-3B-Instruct-Jan08_19-19-13",
+        "judge": "gpt-4o-mini",
+        "task": "COMPLETION",
+        "metric": "Answer Relevancy",
+        "total_score": 126.86626984126984,
+        "total_success": 135.0,
+        "total_cost": 0.031280400000000014,
+        "total_tests": 150.0,
+        "average_score": 0.8457751322751322,
+        "success_rate": 0.9
+    },
+    {
+        "model": "llama32_1epoch-Llama-3_2-3B-Instruct-Jan08_19-19-13",
+        "judge": "gpt-4o-mini",
+        "task": "COMPLETION",
+        "metric": "Correctness (GEval)",
+        "total_score": 18.44355210172399,
+        "total_success": 3.0,
+        "total_cost": 0.011047499999999993,
+        "total_tests": 150.0,
+        "average_score": 0.12295701401149328,
+        "success_rate": 0.02
+    }
+]

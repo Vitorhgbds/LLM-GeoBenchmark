@@ -1,0 +1,14 @@
+[
+    {
+        "model": "phi-4",
+        "judge": "gpt-4o-mini",
+        "task": "TF",
+        "metric": "Objective Task Accuracy Metric",
+        "total_score": 91.0,
+        "total_success": 91.0,
+        "total_cost": 0.0,
+        "total_tests": 134.0,
+        "average_score": 0.6791044776119403,
+        "success_rate": 0.6791044776119403
+    }
+]

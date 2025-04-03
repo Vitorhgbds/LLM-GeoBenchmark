@@ -18,7 +18,10 @@ pretrained_model_name_or_path = "google/gemma-2-9b-it"
 tokenizer_name_or_path = "google/gemma-2-9b-it"
 # Cache directory to store and consume models.
 cache_dir = ""
+# Specify if should apply the chat template before feeding the model
 should_apply_chat_template = false
+# If peft is true, the model will be loaded with peft
+peft = false
 
 [generation]
 max_new_tokens = 150        # Adjust for shorter output
@@ -33,5 +36,7 @@ do_sample = true            # Enable sampling
 
 
 [evaluation]
+# Model to evaluate the test cases
 model_judge = "gpt-4o-mini"
+# Path to store the evaluation results
 results_path = "./results"

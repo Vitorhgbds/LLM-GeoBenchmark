@@ -66,16 +66,21 @@ class BaseModel(DeepEvalBaseLLM):
             else self.model_path_or_name
         )
         self.tokenizer = AutoTokenizer.from_pretrained(tokenizer_name_or_path)
-        if "galactica" in self.model_path_or_name:
-            logger.debug("Setting chat template for Galactica model...")
-            self.tokenizer.chat_template = (
-                "{% for message in messages %}{{ message.content }}{{ eos_token }}{% endfor %}"
+        custom_chat_template = self.model_params.get("custom_chat_template", None)
+        if custom_chat_template:
+            logger.debug(f"Setting chat template {custom_chat_template}...")
+            self.tokenizer.chat_template = custom_chat_template
+            
+        pad_token_id = (
+            self.tokenizer.pad_token_id
+            if self.tokenizer.pad_token_id
+            else self.tokenizer.pad_token_type_id
             )
         self.pipeline = pipeline(task="text-generation", model=self.model, framework="pt", tokenizer=self.tokenizer)
         self.pipeline.generation_config = GenerationConfig(
             **{
                 **self.generation_params,
-                "pad_token_id": self.tokenizer.pad_token_type_id,
+                "pad_token_id": pad_token_id,
             }
         )
 
@@ -99,6 +104,7 @@ class BaseModel(DeepEvalBaseLLM):
         if self.should_apply_chat_template:
             logger.debug("trying to apply chat template...")
             prompt = self.tokenizer.apply_chat_template(prompt, tokenize=False, add_generation_prompt=True)
+            logger.debug(f"prompt after apllying chat template\n{prompt}")
 
         sequences: list = self.pipeline(prompt, return_full_text=False)
         return sequences[0]["generated_text"]

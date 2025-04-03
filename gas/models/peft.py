@@ -25,7 +25,7 @@ class BasePeftModel(DeepEvalBaseLLM):
         self.seed = kwargs.get("seed", None)
         self.model_path_or_name: str = model_params.get("pretrained_model_name_or_path", "")
         self.model_name = self.model_path_or_name.split("/")[-1].replace(".", "_")
-        
+
         self.model = None
         self.tokenizer = None
 
@@ -46,7 +46,7 @@ class BasePeftModel(DeepEvalBaseLLM):
             bnb_4bit_quant_type="nf4",
             bnb_4bit_use_double_quant=True,
         )
- 
+
         # Load the model with CUDA support
         self.model = AutoPeftModelForCausalLM.from_pretrained(
             pretrained_model_name_or_path=self.model_path_or_name,
@@ -56,17 +56,18 @@ class BasePeftModel(DeepEvalBaseLLM):
             low_cpu_mem_usage=True,
             cache_dir=self.model_params.get("cache_dir", None),
         )
+
+        self.tokenizer = AutoTokenizer.from_pretrained(self.model.peft_config["default"].base_model_name_or_path)
         
-        self.tokenizer = AutoTokenizer.from_pretrained(
-            self.model.peft_config["default"].base_model_name_or_path
-            )
+        custom_chat_template = self.model_params.get("custom_chat_template", None)
+        if custom_chat_template:
+            logger.debug(f"Setting chat template {custom_chat_template}...")
+            self.tokenizer.chat_template = custom_chat_template
         
         self.pad_token_id = (
-            self.tokenizer.pad_token_id 
-            if self.tokenizer.pad_token_id 
-            else self.tokenizer.pad_token_type_id
-            )
-        
+            self.tokenizer.pad_token_id if self.tokenizer.pad_token_id else self.tokenizer.pad_token_type_id
+        )
+
         logger.debug(f"pad token id: {self.pad_token_id}")
         logger.debug("Done.")
         return self.model
@@ -90,16 +91,16 @@ class BasePeftModel(DeepEvalBaseLLM):
             logger.debug(prompt)
 
         logger.debug("Trying to build inputs...")
-        
+
         inputs = self.tokenizer(
             prompt,
             return_tensors="pt",
         )
-        
+
         device = self.model.device
         input_ids = inputs.input_ids.to(device)
         attention_mask = inputs.attention_mask.to(device)
-        
+
         outputs = self.model.generate(
             **{
                 "input_ids": input_ids,
@@ -111,7 +112,6 @@ class BasePeftModel(DeepEvalBaseLLM):
         new_tokens = outputs[0][len(input_ids[0]) :]
         generated_text = self.tokenizer.decode(new_tokens, skip_special_tokens=True).strip()
         return generated_text
-
 
     async def a_generate(self, prompt: str) -> str:
         """

@@ -1,0 +1,103 @@
+# This workflow will install Python dependencies, run tests and lint with a variety of Python versions
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-python
+
+name: Python package
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+env:
+  TESTS_PATH: tests  # change as needed
+  TEST_REPORT_PATH: test-results.xml
+  SOURCE_MODULE: gas  # change as needed
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.11"]
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v3
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Install dependencies with poetry
+      run: |
+        set -e
+        python -m pip install --upgrade pip
+        python -m pip install poetry
+        python -m poetry config virtualenvs.create false
+        if ! python -m poetry install --with dev -vvv; then
+          echo "**Failed to run \`poetry install --with dev\` command.**" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "Check your dependencies and make sure you're able to run \`poetry install --with dev\` successfully before you push code." >> $GITHUB_STEP_SUMMARY
+          exit 1
+        fi
+        
+    - name: Lint with Ruff
+      run: |
+        set -e
+        if ! python -m poetry run ruff check .; then
+          echo "**Ruff found issues in the code.**" >> $GITHUB_STEP_SUMMARY
+          echo "Please fix Ruff errors before pushing." >> $GITHUB_STEP_SUMMARY
+          exit 1
+        fi
+        
+    - name: Run mypy
+      run: |
+        set -e
+        if ! python -m poetry run mypy .; then
+          echo "**Mypy found type-checking issues.**" >> $GITHUB_STEP_SUMMARY
+          echo "Please fix Mypy errors before pushing." >> $GITHUB_STEP_SUMMARY
+          exit 1
+        fi
+        
+    - name: Run unit tests with Pytest and generate coverage report
+      if: env.TESTS_PATH != ''
+      run: |
+        $PYTHON_COMMAND -m poetry run pytest $TESTS_PATH \
+          --doctest-modules \
+          --junitxml=$TEST_REPORT_PATH \
+          --cov=$SOURCE_MODULE \
+          --cov-report=xml \
+          --cov-config=.coveragerc
+
+    - name: Upload coverage report
+      uses: actions/upload-artifact@v3
+      with:
+        name: coverage-report
+        path: coverage.xml
+
+    - name: Upload test results
+      uses: actions/upload-artifact@v3
+      with:
+        name: test-results
+        path: ${{ env.TEST_REPORT_PATH }}
+
+    - name: Publish test summary
+      if: always()
+      run: |
+        echo "### Test Summary" >> $GITHUB_STEP_SUMMARY
+          echo "Pytest results saved to \`${{ env.TEST_REPORT_PATH }}\`" >> $GITHUB_STEP_SUMMARY
+          echo "Coverage report saved to \`coverage.xml\`" >> $GITHUB_STEP_SUMMARY
+
+    - name: Create wheel file
+      if: startsWith(github.ref_name, 'release/')
+      run: |
+        python -m pip install build
+        python -m build --wheel
+
+    - name: Upload wheel file
+      if: startsWith(github.ref_name, 'release/')
+      uses: actions/upload-artifact@v3
+      with:
+        name: wheel-distribution
+        path: dist/*.whl

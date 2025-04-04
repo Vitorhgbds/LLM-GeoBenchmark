@@ -63,7 +63,7 @@ jobs:
     - name: Run unit tests with Pytest and generate coverage report
       if: env.TESTS_PATH != ''
       run: |
-        $PYTHON_COMMAND -m poetry run pytest $TESTS_PATH \
+        python -m poetry run pytest $TESTS_PATH \
           --doctest-modules \
           --junitxml=$TEST_REPORT_PATH \
           --cov=$SOURCE_MODULE \

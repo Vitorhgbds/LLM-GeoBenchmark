@@ -27,7 +27,7 @@ class BaseModel(DeepEvalBaseLLM):
     def __init__(self, model_params: dict[str, Any], generation_params: dict[str, Any], **kwargs):
         self.model_params = model_params
         self.generation_params = generation_params
-        self.seed = kwargs.get("seed", None)
+        self.seed = kwargs.get("seed")
         self.model_path_or_name: str = model_params.get("pretrained_model_name_or_path", "")
         self.model_name = self.model_path_or_name.split("/")[-1].replace(".", "_")
 

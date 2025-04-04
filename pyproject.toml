@@ -29,6 +29,7 @@ peft = "^0.14.0"
 torch = "^2.5.1"
 toml = "^0.10.2"
 types-toml = "^0.10.8.20240310"
+pytest-cov = "^6.1.0"
 
 [tool.poetry.group.dev.dependencies]
 ruff = "^0.8.4"

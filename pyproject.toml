@@ -104,6 +104,8 @@ combine-as-imports = true
 [tool.mypy]
 exclude = ["paper"]
 mypy_path = "gas"
+ignore_missing_imports = true
+scripts_are_modules = true
 follow_imports = "silent"
 no_implicit_optional = true
 warn_unused_ignores = true

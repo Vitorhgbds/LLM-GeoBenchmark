@@ -1,0 +1,14 @@
+[
+    {
+        "model": "meta_llama4-scout-17b-instruct-v1_0",
+        "judge": "gpt-4o-mini",
+        "task": "TF",
+        "metric": "Objective Task Accuracy Metric",
+        "total_score": 93.0,
+        "total_success": 93.0,
+        "total_cost": 0.0,
+        "total_tests": 134.0,
+        "average_score": 0.6940298507462687,
+        "success_rate": 0.6940298507462687
+    }
+]

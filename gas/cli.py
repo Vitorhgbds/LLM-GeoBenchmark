@@ -200,6 +200,7 @@ def cli() -> None:
     key = os.environ.get("OPENAI_API_KEY")
     aws_url = os.environ.get("AWS_ENDPOINT_URL")
     logger.debug(key)
+    logger.debug(aws_url)
 
     generation_params = config["generation"]
     model_params = config["model"]

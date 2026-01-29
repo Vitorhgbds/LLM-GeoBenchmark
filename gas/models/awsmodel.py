@@ -4,6 +4,10 @@ import json
 from pydantic import BaseModel
 from deepeval.models import DeepEvalBaseLLM
 from lmformatenforcer import JsonSchemaParser
+from gas.logger import Logger
+
+logging = Logger()
+logger = logging.get_logger()
 
 class AWSModel(DeepEvalBaseLLM):
     """
@@ -13,7 +17,7 @@ class AWSModel(DeepEvalBaseLLM):
 
     def __init__(self, 
                  endpoint_url: str, 
-                 model=None, 
+                 model: str, 
                  generation_params: dict[str, any] = None, 
                  should_apply_chat_template: bool = False,
                  *args, **kwargs):
@@ -30,6 +34,7 @@ class AWSModel(DeepEvalBaseLLM):
         self.model = model
         self.generation_params = generation_params or {}
         self.should_apply_chat_template = should_apply_chat_template
+        self.model_name = self.model.split("/")[-1].replace(".", "_").replace(":", "_")
 
     def load_model(self):
         return None
@@ -43,7 +48,6 @@ class AWSModel(DeepEvalBaseLLM):
             The generated text.
         """
         headers = {"Content-Type": "application/json"}
-        
         if schema:
             json_schema_str = json.dumps(schema.model_json_schema(), indent=2)
             prompt = f"{prompt}\n\nRespond ONLY with a JSON object that follows this schema:\n{json_schema_str}"
@@ -57,7 +61,9 @@ class AWSModel(DeepEvalBaseLLM):
             **self.generation_params,
         }
 
-        while True:
+        done = False
+        retries = 0
+        while not done:
             try:
                 response = requests.post(
                     self.endpoint_url,
@@ -65,17 +71,28 @@ class AWSModel(DeepEvalBaseLLM):
                     headers=headers,
                     timeout=60
                 )
-                response.raise_for_status()
                 
-                data_raw = response.json()
-                text_output = data_raw['body']['response']['output']['message']['content'][0]['text']
+                json_response = response.json()
+                status_code = json_response.get("statusCode", None)
+                if status_code != 200:
+                    logger.warning(f"Received non-200 response: {status_code} - {json_response.get('body', '')}")
+                    logger.info("Retrying in 10s...")
+                    time.sleep(10)
+                    continue
                 
-                return text_output
-
+                text_output = json_response['body']['response']['output']['message']['content'][0]['text']
+                done = True
+                
             except Exception as e:
-                print(f"Erro na geração: {e}. Tentando novamente em 10s...")
-                time.sleep(10)
-                continue
+                logger.warning(f"Error while generating: {e}.\nResponse json: {json_response}\nTrying again")
+                logger.exception(e.with_traceback(e.__traceback__))
+                retries += 1
+                if retries >= 10:
+                    done = True
+                    text_output = ""
+                    logger.error("Max retries reached. Exiting generation loop with text_output set to empty string.")
+            
+        return text_output
     
     async def a_generate(self, prompt: list[str] | str, schema: BaseModel = None) -> str | BaseModel:
         """ Asynchronously generate text based on the prompt.
@@ -91,4 +108,4 @@ class AWSModel(DeepEvalBaseLLM):
         Returns:
             str: the model name
         """
-        return "aws_endpoint_custom_formatted"
+        return self.model_name

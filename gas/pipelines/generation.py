@@ -23,10 +23,10 @@ class GenerationPipeline(Pipeline):
         logger.info("Fetching task instruction...")
         instruction = PromptProvider.fetch_instruction(self.task)
         logger.info("Done.")
-        logger.info("Generating test cases...")
+        logger.info(f"Generating up to {self.limit} test cases...")
         test_cases: list[dict[str, str]] = TestCasesProvider.bulk_create(self.model, instruction, test_data, self.limit)
         logger.info("Done.")
-        logger.info("Saving test cases...")
+        logger.info(f"Saving {len(test_cases)} test cases...")
         outfile = self.test_cases_path / f"{self.model.get_model_name()}_{self.task.value}.json"
         path = self.data_provider.save(records=test_cases, output_file=outfile)
         logger.info("Done.")

@@ -6,6 +6,7 @@ from typing import Any
 from deepeval import evaluate
 from deepeval.metrics import AnswerRelevancyMetric, BaseMetric, GEval, PromptAlignmentMetric
 from deepeval.test_case import LLMTestCaseParams
+from deepeval.evaluate.configs import CacheConfig, AsyncConfig, ErrorConfig, DisplayConfig
 
 from gas.commons import TaskType
 from gas.logger import Logger
@@ -61,22 +62,27 @@ class EvaluationPipeline(Pipeline):
         if tc_result_path.exists():
             tc_result_path.unlink()
         de_result_path = de_result_path.rename(tc_result_path)
-
-        with Path.open(de_result_path, encoding="utf-8") as json_file:
+        logger.debug(f"Renamed to {tc_result_path}")
+        with Path.open(tc_result_path, encoding="utf-8") as json_file:
             data = json.load(json_file)
 
         test_cases: list[dict[str, Any]] = data["testCases"]
-
+        logger.debug(f"Loaded {len(test_cases)} test cases from {tc_result_path}")
         totals: dict[str, dict[str, float]] = {}
         for test_case in test_cases:
             metrics: list[dict[str, Any]] = test_case.get("metricsData", [])
+            #logger.debug(f"Processing test case with metrics: {metrics}")
             for metric in metrics:
-                name = metric.get("name", "None")
-                score = metric.get("score", "None")
-                success = metric.get("success", "False")
-                cost = metric.get("evaluationCost", 0)
+                #logger.debug(f"Processing metric: {metric}")
+                name = metric.get("name", None)
+                score = metric.get("score", None)
+                success = metric.get("success", None)
+                cost = metric.get("evaluationCost", 0.0)
                 if name not in totals:
                     totals[name] = {"total_score": 0.0, "total_success": 0.0, "total_cost": 0.0, "total_tests": 0.0}
+                if any(x == None for x in [name, score, success]):
+                    logger.warning(f"Skipping metric with missing data: {metric}")
+                    continue
                 totals[name]["total_score"] += score
                 totals[name]["total_success"] += 1 if success else 0
                 totals[name]["total_tests"] += 1
@@ -190,7 +196,20 @@ class EvaluationPipeline(Pipeline):
         dataset = TestCasesProvider.fetch(tests_path)
         logger.info("Done.")
         logger.info("Starting Deepeval Evaluation...")
-        evaluate(dataset.test_cases, metrics)
+        done = False
+        use_cache = False
+        while not done:
+            try:
+                evaluate(dataset.test_cases, metrics, identifier=f"{self.task.value}_{self.model.get_model_name()}", cache_config=CacheConfig(write_cache=True, use_cache=use_cache), async_config=AsyncConfig(run_async=True, max_concurrent=5), error_config=ErrorConfig(ignore_errors=False), display_config=DisplayConfig(verbose_mode=False))
+                done = True
+            except KeyboardInterrupt:
+                logger.info("Evaluation interrupted by user.")
+                return
+            except Exception as e:
+                logger.error(f"Deepeval Evaluation failed: {e.with_traceback(None)}")
+                continue
+            finally:
+                use_cache = True
         logger.info("Done.")
         logger.info("Creating benchmark summary...")
         summary = self._create_summary()

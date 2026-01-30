@@ -1,0 +1,50 @@
+[
+    {
+        "model": "mistral_mixtral-8x7b-instruct-v0_1",
+        "judge": "gpt-4o-mini",
+        "task": "COMPLETION",
+        "metric": "Bert Similarity Metric",
+        "total_score": -2.600742924027145,
+        "total_success": 2.0,
+        "total_cost": 0.0,
+        "total_tests": 144.0,
+        "average_score": -0.018060714750188507,
+        "success_rate": 0.013888888888888888
+    },
+    {
+        "model": "mistral_mixtral-8x7b-instruct-v0_1",
+        "judge": "gpt-4o-mini",
+        "task": "COMPLETION",
+        "metric": "Prompt Alignment",
+        "total_score": 17.5,
+        "total_success": 18.0,
+        "total_cost": 0.0060069,
+        "total_tests": 166.0,
+        "average_score": 0.10542168674698796,
+        "success_rate": 0.10843373493975904
+    },
+    {
+        "model": "mistral_mixtral-8x7b-instruct-v0_1",
+        "judge": "gpt-4o-mini",
+        "task": "COMPLETION",
+        "metric": "Answer Relevancy",
+        "total_score": 143.70714285714288,
+        "total_success": 151.0,
+        "total_cost": 0.0073425,
+        "total_tests": 168.0,
+        "average_score": 0.8553996598639457,
+        "success_rate": 0.8988095238095238
+    },
+    {
+        "model": "mistral_mixtral-8x7b-instruct-v0_1",
+        "judge": "gpt-4o-mini",
+        "task": "COMPLETION",
+        "metric": "Correctness [GEval]",
+        "total_score": 26.293695361648094,
+        "total_success": 4.0,
+        "total_cost": 0.0027520499999999994,
+        "total_tests": 170.0,
+        "average_score": 0.15466879624498878,
+        "success_rate": 0.023529411764705882
+    }
+]

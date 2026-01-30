@@ -1,0 +1,50 @@
+[
+    {
+        "model": "meta_llama3-3-70b-instruct-v1_0",
+        "judge": "gpt-4o-mini",
+        "task": "NOUN",
+        "metric": "Bert Similarity Metric",
+        "total_score": 87.42006976832636,
+        "total_success": 0.0,
+        "total_cost": 0.0,
+        "total_tests": 564.0,
+        "average_score": 0.1550001237027063,
+        "success_rate": 0.0
+    },
+    {
+        "model": "meta_llama3-3-70b-instruct-v1_0",
+        "judge": "gpt-4o-mini",
+        "task": "NOUN",
+        "metric": "Prompt Alignment",
+        "total_score": 350.0,
+        "total_success": 350.0,
+        "total_cost": 0.005561849999999999,
+        "total_tests": 359.0,
+        "average_score": 0.9749303621169917,
+        "success_rate": 0.9749303621169917
+    },
+    {
+        "model": "meta_llama3-3-70b-instruct-v1_0",
+        "judge": "gpt-4o-mini",
+        "task": "NOUN",
+        "metric": "Answer Relevancy",
+        "total_score": 345.15595238095244,
+        "total_success": 353.0,
+        "total_cost": 0.006733199999999998,
+        "total_tests": 360.0,
+        "average_score": 0.9587665343915346,
+        "success_rate": 0.9805555555555555
+    },
+    {
+        "model": "meta_llama3-3-70b-instruct-v1_0",
+        "judge": "gpt-4o-mini",
+        "task": "NOUN",
+        "metric": "Correctness [GEval]",
+        "total_score": 105.57037487949749,
+        "total_success": 14.0,
+        "total_cost": 0.0027993,
+        "total_tests": 374.0,
+        "average_score": 0.28227372962432484,
+        "success_rate": 0.0374331550802139
+    }
+]

@@ -1,0 +1,14 @@
+[
+    {
+        "model": "meta_llama4-scout-17b-instruct-v1_0",
+        "judge": "gpt-4o-mini",
+        "task": "CHOICE",
+        "metric": "Objective Task Accuracy Metric",
+        "total_score": 119.0,
+        "total_success": 119.0,
+        "total_cost": 0.0,
+        "total_tests": 182.0,
+        "average_score": 0.6538461538461539,
+        "success_rate": 0.6538461538461539
+    }
+]

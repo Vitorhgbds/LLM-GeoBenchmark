@@ -1,0 +1,50 @@
+[
+    {
+        "model": "deepseek_r1-v1_0",
+        "judge": "gpt-4o-mini",
+        "task": "QA",
+        "metric": "Bert Similarity Metric",
+        "total_score": 10.41791441506939,
+        "total_success": 0.0,
+        "total_cost": 0.0,
+        "total_tests": 153.0,
+        "average_score": 0.06809094388934242,
+        "success_rate": 0.0
+    },
+    {
+        "model": "deepseek_r1-v1_0",
+        "judge": "gpt-4o-mini",
+        "task": "QA",
+        "metric": "Prompt Alignment",
+        "total_score": 151.5,
+        "total_success": 153.0,
+        "total_cost": 0.038130600000000014,
+        "total_tests": 153.0,
+        "average_score": 0.9901960784313726,
+        "success_rate": 1.0
+    },
+    {
+        "model": "deepseek_r1-v1_0",
+        "judge": "gpt-4o-mini",
+        "task": "QA",
+        "metric": "Answer Relevancy",
+        "total_score": 145.99348763981115,
+        "total_success": 150.0,
+        "total_cost": 0.07354484999999998,
+        "total_tests": 153.0,
+        "average_score": 0.9542058015673931,
+        "success_rate": 0.9803921568627451
+    },
+    {
+        "model": "deepseek_r1-v1_0",
+        "judge": "gpt-4o-mini",
+        "task": "QA",
+        "metric": "Correctness [GEval]",
+        "total_score": 39.51423583067709,
+        "total_success": 5.0,
+        "total_cost": 0.022838249999999994,
+        "total_tests": 153.0,
+        "average_score": 0.25826297928547115,
+        "success_rate": 0.032679738562091505
+    }
+]

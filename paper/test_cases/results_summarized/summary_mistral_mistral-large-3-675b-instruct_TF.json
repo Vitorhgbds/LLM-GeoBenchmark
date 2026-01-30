@@ -1,0 +1,14 @@
+[
+    {
+        "model": "mistral_mistral-large-3-675b-instruct",
+        "judge": "gpt-4o-mini",
+        "task": "TF",
+        "metric": "Objective Task Accuracy Metric",
+        "total_score": 77.0,
+        "total_success": 77.0,
+        "total_cost": 0.0,
+        "total_tests": 134.0,
+        "average_score": 0.5746268656716418,
+        "success_rate": 0.5746268656716418
+    }
+]

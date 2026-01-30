@@ -7,7 +7,7 @@ from deepeval.models import DeepEvalBaseLLM
 from dotenv import load_dotenv
 
 from gas.logger import Logger
-from gas.models import BaseModel, BasePeftModel
+from gas.models import BaseModel, BasePeftModel, AWSModel
 from gas.pipelines import EvaluationPipeline, GenerationPipeline
 
 logging = Logger()
@@ -198,15 +198,19 @@ def cli() -> None:
     tc_path = config["environment"]["test_cases_path"]
 
     key = os.environ.get("OPENAI_API_KEY")
+    aws_url = os.environ.get("AWS_ENDPOINT_URL")
     logger.debug(key)
+    logger.debug(aws_url)
 
     generation_params = config["generation"]
     model_params = config["model"]
     seed = config["environment"].get("seed", None)
     model = (
-        BaseModel(model_params, generation_params, seed=seed)
-        if not model_params.get("peft", False)
-        else BasePeftModel(model_params, generation_params, seed=seed)
+        BasePeftModel(model_params, generation_params, seed=seed)
+        if model_params.get("peft", False)
+        else BaseModel(model_params, generation_params, seed=seed) 
+        if model_params.get("base_model", False)
+        else AWSModel(endpoint_url=aws_url, generation_params=generation_params, **model_params)
     )
 
     show_info(model=model, seed=seed, generation_params=generation_params, **args_dict)

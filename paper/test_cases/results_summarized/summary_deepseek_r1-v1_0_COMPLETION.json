@@ -1,0 +1,50 @@
+[
+    {
+        "model": "deepseek_r1-v1_0",
+        "judge": "gpt-4o-mini",
+        "task": "COMPLETION",
+        "metric": "Bert Similarity Metric",
+        "total_score": 119.59555061534047,
+        "total_success": 116.0,
+        "total_cost": 0.0,
+        "total_tests": 437.0,
+        "average_score": 0.273674028868056,
+        "success_rate": 0.2654462242562929
+    },
+    {
+        "model": "deepseek_r1-v1_0",
+        "judge": "gpt-4o-mini",
+        "task": "COMPLETION",
+        "metric": "Prompt Alignment",
+        "total_score": 246.0,
+        "total_success": 246.0,
+        "total_cost": 0.030453899999999996,
+        "total_tests": 385.0,
+        "average_score": 0.638961038961039,
+        "success_rate": 0.638961038961039
+    },
+    {
+        "model": "deepseek_r1-v1_0",
+        "judge": "gpt-4o-mini",
+        "task": "COMPLETION",
+        "metric": "Answer Relevancy",
+        "total_score": 333.6666666666667,
+        "total_success": 338.0,
+        "total_cost": 0.03464085000000001,
+        "total_tests": 380.0,
+        "average_score": 0.8780701754385966,
+        "success_rate": 0.8894736842105263
+    },
+    {
+        "model": "deepseek_r1-v1_0",
+        "judge": "gpt-4o-mini",
+        "task": "COMPLETION",
+        "metric": "Correctness [GEval]",
+        "total_score": 80.62989613821587,
+        "total_success": 25.0,
+        "total_cost": 0.014577749999999999,
+        "total_tests": 392.0,
+        "average_score": 0.20568851055667314,
+        "success_rate": 0.06377551020408163
+    }
+]

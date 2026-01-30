@@ -4,47 +4,47 @@
         "judge": "gpt-4o-mini",
         "task": "COMPLETION",
         "metric": "Bert Similarity Metric",
-        "total_score": 40.828395332209766,
-        "total_success": 40.0,
+        "total_score": 119.59555061534047,
+        "total_success": 116.0,
         "total_cost": 0.0,
-        "total_tests": 150.0,
-        "average_score": 0.27218930221473175,
-        "success_rate": 0.26666666666666666
+        "total_tests": 437.0,
+        "average_score": 0.273674028868056,
+        "success_rate": 0.2654462242562929
     },
     {
         "model": "deepseek_r1-v1_0",
         "judge": "gpt-4o-mini",
         "task": "COMPLETION",
         "metric": "Prompt Alignment",
-        "total_score": 90.0,
-        "total_success": 90.0,
-        "total_cost": 0.0,
-        "total_tests": 150.0,
-        "average_score": 0.6,
-        "success_rate": 0.6
+        "total_score": 246.0,
+        "total_success": 246.0,
+        "total_cost": 0.030453899999999996,
+        "total_tests": 385.0,
+        "average_score": 0.638961038961039,
+        "success_rate": 0.638961038961039
     },
     {
         "model": "deepseek_r1-v1_0",
         "judge": "gpt-4o-mini",
         "task": "COMPLETION",
         "metric": "Answer Relevancy",
-        "total_score": 131.83333333333334,
-        "total_success": 133.0,
-        "total_cost": 0.007436699999999999,
-        "total_tests": 150.0,
-        "average_score": 0.8788888888888889,
-        "success_rate": 0.8866666666666667
+        "total_score": 333.6666666666667,
+        "total_success": 338.0,
+        "total_cost": 0.03464085000000001,
+        "total_tests": 380.0,
+        "average_score": 0.8780701754385966,
+        "success_rate": 0.8894736842105263
     },
     {
         "model": "deepseek_r1-v1_0",
         "judge": "gpt-4o-mini",
         "task": "COMPLETION",
         "metric": "Correctness [GEval]",
-        "total_score": 30.532750717124497,
-        "total_success": 8.0,
-        "total_cost": 9.6e-05,
-        "total_tests": 150.0,
-        "average_score": 0.20355167144749664,
-        "success_rate": 0.05333333333333334
+        "total_score": 80.62989613821587,
+        "total_success": 25.0,
+        "total_cost": 0.014577749999999999,
+        "total_tests": 392.0,
+        "average_score": 0.20568851055667314,
+        "success_rate": 0.06377551020408163
     }
 ]
